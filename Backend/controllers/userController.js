@@ -1,5 +1,4 @@
 const User = require("../models/userModel");
-const AdvocateProfile = require("../models/advocateProfileModel");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
@@ -10,60 +9,52 @@ const generateToken = (id) => {
 
 // Register User
 const registerUser = async (req, res) => {
-  const { name, phone, email, password, role, additionalInfo } = req.body;
+  const { name, phone, email, password, role, barCouncilRegNo } = req.body;
 
   try {
+    // Validate required fields
+    if (!name || !phone || !email || !password || !role) {
+      return res.status(400).json({ message: "All fields are required." });
+    }
+
     // Check if user already exists
     const userExists = await User.findOne({ email });
     if (userExists) {
-      return res.status(400).json({ message: "User already exists" });
+      return res.status(400).json({ message: "User already exists." });
+    }
+
+    // Validate Bar Council Registration Number if the role is 'advocate'
+    if (role === "advocate") {
+      if (!barCouncilRegNo) {
+        return res
+          .status(400)
+          .json({
+            message:
+              "Bar Council Registration Number is required for advocates.",
+          });
+      }
+
+      const existingAdvocate = await User.findOne({ barCouncilRegNo });
+      if (existingAdvocate) {
+        return res
+          .status(400)
+          .json({ message: "Bar Council Registration Number already exists." });
+      }
     }
 
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create a new user (basic user data)
+    // Create a new user
     const user = await User.create({
       name,
       phone,
       email,
       password: hashedPassword,
       role,
-      isApproved: role === "advocate" ? false : true, // Advocates need approval
+      barCouncilRegNo: role === "advocate" ? barCouncilRegNo : undefined,
+      isApproved: role === "advocate" ? false : true, // Advocates need admin approval
     });
-
-    // If the user is an advocate, create an AdvocateProfile
-    if (role === "advocate") {
-      const advocateProfile = new AdvocateProfile({
-        user: user._id, // reference to the user
-        languages: additionalInfo.languages,
-        dateOfBirth: additionalInfo.dateOfBirth,
-        location: additionalInfo.location,
-        enrolmentNo: additionalInfo.enrolmentNo,
-        barCouncilRegNo: additionalInfo.barCouncilRegNo,
-        yearsOfExperience: additionalInfo.yearsOfExperience,
-        education: additionalInfo.education.map((edu) => ({
-          degree: edu.degree,
-          institution: edu.institution,
-          yearOfPassing: edu.yearOfPassing,
-          extraCourses: edu.extraCourses,
-        })),
-        workExperience: additionalInfo.workExperience.map((work) => ({
-          firmName: work.firmName,
-          startDate: work.startDate,
-          endDate: work.endDate,
-          briefDescription: work.briefDescription,
-        })),
-        specialisations: additionalInfo.specialisations,
-        casesHandled: additionalInfo.casesHandled,
-        description: additionalInfo.description,
-        preferredClientele: additionalInfo.preferredClientele,
-        courts: additionalInfo.courts,
-      });
-
-      await advocateProfile.save();
-    }
-
 
     // Respond with user data and token
     res.status(201).json({
@@ -81,18 +72,30 @@ const registerUser = async (req, res) => {
 
 // Login User
 const loginUser = async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, role } = req.body;
   try {
+    // Validate required fields
+    if (!email || !password || !role) {
+      return res.status(400).json({ message: "All fields are required." });
+    }
+
     // Find user by email
     const user = await User.findOne({ email });
 
     if (!user || !(await bcrypt.compare(password, user.password))) {
-      return res.status(401).json({ message: "Invalid credentials" });
+      return res.status(401).json({ message: "Invalid credentials." });
     }
 
-    // Check if the advocate's approval is pending
+    // Ensure the role matches
+    if (role !== user.role) {
+      return res
+        .status(400)
+        .json({ message: "Account doesn't exist with the selected role." });
+    }
+
+    // Check advocate approval status
     if (user.role === "advocate" && !user.isApproved) {
-      return res.status(403).json({ message: "Advocate approval pending" });
+      return res.status(403).json({ message: "Advocate approval pending." });
     }
 
     // Generate JWT token
@@ -100,14 +103,14 @@ const loginUser = async (req, res) => {
 
     // Set token as a cookie
     res.cookie("token", token, {
-      httpOnly: true, // Prevents access from JavaScript
-      secure: process.env.NODE_ENV === "production", // Sends cookie over HTTPS in production
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
       maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days expiration
-      sameSite: "Strict", // Mitigates CSRF attacks
+      sameSite: "Strict",
     });
 
     res.status(200).json({
-      message: "User logged in successfully",
+      message: "User logged in successfully.",
       _id: user.id,
       name: user.name,
       email: user.email,
@@ -119,7 +122,3 @@ const loginUser = async (req, res) => {
 };
 
 module.exports = { registerUser, loginUser };
-
-
-
-

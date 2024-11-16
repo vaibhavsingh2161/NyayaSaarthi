@@ -10,11 +10,18 @@ const SignUp = () => {
     phone: "",
     email: "",
     password: "",
+    barCouncilRegNumber: "", // Added for advocate role
   });
   const navigate = useNavigate();
 
   const handleRoleChange = (e) => {
-    setRole(e.target.value);
+    const selectedRole = e.target.value;
+    setRole(selectedRole);
+
+    // Clear bar council registration number if not advocate
+    if (selectedRole !== "advocate") {
+      setFormData({ ...formData, barCouncilRegNumber: "" });
+    }
   };
 
   const handleInputChange = (e) => {
@@ -117,6 +124,17 @@ const SignUp = () => {
                 Plaintiff
               </label>
             </div>
+
+            {role === "advocate" && (
+              <input
+                type="text"
+                name="barCouncilRegNo"
+                placeholder="Bar Council Registration Number"
+                value={formData.barCouncilRegNo}
+                onChange={handleInputChange}
+                required
+              />
+            )}
 
             <button type="submit" className="signup-button">
               Submit

@@ -140,3 +140,28 @@
     width: 100%; /* Ensure inputs and button take full width */
   }
 }
+
+/* Align radio buttons properly */
+.role-selection {
+  display: flex;
+  gap: 16px; /* Space between the radio button groups */
+  margin: 16px 0; /* Space above and below the radio button group */
+}
+
+.role-selection label {
+  display: flex;
+  align-items: center; /* Vertically center-align text and radio buttons */
+  font-size: 14px; /* Adjust text size */
+  color: #333; /* Text color */
+  cursor: pointer;
+}
+
+input[type="radio"] {
+  width: 16px; /* Fixed width for proper size */
+  height: 16px; /* Fixed height for proper size */
+  margin: 0; /* Remove default margin */
+  margin-right: 8px; /* Space between the button and the label text */
+  -webkit-appearance: radio; /* Ensures the default circular appearance in webkit browsers */
+  appearance: radio; /* Ensures the default circular appearance in modern browsers */
+  cursor: pointer;
+}

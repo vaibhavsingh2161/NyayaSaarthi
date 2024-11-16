@@ -29,6 +29,13 @@ const userSchema = mongoose.Schema(
       type: Boolean,
       default: false, // Only true after admin approval for advocates
     },
+    barCouncilRegNo: {
+      type: String,
+      required: function () {
+        return this.role === "advocate"; // Required only for advocates
+      },
+      unique: true,
+    },
   },
   { timestamps: true }
 );

@@ -10,18 +10,27 @@ function SignIn() {
   });
 
   const [error, setError] = useState(""); // State to track error messages
+  const [role, setRole] = useState(""); // State to track selected role
   const navigate = useNavigate(); // For redirecting after successful login
 
+  // Handle input change
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
+  // Handle role selection
+  const handleRoleChange = (e) => {
+    setRole(e.target.value);
+  };
+
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!formData.email || !formData.password) {
-      setError("Please fill in all fields.");
+    // Validation for missing fields
+    if (!formData.email || !formData.password || !role) {
+      setError("Please fill in all fields, including selecting your role.");
       return;
     }
 
@@ -29,20 +38,22 @@ function SignIn() {
       // Make API call to login
       const response = await axios.post(
         "http://localhost:3005/api/users/login",
-        formData
+        { ...formData, role } // Include role in the request body
       );
 
-      // Store the token (optional: store in cookies/localStorage if required)
-      const { token, name, role } = response.data;
+      // Extract response data
+      const { token, name, role: userRole } = response.data;
+
+      // Store the token
       localStorage.setItem("token", token); // Save the token for future API calls
 
       alert(`Welcome back, ${name}!`);
 
       // Redirect based on the role
-      if (role === "plaintiff") {
-        navigate("/dashboard"); // Replace with the plaintiff dashboard route
-      } else if (role === "advocate") {
-        navigate("/advocate-portal"); // Replace with the advocate portal route
+      if (userRole === "plaintiff") {
+        navigate("/dashboard"); // Redirect to the plaintiff dashboard
+      } else if (userRole === "advocate") {
+        navigate("/dashboard"); // Redirect to the advocate portal
       }
     } catch (error) {
       console.error(error.response?.data?.message || "An error occurred");
@@ -88,6 +99,28 @@ function SignIn() {
               className="form-input"
               required
             />
+            <div className="role-selection">
+              <label>
+                <input
+                  type="radio"
+                  name="role"
+                  value="advocate"
+                  checked={role === "advocate"}
+                  onChange={handleRoleChange}
+                />
+                Advocate
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name="role"
+                  value="plaintiff"
+                  checked={role === "plaintiff"}
+                  onChange={handleRoleChange}
+                />
+                Plaintiff
+              </label>
+            </div>
             <button type="submit" className="submit-button">
               Sign In
             </button>
