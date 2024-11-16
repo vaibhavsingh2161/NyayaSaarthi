@@ -5,6 +5,7 @@ const connectDB = require("./utils/db");
 const userRoutes = require("./routes/userRoutes");
 // const advocateRoutes = require("./routes/advocateRoutes");
 const cookieParser = require("cookie-parser");
+const nyayaSanhita = require("./routes/nyayaSanhitaRoutes");
 
 dotenv.config();
 connectDB();
@@ -15,6 +16,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use("/api/users", userRoutes);
+app.use("/api/nyaya-sanhita",nyayaSanhita);
 // app.use("/api/advocates", advocateRoutes);
 
 const PORT = process.env.PORT || 5000;
