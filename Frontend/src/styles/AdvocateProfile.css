@@ -1,0 +1,154 @@
+/* AdvocateProfile.css */
+
+.profile-container {
+    font-family: 'Inter', sans-serif;
+    color: #333A56;
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Full viewport height */
+    overflow-y: hidden; /* Prevent outer container from scrolling */
+    padding: 1rem 2rem;
+  }
+  
+  .profile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .edit-link {
+    color: #D4A373;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  
+  .edit-link:hover {
+    text-decoration: underline;
+  }
+  
+  .profile-details {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 2rem;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    flex-grow: 1;
+    overflow-y: auto; /* Enable scrolling in the main content area */
+    margin-bottom: 1.5rem;
+  }
+  
+  .profile-card {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .profile-picture {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-color: #f0f0f0;
+    border: 2px solid #ddd;
+    margin-right: 2rem;
+  }
+  
+  .profile-info h3 {
+    font-size: 1.8rem;
+    color: #333A56;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  
+  .profile-rating {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    color: #FFA500;
+    margin-bottom: 0.8rem;
+  }
+  
+  .profile-meta {
+    display: flex;
+    gap: 1.5rem;
+    font-size: 1rem;
+    color: #666;
+  }
+  
+  .profile-meta p {
+    display: flex;
+    align-items: center;
+  }
+  
+  .star-icon {
+    color: #D4A373;
+    margin-right: 5px;
+  }
+  
+  .profile-id {
+    font-size: 1rem;
+    color: #333A56;
+    margin-top: 0.5rem;
+  }
+  
+  .profile-sections {
+    margin-top: 1.5rem;
+  }
+  
+  .profile-section {
+    margin-top: 1.5rem;
+  }
+  
+  .profile-section h4 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333A56;
+    margin-bottom: 0.5rem;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 0.5rem;
+  }
+  
+  .profile-section p {
+    color: #666;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+  
+  /* Footer */
+  .footer {
+    background-color: #0d1238;
+    color: #D4A373;
+    padding: 2rem;
+    display: flex;
+    justify-content: space-between;
+    margin-top: auto;
+  }
+  
+  .footer-logo img {
+    width: 350px;
+  }
+  
+  .footer-links {
+    display: flex;
+  }
+  
+  .footer-column {
+    margin-left: 2rem;
+  }
+  
+  .footer-column h4 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .footer-column a {
+    display: block;
+    color: #D4A373;
+    text-decoration: none;
+    font-size: 0.9rem;
+    margin-bottom: 0.3rem;
+  }
+  
+  .footer-column a:hover {
+    text-decoration: underline;
+  }

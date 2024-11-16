@@ -1,0 +1,370 @@
+/* LandingPage.css */
+
+/* Global Styles */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Georgia', serif;
+}
+
+.landing-page {
+  text-align: left;
+  font-family: 'Georgia', serif;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  background-color: #f9f4e7;
+}
+
+.logo {
+  width: 200px;
+}
+
+.nav {
+  display: flex;
+  gap: 30px;
+}
+
+.nav a {
+  text-decoration: none;
+  font-weight: 600;
+  color: #333;
+  font-size: 1.1em;
+}
+
+.header-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.login-btn,
+.signup-btn {
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1em;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+}
+
+.login-btn {
+  background-color: #fff;
+  color: #333;
+  border: 1px solid #ccc;
+}
+
+.signup-btn {
+  background-color: #0d1238;
+  color: #fff;
+}
+
+/* Hero Section */
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 60px;
+  background: linear-gradient(90deg, #fff6c5, #dfdbf8);
+}
+
+.hero-text {
+  max-width: 50%;
+}
+
+.hero-text h1 {
+  font-size: 3em;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #333;
+}
+
+.highlight {
+  color: #4a3b99;
+  border-bottom: 3px solid #333;
+}
+
+.hero-text p {
+  margin-top: 10px;
+  font-size: 1.2em;
+  color: #555;
+}
+
+.hero-image img {
+  width: 600px;
+  height: auto;
+}
+
+/* Adjust Button Styles */
+button:focus {
+  outline: none;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+  
+  /* Legal Help Section */
+.legal-help-section {
+  background-color: #f4f7fb;
+  padding: 60px 40px;
+  display: flex;
+  justify-content: center;
+}
+
+.legal-help-content {
+  display: flex;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.left-section {
+  width: 50%;
+  padding-right: 40px;
+}
+
+.left-section h2 {
+  font-size: 2em;
+  font-weight: 700;
+  color: #333;
+}
+
+.left-section p {
+  font-size: 1.1em;
+  color: #666;
+  margin-top: 10px;
+}
+
+.play-video {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.play-button {
+  width: 40px;
+  height: 40px;
+  background-color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2em;
+  font-weight: bold;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.play-video span {
+  font-size: 1em;
+  color: #333;
+}
+
+.right-section {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.help-step {
+  display: flex;
+  align-items: flex-start;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.icon-container {
+  width: 50px;
+  height: 50px;
+  background-color: #e6e4f2;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 15px;
+}
+
+.help-step h3 {
+  font-size: 1.1em;
+  font-weight: bold;
+  color: #333;
+}
+
+.help-step p {
+  font-size: 0.95em;
+  color: #666;
+  margin-top: 5px;
+}
+  
+ /* Indian Law Search Portal Section */
+.law-search-portal {
+  background-color: #faf1dc; /* Light cream background */
+  padding: 80px 20px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.law-search-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.law-search-content h2 {
+  font-size: 2.5em;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.search-bar {
+  display: block;
+  width: 100%;
+  max-width: 550px;
+  margin: 20px auto;
+  padding: 12px;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.law-search-content p {
+  font-size: 1.1em;
+  color: #555;
+  line-height: 1.6;
+  max-width: 900px;
+  margin: 20px auto;
+}
+
+.law-search-content .highlight {
+  color: #b87437; /* Highlight color for keywords */
+  font-weight: bold;
+}
+
+.gavel-image {
+  margin-top: 40px;
+}
+
+.gavel-image img {
+  width: 500px;
+  opacity: 0.9;
+}
+
+/* Optional: Background illustration for atmosphere */
+.law-search-portal::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  /* background-image: url('/images/background-illustration.png'); Placeholder for background illustration */
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  opacity: 0.2;
+  z-index: -1;
+}
+  
+ /* Best Features Section */
+.features-section {
+  background: linear-gradient(to right, #eef0f8, #faf5ff); /* Light gradient background */
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.features-content {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.features-content h2 {
+  font-size: 2.5em;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 40px;
+  line-height: 1.2;
+}
+
+.features-cards {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.feature-card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  width: 45%;
+  text-align: left;
+}
+
+.icon-container {
+  width: 40px;
+  height: 40px;
+  background-color: #f2ebff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.feature-card h3 {
+  font-size: 1.3em;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.feature-card p {
+  font-size: 1em;
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+.feature-card p strong {
+  font-weight: bold;
+  color: #333;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .features-cards {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .feature-card {
+    width: 90%;
+  }
+}
+  
+  .footer {
+    background-color: #0d1238;
+    color: #ffffff;
+    padding: 40px 20px;
+  }
+  
+  .footer-links {
+    display: flex;
+    justify-content: space-around;
+    padding-top: 20px;
+  }
+  
+  .footer-links a {
+    color: #ccc;  /* Changed from #ccw to #ccc for light gray */
+    text-decoration: none;
+    display: block;
+    margin-top: 10px;
+}

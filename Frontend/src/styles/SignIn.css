@@ -1,0 +1,142 @@
+.create-profile-container {
+  display: flex;
+  height: 100vh;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Left Section */
+.profile-left {
+  flex: 1;
+  background-color: #0d1238; /* Dark blue background */
+  color: #D4A373; /* Gold color for text */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.profile-left .logo {
+  width: 300px; /* Adjusted size for better proportions */
+  margin-bottom: 20px;
+}
+
+.profile-left .divider {
+  width: 70%;
+  height: 1px;
+  background-color: #D4A373;
+  margin: 20px 0;
+}
+
+.profile-left .quote {
+  font-size: 1.6rem; /* Adjusted for symmetry */
+  font-weight: 500;
+  text-align: center;
+  line-height: 1.5;
+  margin-top: 1.5rem;
+  max-width: 80%;
+}
+
+/* Right Section */
+.profile-right {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Ensures vertical centering */
+  background-color: #FFFFFF; /* White background */
+  padding: 2rem;
+  position: relative; /* Allows precise positioning if needed */
+}
+
+.profile-right h2 {
+  font-size: 2.4rem;
+  font-weight: 600;
+  color: #0d1238; /* Dark blue for heading */
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+/* Material-style form container */
+.signin-form-container {
+  width: 100%;
+  max-width: 350px; /* Matches the button and input max width */
+  padding: 2rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  text-align: center;
+  position: relative; /* Allows precise centering adjustments */
+}
+
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem; /* Consistent spacing between fields */
+}
+
+.profile-form input {
+  width: 100%; /* Full width of the container */
+  padding: 1rem;
+  font-size: 1.1rem;
+  border: 2px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box; /* Ensures consistent padding calculation */
+}
+
+/* Adjusted Sign-In Button */
+.submit-button {
+  background-color: #0d1238; /* Dark blue button */
+  color: #D4A373; /* Gold color for text */
+  padding: 1.2rem; /* Increased padding for a larger button */
+  font-size: 1.2rem; /* Slightly larger font size */
+  font-weight: 600; /* Bolder text for emphasis */
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100%; /* Full width to match the input fields */
+  max-width: 450px; /* Matches the form container's max width */
+  margin: 0 auto; /* Centers the button */
+}
+
+.submit-button:hover {
+  background-color: #333A56; /* Slightly lighter shade on hover */
+}
+
+/* Sign Up Prompt */
+.signup-prompt {
+  font-size: 1rem;
+  color: #666;
+  margin-top: 1.5rem;
+}
+
+.signup-prompt a {
+  color: #0d1238; /* Dark blue for link */
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.signup-prompt a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .profile-left {
+    display: none; /* Hide the left section on smaller screens */
+  }
+
+  .profile-right {
+    flex: 1;
+    padding: 1rem;
+  }
+
+  .signin-form-container {
+    width: 90%; /* Adjust the form container width for smaller screens */
+  }
+
+  .profile-form input,
+  .submit-button {
+    width: 100%; /* Ensure inputs and button take full width */
+  }
+}

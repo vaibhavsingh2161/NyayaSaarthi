@@ -1,0 +1,146 @@
+/* src/styles/AdvocateDashboard.css */
+
+/* Container */
+.dashboard-container {
+    font-family: 'Inter', sans-serif;
+    color: #333A56;
+  }
+  
+  /* Navbar */
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .logo {
+    width: 120px;
+  }
+  
+  .nav-links a {
+    margin: 0 1rem;
+    color: #333A56;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  
+  .nav-links a:hover {
+    text-decoration: underline;
+  }
+  
+  .nav-links .active-link {
+    color: #D4A373; /* Golden color for active link */
+    font-weight: 600;
+  }
+  
+  /* Sections */
+  .section {
+    padding: 1.5rem 2rem;
+  }
+  
+  .section h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #333A56;
+  }
+  
+  /* My Case and Case Request */
+  .case-list, .case-request-list {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1rem;
+  }
+  
+  .case-item, .case-request-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .case-item:last-child, .case-request-item:last-child {
+    border-bottom: none;
+  }
+  
+  .case-actions a {
+    margin-left: 1rem;
+    color: #333A56;
+    text-decoration: none;
+    font-size: 0.9rem;
+  }
+  
+  .case-actions a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Bookmarks */
+  .bookmarks .bookmark-items {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1rem;
+  }
+  
+  .bookmark-item {
+    height: 50px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 0.5rem;
+  }
+  
+  .view-more {
+    color: #333A56;
+    text-align: center;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    cursor: pointer;
+  }
+  
+  /* News - Law */
+  .news-law .news-content {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    height: 100px;
+  }
+  
+  /* Footer */
+  .footer {
+    background-color: #0d1238;
+    color: #D4A373;
+    padding: 2rem;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .footer-logo img {
+    width: 350px;
+  }
+  
+  .footer-links {
+    display: flex;
+  }
+  
+  .footer-column {
+    margin-left: 2rem;
+  }
+  
+  .footer-column h4 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .footer-column a {
+    display: block;
+    color: #D4A373;
+    text-decoration: none;
+    font-size: 0.9rem;
+    margin-bottom: 0.3rem;
+  }
+  
+  .footer-column a:hover {
+    text-decoration: underline;
+  }

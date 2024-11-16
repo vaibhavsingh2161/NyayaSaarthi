@@ -1,0 +1,149 @@
+FloatingCase.css
+
+.floating-case-container {
+    font-family: 'Inter', sans-serif;
+    color: #333A56;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .logo {
+    width: 120px;
+  }
+  
+  .nav-links a {
+    margin: 0 1rem;
+    color: #333A56;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  
+  .nav-links .active-link {
+    color: #D4A373;
+    font-weight: 600;
+  }
+  
+  .filter-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    gap: 1rem;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .filter-dropdown {
+    padding: 0.6rem 1rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .search-button {
+    background-color: transparent;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #333A56;
+  }
+  
+  .case-list {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .case-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1.5rem;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  }
+  
+  .case-card h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333A56;
+    margin-bottom: 0.5rem;
+  }
+  
+  .case-card p {
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+  }
+  
+  .case-meta {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.9rem;
+    color: #333A56;
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+  
+  .details-button {
+    background-color: #0d1238;
+    color: #D4A373;
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
+    font-weight: 500;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .details-button:hover {
+    background-color: #333A56;
+  }
+  
+  /* Footer */
+  .footer {
+    background-color: #0d1238;
+    color: #D4A373;
+    padding: 2rem;
+    display: flex;
+    justify-content: space-between;
+    margin-top: auto;
+  }
+  
+  .footer-logo img {
+    width: 350px;
+  }
+  
+  .footer-links {
+    display: flex;
+  }
+  
+  .footer-column {
+    margin-left: 2rem;
+  }
+  
+  .footer-column h4 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .footer-column a {
+    display: block;
+    color: #D4A373;
+    text-decoration: none;
+    font-size: 0.9rem;
+    margin-bottom: 0.3rem;
+  }
+  
+  .footer-column a:hover {
+    text-decoration: underline;
+  }

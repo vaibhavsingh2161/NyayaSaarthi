@@ -1,0 +1,145 @@
+/* CreateCase.css */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .create-case-page {
+    text-align: center;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Header Styling */
+  .create-case-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+  }
+  
+  .logo {
+    width: 200px;
+  }
+  
+  .header-nav a {
+    margin: 0 15px;
+    color: #333;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  
+  .header-nav a:hover {
+    color: #000;
+  }
+  
+  /* Main Content */
+  .create-case-content {
+    padding: 40px;
+  }
+  
+  .create-case-content h1 {
+    color: #333;
+    font-size: 2em;
+    margin-bottom: 20px;
+  }
+  
+  .case-form {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .case-input,
+  .case-textarea {
+    width: 100%;
+    padding: 15px;
+    font-size: 1em;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+  }
+  
+  .case-textarea {
+    height: 150px;
+    resize: none;
+  }
+  
+  .upload-section {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .upload-button {
+    background-color: #6098f6;
+    border: 1px solid #ccc;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .upload-icon {
+    font-size: 1.2em;
+    margin-right: 10px;
+  }
+  
+  .form-buttons {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .create-button,
+.float-button {
+  width: 48%;
+  padding: 15px;
+  font-size: 1em;
+  color: #D4A373;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #0d1238; /* Color code specified */
+  font-weight: bold; /* Makes the font bold */
+}
+  
+  /* Footer Styling */
+  .create-case-footer {
+    background-color: #0d1238;
+    color: #fff;
+    padding: 40px;
+    display: flex;
+    justify-content: space-between;
+    text-align: left;
+  }
+  
+  .footer-logo {
+    width: 420px;
+  }
+  
+  .footer-links {
+    display: flex;
+    gap: 40px;
+  }
+  
+  .footer-links h4 {
+    margin-bottom: 10px;
+    font-size: 1em;
+    color: #d1a354;
+  }
+  
+  .footer-links a {
+    color: #ccc;
+    text-decoration: none;
+    font-size: 0.9em;
+    display: block;
+    margin: 5px 0;
+  }
+  
+  .footer-links a:hover {
+    color: #fff;
+  }
