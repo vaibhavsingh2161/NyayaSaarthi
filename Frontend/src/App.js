@@ -10,6 +10,7 @@ import FloatingCase from './pages/FloatingCase';
 import LandingPage from './pages/LandingPage'; 
 import CreateCase from './pages/CreateCase'; // Import the LandingPage component
 import FindALawyer from './pages/FindALawyer';
+import BhartiyaNyayaSanhita from './pages/BhartiyaNyayaSanhita';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/profile" element={<AdvocateProfile />} />
           <Route path="/find-a-lawyer" element={<FindALawyer />} />
           <Route path="/floating-case" element={<FloatingCase />} />
+          <Route path="/nyaya-sanhita" element={<BhartiyaNyayaSanhita />} />
         </Routes>
       </div>
     </Router>
