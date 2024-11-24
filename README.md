@@ -2,6 +2,8 @@
 
 NyayaSarthi is a web portal designed to streamline the onboarding of legal service providers to offer their services to citizens across India. This platform bridges the gap between citizens seeking legal assistance and advocates, providing a comprehensive system for managing registrations, roles, and approvals efficiently.
 
+The design of the platform is carefully crafted to ensure an intuitive and seamless user experience. You can view the complete design mockup on [Figma](https://www.figma.com/design/pqvX1kfRIrnZJ02WIHSMLM/NyayaSarthi?node-id=0-1&node-type=canvas&t=rabnLhP2VkPtmAre-0), which reflects the user interface and experience of the portal.
+
 ## Key Features
 
 - 🔐 **User Registration System**: Allows users to sign up as plaintiffs or advocates, collecting essential information based on their role.
