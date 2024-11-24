@@ -22,3 +22,12 @@ NyayaSarthi aims to extend the reach of legal services to every corner of India 
 - 💻 **Backend**: Express.js, Node.js
 - 🗄️ **Database**: MongoDB
 - 🔍 **Search Functionality**: Text-based search for legal documents using MongoDB's text indexing.
+
+## Platform Snippets
+
+Below are some snippets of the platform's user interface and functionality.
+
+![WhatsApp Image 2024-11-22 at 22 34 13](https://github.com/user-attachments/assets/3c20dfa3-56c2-42a0-902a-869d5e5a7918)
+![WhatsApp Image 2024-11-22 at 22 34 14 (1)](https://github.com/user-attachments/assets/8300d1b1-f5df-40fa-8ffc-b211d892ab81)
+![WhatsApp Image 2024-11-22 at 22 34 15](https://github.com/user-attachments/assets/4fbca7d8-2ca8-4f0a-bc28-1a201db0f779)
+
