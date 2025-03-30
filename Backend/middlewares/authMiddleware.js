@@ -1,49 +1,56 @@
-const User = require("../models/userModel");
+// Backend/middlewares/authMiddleware.js
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
+const User = require("../models/userModel");
 
-const generateToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "30d" });
-};
+// Middleware to protect routes
+const protect = async (req, res, next) => {
+  let token;
 
-// Register User
-const registerUser = async (req, res) => {
-  const { name, email, password, role } = req.body;
-  try {
-    const userExists = await User.findOne({ email });
-    if (userExists) {
-      return res.status(400).json({ message: "User already exists" });
+  // Check if token exists in headers
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith("Bearer")
+  ) {
+    try {
+      // Get token from header
+      token = req.headers.authorization.split(" ")[1];
+
+      // Verify token
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+      // Get user from the token (exclude password)
+      req.user = await User.findById(decoded.id).select("-password");
+
+      // If user not found
+      if (!req.user) {
+        return res.status(401).json({ message: "User not found" });
+      }
+
+      // For advocates, check if they're approved
+      if (req.user.role === "advocate" && !req.user.isApproved) {
+        return res.status(403).json({ message: "Advocate account pending approval" });
+      }
+
+      next();
+    } catch (error) {
+      console.error(error);
+      res.status(401).json({ message: "Not authorized, token failed" });
     }
-    const user = await User.create({ name, email, password, role });
-    res.status(201).json({
-      _id: user.id,
-      name: user.name,
-      email: user.email,
-      token: generateToken(user.id),
-    });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
+  } else if (!token) {
+    res.status(401).json({ message: "Not authorized, no token" });
   }
 };
 
-// Login User
-const loginUser = async (req, res) => {
-  const { email, password } = req.body;
-  try {
-    const user = await User.findOne({ email });
-    if (user && (await bcrypt.compare(password, user.password))) {
-      res.json({
-        _id: user.id,
-        name: user.name,
-        email: user.email,
-        token: generateToken(user.id),
+// Middleware to restrict access based on role
+const restrictTo = (...roles) => {
+  return (req, res, next) => {
+    if (!roles.includes(req.user.role)) {
+      return res.status(403).json({
+        message: "You do not have permission to perform this action"
       });
-    } else {
-      res.status(401).json({ message: "Invalid email or password" });
     }
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
+    next();
+  };
 };
 
-module.exports = { registerUser, loginUser };
+module.exports = { protect, restrictTo };

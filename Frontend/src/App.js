@@ -8,22 +8,35 @@ import AdvocateDashboard from './pages/AdvocateDashboard';
 import AdvocateProfile from './pages/AdvocateProfile';
 import FloatingCase from './pages/FloatingCase';
 import LandingPage from './pages/LandingPage'; 
-import CreateCase from './pages/CreateCase'; // Import the LandingPage component
+import CreateCase from './pages/CreateCase';
 import FindALawyer from './pages/FindALawyer';
 import BhartiyaNyayaSanhita from './pages/BhartiyaNyayaSanhita';
+import UserDashboard from './pages/UserDashboard';
+import CaseDetail from './pages/CaseDetail';
 
 function App() {
   return (
     <Router>
       <div className="App">
         <Routes>
-          <Route path="/" element={<LandingPage />} /> {/* Set LandingPage as the root route */}
-          <Route path="/sign-up" element={<SignUp />} /> {/* Updated SignIn route */}
-          <Route path="/sign-in" element={<SignIn />} /> {/* Updated route for SignIn */}
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/sign-in" element={<SignIn />} />
           <Route path="/create-profile" element={<CreateProfile />} />
-          <Route path="/create-case" element={<CreateCase />} /> {/* Define Create Case route */}
-          <Route path="/dashboard" element={<AdvocateDashboard />} />
+          <Route path="/create-case" element={<CreateCase />} />
+          
+          {/* User Dashboard */}
+          <Route path="/dashboard" element={<UserDashboard />} />
+          
+          {/* Case Detail Routes with tabs */}
+          <Route path="/case/:caseId" element={<CaseDetail />} />
+          <Route path="/case/:caseId/:tab" element={<CaseDetail />} />
+          
+          {/* Advocate Routes */}
+          <Route path="/advocate-dashboard" element={<AdvocateDashboard />} />
           <Route path="/profile" element={<AdvocateProfile />} />
+          
+          {/* Other Routes */}
           <Route path="/find-a-lawyer" element={<FindALawyer />} />
           <Route path="/floating-case" element={<FloatingCase />} />
           <Route path="/nyaya-sanhita" element={<BhartiyaNyayaSanhita />} />

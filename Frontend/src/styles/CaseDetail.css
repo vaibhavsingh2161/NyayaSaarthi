@@ -1,0 +1,801 @@
+/* src/styles/CaseDetail.css */
+
+.case-detail-container {
+  font-family: 'Inter', sans-serif;
+  background-color: #f7f7f7;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.case-detail-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+/* Header Styles */
+.case-detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  border-bottom: 1px solid #eee;
+}
+
+.logo {
+  width: 150px;
+}
+
+.case-detail-nav {
+  display: flex;
+  gap: 25px;
+}
+
+.case-detail-nav a {
+  color: #333;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 5px 0;
+}
+
+.case-detail-nav a:hover {
+  color: #0d1238;
+}
+
+/* Main Content Styles */
+.case-detail-main {
+  padding: 20px 30px;
+}
+
+/* Case Title Bar */
+.case-title-bar {
+  margin-bottom: 25px;
+}
+
+.case-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.case-header h1 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #0d1238;
+}
+
+.case-status {
+  background-color: #0d1238;
+  color: #ffffff;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.case-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+/* Tabs Styles */
+.case-tabs {
+  display: flex;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 20px;
+}
+
+.case-tabs button {
+  padding: 10px 20px;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #666;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+}
+
+.case-tabs button.active {
+  color: #0d1238;
+  border-bottom-color: #D4A373;
+}
+
+.tab-content {
+  min-height: 400px;
+}
+
+/* Details Tab */
+.details-tab h3 {
+  font-size: 1.2rem;
+  color: #0d1238;
+  margin-bottom: 15px;
+}
+
+/* Horizontal case type styling */
+.case-type-section {
+  margin-bottom: 25px;
+}
+
+.case-type-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.case-type-header h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #0d1238;
+}
+
+.case-type-badge {
+  display: inline-block;
+  background-color: #0d1238;
+  color: #ffffff;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+.case-description {
+  margin-bottom: 25px;
+}
+
+.case-description p {
+  line-height: 1.6;
+  color: #333;
+}
+
+/* Case actions section with delete button */
+.case-actions-section {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #eee;
+}
+
+.delete-case-button {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.delete-case-button:hover {
+  background-color: #c0392b;
+}
+
+.delete-case-button:disabled {
+  background-color: #cacaca;
+  cursor: not-allowed;
+}
+
+.delete-info {
+  margin-top: 10px;
+  font-size: 0.85rem;
+  color: #777;
+  font-style: italic;
+}
+
+.lawyer-info {
+  margin-bottom: 25px;
+}
+
+.lawyer-card {
+  display: flex;
+  align-items: center;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+.lawyer-image {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 20px;
+}
+
+.lawyer-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.lawyer-details h4 {
+  font-size: 1.2rem;
+  color: #0d1238;
+  margin-bottom: 10px;
+}
+
+.lawyer-details p {
+  margin-bottom: 5px;
+  font-size: 0.95rem;
+}
+
+.contact-button {
+  background-color: #0d1238;
+  color: #D4A373;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.find-lawyer-section {
+  margin-bottom: 25px;
+  text-align: center;
+  padding: 20px;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.lawyer-actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.find-lawyer-button, .float-case-button {
+  background-color: #0d1238;
+  color: #D4A373;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+/* Case Status Timeline */
+.case-status-section {
+  margin-bottom: 25px;
+}
+
+.status-timeline {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  margin: 40px 0;
+}
+
+.status-timeline::before {
+  content: '';
+  position: absolute;
+  top: 15px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #eee;
+  z-index: 0;
+}
+
+.status-step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 1;
+  width: 25%;
+}
+
+.status-indicator {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #fff;
+  border: 2px solid #ccc;
+  margin-bottom: 8px;
+}
+
+.status-step.completed .status-indicator {
+  background-color: #0d1238;
+  border-color: #0d1238;
+}
+
+.status-step p {
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+/* Notifications Tab */
+.notifications-tab h3 {
+  font-size: 1.2rem;
+  color: #0d1238;
+  margin-bottom: 15px;
+}
+
+.notification-list {
+  border: 1px solid #eee;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.notification-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.notification-item:last-child {
+  border-bottom: none;
+}
+
+.notification-item.unread {
+  background-color: #f2f7ff;
+}
+
+.notification-content p {
+  margin-bottom: 5px;
+}
+
+.notification-date {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.unread-indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #D4A373;
+}
+
+/* Messages Tab */
+.messages-tab h3 {
+  font-size: 1.2rem;
+  color: #0d1238;
+  margin-bottom: 15px;
+}
+
+.message-thread {
+  border: 1px solid #eee;
+  border-radius: 8px;
+  overflow: hidden;
+  padding: 15px;
+  background-color: #f9f9f9;
+  height: 450px;
+  display: flex;
+  flex-direction: column;
+}
+
+.message-item {
+  margin-bottom: 15px;
+  display: flex;
+}
+
+.message-item.sent {
+  justify-content: flex-end;
+}
+
+.message-bubble {
+  max-width: 70%;
+  padding: 12px 15px;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.message-item.sent .message-bubble {
+  background-color: #e6f3ff;
+}
+
+.message-sender {
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 5px;
+  color: #0d1238;
+}
+
+.message-content {
+  margin-bottom: 5px;
+}
+
+.message-time {
+  display: block;
+  font-size: 0.8rem;
+  color: #999;
+  text-align: right;
+}
+
+.message-input {
+  margin-top: auto;
+  display: flex;
+  gap: 10px;
+}
+
+.message-input textarea {
+  flex: 1;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  resize: none;
+  min-height: 60px;
+}
+
+.message-input button {
+  background-color: #0d1238;
+  color: #D4A373;
+  border: none;
+  padding: 0 20px;
+  border-radius: 5px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* Documents Tab */
+.documents-tab h3 {
+  font-size: 1.2rem;
+  color: #0d1238;
+  margin-bottom: 15px;
+}
+
+.documents-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.upload-document-button {
+  background-color: #0d1238;
+  color: #D4A373;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.document-list {
+  border: 1px solid #eee;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.document-item {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.document-item:last-child {
+  border-bottom: none;
+}
+
+.document-icon {
+  font-size: 24px;
+  margin-right: 15px;
+}
+
+.document-info {
+  flex: 1;
+}
+
+.document-name {
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.document-meta {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.document-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.download-button, .open-button {
+  background-color: transparent;
+  padding: 5px 12px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.download-button {
+  color: #0d1238;
+  border: 1px solid #0d1238;
+}
+
+.open-button {
+  color: #28a745;
+  border: 1px solid #28a745;
+}
+
+.download-button:hover {
+  background-color: #f0f0f0;
+}
+
+.open-button:hover {
+  background-color: #f0fff4;
+}
+
+.download-button:disabled, .open-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.no-data-message {
+  padding: 20px;
+  text-align: center;
+  color: #666;
+  font-style: italic;
+}
+
+/* Loading and Error States */
+.loading, .error-message {
+  padding: 30px;
+  text-align: center;
+  border-radius: 8px;
+  margin: 20px;
+}
+
+.loading {
+  background-color: #f8f9fa;
+  color: #666;
+}
+
+.error-message {
+  background-color: #fef2f2;
+  color: #e74c3c;
+  border: 1px solid #fbd5d5;
+}
+
+/* Footer Styles */
+.case-detail-footer {
+  background-color: #0d1238;
+  color: #D4A373;
+  padding: 30px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.footer-logo img {
+  width: 300px;
+}
+
+.footer-links {
+  display: flex;
+  gap: 40px;
+}
+
+.footer-column {
+  text-align: left;
+}
+
+.footer-column h4 {
+  color: #D4A373;
+  margin-bottom: 15px;
+  font-size: 1rem;
+}
+
+.footer-column a {
+  color: #D4A373;
+  text-decoration: none;
+  font-size: 0.9rem;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.footer-column a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .case-detail-header {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .case-detail-nav {
+    margin-top: 15px;
+  }
+  
+  .case-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .case-status {
+    margin-top: 10px;
+  }
+  
+  .case-tabs {
+    overflow-x: auto;
+  }
+  
+  .lawyer-card {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .lawyer-image {
+    margin-right: 0;
+    margin-bottom: 15px;
+  }
+  
+  .status-timeline {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  
+  .status-timeline::before {
+    display: none;
+  }
+  
+  .status-step {
+    width: 100%;
+    flex-direction: row;
+  }
+  
+  .status-indicator {
+    margin-right: 15px;
+    margin-bottom: 0;
+  }
+  
+  .case-detail-footer {
+    flex-direction: column;
+  }
+  
+  .footer-logo {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .footer-links {
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
+/* Add these styles to your CaseDetail.css file */
+
+.documents-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 15px;
+}
+
+.upload-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.upload-document-button {
+  background-color: #0d1238;
+  color: #D4A373;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.upload-document-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.selected-files {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #f5f5f5;
+  padding: 6px 10px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+}
+
+.selected-files p {
+  margin: 0;
+  color: #333;
+}
+
+.upload-submit-button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 5px 12px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.upload-submit-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.selected-files-list {
+  background-color: #f9f9f9;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  padding: 10px 15px;
+  margin-bottom: 15px;
+}
+
+.selected-files-list h4 {
+  font-size: 1rem;
+  margin-bottom: 10px;
+  color: #0d1238;
+}
+
+.selected-files-list ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.selected-files-list li {
+  padding: 5px 0;
+  font-size: 0.9rem;
+  color: #444;
+  border-bottom: 1px solid #eee;
+}
+
+.selected-files-list li:last-child {
+  border-bottom: none;
+}
+
+.upload-document-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 14px;
+  color: #333333;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.upload-document-button:hover {
+  background-color: #f5f5f5;
+  border-color: #d0d0d0;
+}
+
+.upload-document-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.upload-icon {
+  display: inline-block;
+}

@@ -11,6 +11,7 @@ function SignIn() {
 
   const [error, setError] = useState(""); // State to track error messages
   const [role, setRole] = useState(""); // State to track selected role
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate(); // For redirecting after successful login
 
   // Handle input change
@@ -27,40 +28,51 @@ function SignIn() {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
+    setIsLoading(true);
 
     // Validation for missing fields
     if (!formData.email || !formData.password || !role) {
       setError("Please fill in all fields, including selecting your role.");
+      setIsLoading(false);
       return;
     }
 
     try {
+      // Log the request being made for debugging
+      console.log("Sending login request with:", { ...formData, role });
+      
       // Make API call to login
       const response = await axios.post(
         "http://localhost:3005/api/users/login",
-        { ...formData, role } // Include role in the request body
+        { ...formData, role }
       );
 
-      // Extract response data
-      const { token, name, role: userRole } = response.data;
+      // Log successful response for debugging
+      console.log("Login successful:", response.data);
 
       // Store the token
-      localStorage.setItem("token", token); // Save the token for future API calls
+      localStorage.setItem("token", response.data.token || "");
+      localStorage.setItem("userRole", role);
+      localStorage.setItem("userName", response.data.name || "");
 
-      alert(`Welcome back, ${name}!`);
+      // Alert success
+      alert(`Welcome back, ${response.data.name || "User"}!`);
 
       // Redirect based on the role
-      if (userRole === "plaintiff") {
+      if (role === "plaintiff") {
         navigate("/dashboard"); // Redirect to the plaintiff dashboard
-      } else if (userRole === "advocate") {
+      } else if (role === "advocate") {
         navigate("/dashboard"); // Redirect to the advocate portal
       }
     } catch (error) {
-      console.error(error.response?.data?.message || "An error occurred");
+      console.error("Login error:", error);
       setError(
         error.response?.data?.message ||
-          "Invalid credentials. Please try again."
+          "Invalid credentials. Please check your email, password, and role."
       );
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -68,7 +80,7 @@ function SignIn() {
     <div className="create-profile-container">
       {/* Profile Left Section */}
       <div className="profile-left">
-        <img src="/images/Component 1.png" alt="Logo" className="logo" />
+        <img src="/images/golden nyayasarthi logo.png" alt="Logo" className="logo" />
         <div className="divider"></div>
         <p className="quote">Law without justice is a wound without a cure.</p>
       </div>
@@ -121,8 +133,12 @@ function SignIn() {
                 Plaintiff
               </label>
             </div>
-            <button type="submit" className="submit-button">
-              Sign In
+            <button 
+              type="submit" 
+              className="submit-button"
+              disabled={isLoading}
+            >
+              {isLoading ? "Signing In..." : "Sign In"}
             </button>
           </form>
 

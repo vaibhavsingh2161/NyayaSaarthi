@@ -10,8 +10,10 @@ const SignUp = () => {
     phone: "",
     email: "",
     password: "",
-    barCouncilRegNumber: "", // Added for advocate role
+    barCouncilRegNo: "", // Only for advocate role
   });
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleRoleChange = (e) => {
@@ -20,7 +22,7 @@ const SignUp = () => {
 
     // Clear bar council registration number if not advocate
     if (selectedRole !== "advocate") {
-      setFormData({ ...formData, barCouncilRegNumber: "" });
+      setFormData({ ...formData, barCouncilRegNo: "" });
     }
   };
 
@@ -31,11 +33,35 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
+    setIsLoading(true);
+    
     try {
       if (!role) {
-        alert("Please select a role before signing up.");
+        setError("Please select a role before signing up.");
+        setIsLoading(false);
         return;
       }
+
+      // Validation for required fields
+      if (!formData.name || !formData.phone || !formData.email || !formData.password) {
+        setError("Please fill in all required fields.");
+        setIsLoading(false);
+        return;
+      }
+
+      // Validation for advocate role
+      if (role === "advocate" && !formData.barCouncilRegNo) {
+        setError("Bar Council Registration Number is required for advocates.");
+        setIsLoading(false);
+        return;
+      }
+
+      // Log registration data for debugging
+      console.log("Sending registration request with:", {
+        ...formData,
+        role,
+      });
 
       // Send data to the backend
       const response = await axios.post(
@@ -46,15 +72,23 @@ const SignUp = () => {
         }
       );
 
+      // Log successful response for debugging
+      console.log("Registration successful:", response.data);
+
       alert("Registration successful!");
+      
       if (role === "advocate") {
         navigate("/create-profile"); // Redirect to create-profile for advocates
       } else {
         navigate("/sign-in"); // Redirect to sign-in for plaintiffs
       }
     } catch (error) {
-      console.error(error.response.data.message);
-      alert(error.response.data.message || "Registration failed");
+      console.error("Registration error:", error);
+      setError(
+        error.response?.data?.message || "Registration failed. Please try again."
+      );
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -68,6 +102,8 @@ const SignUp = () => {
       <div className="profile-right">
         <h2>Sign Up</h2>
         <div className="signup-form-container">
+          {error && <p className="error-message">{error}</p>}
+          
           <form className="signup-form" onSubmit={handleSubmit}>
             <input
               type="text"
@@ -136,8 +172,12 @@ const SignUp = () => {
               />
             )}
 
-            <button type="submit" className="signup-button">
-              Submit
+            <button 
+              type="submit" 
+              className="signup-button"
+              disabled={isLoading}
+            >
+              {isLoading ? "Signing Up..." : "Submit"}
             </button>
           </form>
         </div>

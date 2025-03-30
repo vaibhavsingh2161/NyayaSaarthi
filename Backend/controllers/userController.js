@@ -12,6 +12,8 @@ const registerUser = async (req, res) => {
   const { name, phone, email, password, role, barCouncilRegNo } = req.body;
 
   try {
+    console.log("Register request received:", req.body);
+    
     // Validate required fields
     if (!name || !phone || !email || !password || !role) {
       return res.status(400).json({ message: "All fields are required." });
@@ -20,41 +22,49 @@ const registerUser = async (req, res) => {
     // Check if user already exists
     const userExists = await User.findOne({ email });
     if (userExists) {
-      return res.status(400).json({ message: "User already exists." });
+      return res.status(400).json({ message: "User already exists with this email." });
     }
 
-    // Validate Bar Council Registration Number if the role is 'advocate'
-    if (role === "advocate") {
-      if (!barCouncilRegNo) {
-        return res
-          .status(400)
-          .json({
-            message:
-              "Bar Council Registration Number is required for advocates.",
-          });
-      }
-
-      const existingAdvocate = await User.findOne({ barCouncilRegNo });
-      if (existingAdvocate) {
-        return res
-          .status(400)
-          .json({ message: "Bar Council Registration Number already exists." });
-      }
+    // Check if phone number is already used
+    const phoneExists = await User.findOne({ phone });
+    if (phoneExists) {
+      return res.status(400).json({ message: "Phone number already in use." });
     }
 
-    // Hash the password
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    // Create a new user
-    const user = await User.create({
+    // Create user object
+    const userData = {
       name,
       phone,
       email,
-      password: hashedPassword,
+      password: await bcrypt.hash(password, 10), // Hash the password
       role,
-      barCouncilRegNo: role === "advocate" ? barCouncilRegNo : undefined,
       isApproved: role === "advocate" ? false : true, // Advocates need admin approval
-    });
+    };
+    
+    // Only add barCouncilRegNo field for advocates
+    if (role === "advocate") {
+      if (!barCouncilRegNo) {
+        return res.status(400).json({
+          message: "Bar Council Registration Number is required for advocates."
+        });
+      }
+      
+      // Check if Bar Council Reg No already exists
+      const existingAdvocate = await User.findOne({ barCouncilRegNo });
+      if (existingAdvocate) {
+        return res.status(400).json({ 
+          message: "Bar Council Registration Number already exists." 
+        });
+      }
+      
+      userData.barCouncilRegNo = barCouncilRegNo;
+    }
+
+    // Create a new user
+    const user = await User.create(userData);
+
+    // Generate token
+    const token = generateToken(user.id);
 
     // Respond with user data and token
     res.status(201).json({
@@ -63,9 +73,10 @@ const registerUser = async (req, res) => {
       email: user.email,
       role: user.role,
       isApproved: user.isApproved,
-      token: generateToken(user.id),
+      token,
     });
   } catch (error) {
+    console.error("Registration error:", error);
     res.status(500).json({ message: error.message });
   }
 };
@@ -73,7 +84,10 @@ const registerUser = async (req, res) => {
 // Login User
 const loginUser = async (req, res) => {
   const { email, password, role } = req.body;
+  
   try {
+    console.log("Login request received:", req.body);
+    
     // Validate required fields
     if (!email || !password || !role) {
       return res.status(400).json({ message: "All fields are required." });
@@ -82,7 +96,13 @@ const loginUser = async (req, res) => {
     // Find user by email
     const user = await User.findOne({ email });
 
-    if (!user || !(await bcrypt.compare(password, user.password))) {
+    if (!user) {
+      return res.status(401).json({ message: "Invalid credentials." });
+    }
+    
+    // Compare passwords
+    const isPasswordMatch = await bcrypt.compare(password, user.password);
+    if (!isPasswordMatch) {
       return res.status(401).json({ message: "Invalid credentials." });
     }
 
@@ -109,16 +129,34 @@ const loginUser = async (req, res) => {
       sameSite: "Strict",
     });
 
+    // Return the response
     res.status(200).json({
-      message: "User logged in successfully.",
       _id: user.id,
       name: user.name,
       email: user.email,
       role: user.role,
+      token
     });
   } catch (error) {
+    console.error("Login error:", error);
     res.status(500).json({ message: error.message });
   }
 };
 
-module.exports = { registerUser, loginUser };
+// Get current user profile
+const getCurrentUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select('-password');
+    
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    
+    res.status(200).json(user);
+  } catch (error) {
+    console.error("Error fetching user profile:", error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports = { registerUser, loginUser, getCurrentUser };

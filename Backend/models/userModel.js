@@ -34,7 +34,10 @@ const userSchema = mongoose.Schema(
       required: function () {
         return this.role === "advocate"; // Required only for advocates
       },
-      unique: true,
+      unique: function() {
+        return this.role === "advocate"; // Only enforce uniqueness for advocates
+      },
+      sparse: true, // This is the key change - makes the index ignore null/undefined values
     },
   },
   { timestamps: true }

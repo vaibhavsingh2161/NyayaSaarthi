@@ -1,0 +1,384 @@
+/* src/styles/UserDashboard.css */
+
+.dashboard-container {
+  font-family: 'Inter', sans-serif;
+  background-color: #f7f7f7;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.dashboard-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+/* Header Styles */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  border-bottom: 1px solid #eee;
+}
+
+.logo {
+  width: 150px;
+}
+
+.dashboard-nav {
+  display: flex;
+  gap: 25px;
+}
+
+.dashboard-nav a {
+  color: #333;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 5px 0;
+}
+
+.dashboard-nav a.active {
+  color: #0d1238;
+  border-bottom: 2px solid #D4A373;
+}
+
+.dashboard-nav a:hover {
+  color: #0d1238;
+}
+
+/* Main Content Styles */
+.dashboard-main {
+  padding: 20px 30px;
+}
+
+.dashboard-section {
+  margin-bottom: 30px;
+}
+
+.dashboard-section h2 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #0d1238;
+  margin-bottom: 15px;
+}
+
+/* Case List Styles */
+.case-list {
+  border: 1px solid #eee;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.case-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.case-item {
+  border-bottom: 1px solid #eee;
+}
+
+.case-item:last-child {
+  border-bottom: none;
+}
+
+.case-index {
+  padding: 12px 15px;
+  width: 30px;
+  color: #666;
+}
+
+.case-title {
+  padding: 12px 10px;
+  font-weight: 500;
+}
+
+.case-date {
+  padding: 12px;
+  color: #666;
+  width: 120px;
+  text-align: right;
+}
+
+.case-actions {
+  padding: 12px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.case-actions a {
+  color: #0d1238;
+  text-decoration: none;
+  margin-left: 15px;
+  font-size: 0.9rem;
+}
+
+.case-actions a:hover {
+  text-decoration: underline;
+}
+
+.contact-link {
+  font-weight: 500;
+}
+
+.create-case-link {
+  padding: 12px 15px;
+  display: flex;
+  justify-content: flex-start;
+  background-color: #f9f9f9;
+}
+
+.create-case-link a {
+  color: #0d1238;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.plus-icon {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  text-align: center;
+  line-height: 14px;
+  border-radius: 50%;
+  background-color: #0d1238;
+  color: #fff;
+  margin-right: 6px;
+  font-weight: bold;
+}
+
+.loading, .error-message {
+  padding: 20px;
+  text-align: center;
+  color: #666;
+}
+
+.error-message {
+  color: #e74c3c;
+}
+
+.no-cases {
+  padding: 20px;
+  text-align: center;
+  color: #666;
+}
+
+/* Delete button */
+.delete-button {
+  background: none;
+  border: none;
+  color: #e74c3c;
+  cursor: pointer;
+  font-size: 0.9rem;
+  margin-left: 15px;
+  padding: 0;
+  text-decoration: underline;
+}
+
+.delete-button:hover {
+  color: #c0392b;
+}
+
+/* Bookmarks Styles */
+.bookmarks-container {
+  border: 1px solid #eee;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.bookmark-item {
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.bookmark-item:last-of-type {
+  border-bottom: none;
+}
+
+.view-more {
+  padding: 10px;
+  text-align: center;
+  background-color: #f9f9f9;
+  border-top: 1px solid #eee;
+}
+
+.view-more a {
+  color: #0d1238;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+/* News Styles */
+.news-container {
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 15px;
+}
+
+.news-item {
+  margin-bottom: 15px;
+}
+
+.news-item h3 {
+  font-size: 1.1rem;
+  margin-bottom: 5px;
+  color: #0d1238;
+}
+
+.news-item p {
+  font-size: 0.95rem;
+  color: #666;
+  margin-bottom: 5px;
+}
+
+.news-date {
+  font-size: 0.85rem;
+  color: #999;
+}
+
+/* Footer Styles */
+.dashboard-footer {
+  background-color: #0d1238;
+  color: #D4A373;
+  padding: 30px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.footer-logo img {
+  width: 300px;
+}
+
+.footer-links {
+  display: flex;
+  gap: 40px;
+}
+
+.footer-column {
+  text-align: left;
+}
+
+/* src/styles/UserDashboard.css (continued) */
+
+.footer-column h4 {
+  color: #D4A373;
+  margin-bottom: 15px;
+  font-size: 1rem;
+}
+
+.footer-column a {
+  color: #D4A373;
+  text-decoration: none;
+  font-size: 0.9rem;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.footer-column a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .dashboard-header {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .dashboard-nav {
+    margin-top: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .case-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-end;
+  }
+  
+  .case-actions a, 
+  .delete-button {
+    margin-left: 0;
+  }
+  
+  .dashboard-footer {
+    flex-direction: column;
+  }
+  
+  .footer-logo {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .footer-links {
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
+/* Add these styles to your src/styles/UserDashboard.css file */
+
+.case-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 15px;
+}
+
+.details-button {
+  background-color: #0d1238;
+  color: #D4A373 !important;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.details-button:hover {
+  background-color: #192057;
+  text-decoration: none;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  color: #e74c3c;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  padding: 6px;
+  border-radius: 50%;
+  transition: background-color 0.2s ease;
+}
+
+.delete-button:hover {
+  background-color: #f8f0f0;
+  color: #c0392b;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .case-actions {
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+  
+  .details-button, .delete-button {
+    margin-left: 0;
+  }
+}
