@@ -13,6 +13,7 @@ import FindALawyer from './pages/FindALawyer';
 import BhartiyaNyayaSanhita from './pages/BhartiyaNyayaSanhita';
 import UserDashboard from './pages/UserDashboard';
 import CaseDetail from './pages/CaseDetail';
+import EditProfile from './pages/EditProfile';
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
           {/* Advocate Routes */}
           <Route path="/advocate-dashboard" element={<AdvocateDashboard />} />
           <Route path="/profile" element={<AdvocateProfile />} />
+          <Route path="/edit-profile" element={<EditProfile />} />
           
           {/* Other Routes */}
           <Route path="/find-a-lawyer" element={<FindALawyer />} />

@@ -1,14 +1,28 @@
-// CreateProfile.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import '../styles/CreateProfile.css';
 
 const CreateProfile = () => {
   const [step, setStep] = useState(1);
-  const [selectedLanguages, setSelectedLanguages] = useState(['English', 'Hindi']);
+  const [selectedLanguages, setSelectedLanguages] = useState(['English']);
   const [languageInput, setLanguageInput] = useState('');
+  const [dob, setDob] = useState('');
+  const [location, setLocation] = useState('');
+  const [profilePicture, setProfilePicture] = useState(null);
+  const [enrolmentNo, setEnrolmentNo] = useState('');
+  const [barCouncilRegNo, setBarCouncilRegNo] = useState('');
+  const [yearsOfExperience, setYearsOfExperience] = useState('');
+  const [education, setEducation] = useState([]);
+  const [workExperience, setWorkExperience] = useState([]);
+  const [specialisation, setSpecialisation] = useState([]);
+  const [casesHandled, setCasesHandled] = useState([]);
+  const [description, setDescription] = useState('');
+  const [clientele, setClientele] = useState([]);
+  const [courts, setCourts] = useState([]);
   const navigate = useNavigate();
 
+  // Language handling
   const handleAddLanguage = (e) => {
     e.preventDefault();
     if (languageInput && !selectedLanguages.includes(languageInput)) {
@@ -21,14 +35,62 @@ const CreateProfile = () => {
     setSelectedLanguages(selectedLanguages.filter((lang) => lang !== language));
   };
 
+  // Tag handling (for specialization, cases handled, etc.)
+  const handleAddTag = (setter, value) => {
+    setter((prevTags) => {
+      if (value && !prevTags.includes(value)) {
+        return [...prevTags, value];
+      }
+      return prevTags;
+    });
+  };
+
+  const handleRemoveTag = (setter, value) => {
+    setter((prevTags) => prevTags.filter((item) => item !== value));
+  };
+
+  // Move to next step in the form
   const nextStep = () => {
     setStep(step + 1);
   };
 
-  const handleSubmit = (e) => {
+  // Handle form submission
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    navigate('/dashboard');
+
+    // Prepare FormData for file upload and other data
+    const formData = new FormData();
+    formData.append('languages', JSON.stringify(selectedLanguages));
+    formData.append('dob', dob);
+    formData.append('location', location);
+    formData.append('profilePicture', profilePicture);
+    formData.append('enrolmentNo', enrolmentNo);
+    formData.append('barCouncilRegNo', barCouncilRegNo);
+    formData.append('yearsOfExperience', yearsOfExperience);
+    formData.append('education', JSON.stringify(education));
+    formData.append('workExperience', JSON.stringify(workExperience));
+    formData.append('specialisation', JSON.stringify(specialisation));
+    formData.append('casesHandled', JSON.stringify(casesHandled));
+    formData.append('description', description);
+    formData.append('clientele', JSON.stringify(clientele));
+    formData.append('courts', JSON.stringify(courts));
+
+    try {
+      const response = await axios.post('http://localhost:3005/api/advocate/createProfile', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${localStorage.getItem('token')}`, // Use token for authentication
+        },
+      });
+
+      if (response.status === 201) {
+        navigate('/advocate-dashboard'); // Redirect to dashboard on successful profile creation
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+    }
   };
+
 
   return (
     <div className="create-profile-container">
@@ -56,11 +118,45 @@ const CreateProfile = () => {
             handleAddLanguage={handleAddLanguage}
             handleRemoveLanguage={handleRemoveLanguage}
             setLanguageInput={setLanguageInput}
+            dob={dob}
+            setDob={setDob}
+            location={location}
+            setLocation={setLocation}
+            profilePicture={profilePicture}
+            setProfilePicture={setProfilePicture}
             nextStep={nextStep}
           />
         )}
-        {step === 2 && <ProfessionalDetails nextStep={nextStep} />}
-        {step === 3 && <SpecialisationCourt handleSubmit={handleSubmit} />}
+        {step === 2 && (
+          <ProfessionalDetails
+            enrolmentNo={enrolmentNo}
+            setEnrolmentNo={setEnrolmentNo}
+            barCouncilRegNo={barCouncilRegNo}
+            setBarCouncilRegNo={setBarCouncilRegNo}
+            yearsOfExperience={yearsOfExperience}
+            setYearsOfExperience={setYearsOfExperience}
+            education={education}
+            setEducation={setEducation}
+            workExperience={workExperience}
+            setWorkExperience={setWorkExperience}
+            nextStep={nextStep}
+          />
+        )}
+        {step === 3 && (
+          <SpecialisationCourt
+            specialisation={specialisation}
+            setSpecialisation={setSpecialisation}
+            casesHandled={casesHandled}
+            setCasesHandled={setCasesHandled}
+            description={description}
+            setDescription={setDescription}
+            clientele={clientele}
+            setClientele={setClientele}
+            courts={courts}
+            setCourts={setCourts}
+            handleSubmit={handleSubmit}
+          />
+        )}
       </div>
     </div>
   );
@@ -72,10 +168,15 @@ const BasicDetails = ({
   handleAddLanguage,
   handleRemoveLanguage,
   setLanguageInput,
-  nextStep
+  dob,
+  setDob,
+  location,
+  setLocation,
+  profilePicture,
+  setProfilePicture,
+  nextStep,
 }) => (
   <form className="profile-form">
-    
     <div className="form-group">
       <label>Languages</label>
       <input
@@ -95,20 +196,25 @@ const BasicDetails = ({
       </div>
     </div>
 
-
     <div className="form-group">
       <label>Date of Birth</label>
-      <input type="date" required />
+      <input type="date" value={dob} onChange={(e) => setDob(e.target.value)} required />
     </div>
 
     <div className="form-group">
       <label>Location</label>
-      <input type="text" placeholder="Bangalore" required />
+      <input
+        type="text"
+        value={location}
+        onChange={(e) => setLocation(e.target.value)}
+        placeholder="Bangalore"
+        required
+      />
     </div>
 
     <div className="form-group">
       <label>Profile Picture</label>
-      <input type="file" />
+      <input type="file" onChange={(e) => setProfilePicture(e.target.files[0])} />
       <p className="file-info">10 MB Max</p>
     </div>
 
@@ -116,19 +222,49 @@ const BasicDetails = ({
   </form>
 );
 
-const ProfessionalDetails = ({ nextStep }) => (
+const ProfessionalDetails = ({
+  enrolmentNo,
+  setEnrolmentNo,
+  barCouncilRegNo,
+  setBarCouncilRegNo,
+  yearsOfExperience,
+  setYearsOfExperience,
+  education,
+  setEducation,
+  workExperience,
+  setWorkExperience,
+  nextStep
+}) => (
   <form className="profile-form">
     <div className="form-group">
       <label>Enrolment No.</label>
-      <input type="text" placeholder="Enrolment Number" required />
+      <input
+        type="text"
+        value={enrolmentNo}
+        onChange={(e) => setEnrolmentNo(e.target.value)}
+        placeholder="Enrolment Number"
+        required
+      />
     </div>
     <div className="form-group">
       <label>Bar Council Reg. No.</label>
-      <input type="text" placeholder="Bar Council Registration Number" required />
+      <input
+        type="text"
+        value={barCouncilRegNo}
+        onChange={(e) => setBarCouncilRegNo(e.target.value)}
+        placeholder="Bar Council Registration Number"
+        required
+      />
     </div>
     <div className="form-group">
       <label>Years of Experience</label>
-      <input type="number" placeholder="Years of Experience" required />
+      <input
+        type="number"
+        value={yearsOfExperience}
+        onChange={(e) => setYearsOfExperience(e.target.value)}
+        placeholder="Years of Experience"
+        required
+      />
     </div>
     <div className="form-group education-section">
       <label>Education</label>
@@ -147,7 +283,7 @@ const ProfessionalDetails = ({ nextStep }) => (
     <div className="form-group work-experience-section">
       <label>Work Experience</label>
       <div className="work-experience-box">
-        <input type="text" placeholder="Firm / Organisation" required />
+      <input type="text" placeholder="Firm / Organisation" required />
         <div className="date-group">
           <input type="date" placeholder="Start date" required />
           <input type="date" placeholder="End date" required />
@@ -159,21 +295,32 @@ const ProfessionalDetails = ({ nextStep }) => (
   </form>
 );
 
-const SpecialisationCourt = ({ handleSubmit }) => {
-  const [specialisations, setSpecialisations] = useState([]);
-  const [casesHandled, setCasesHandled] = useState([]);
-  const [clientele, setClientele] = useState([]);
-  const [courts, setCourts] = useState([]);
-  const [description, setDescription] = useState('');
-
+const SpecialisationCourt = ({
+  specialisation,
+  setSpecialisation,
+  casesHandled,
+  setCasesHandled,
+  description,
+  setDescription,
+  clientele,
+  setClientele,
+  courts,
+  setCourts,
+  handleSubmit
+}) => {
+  // Define the handleAddTag and handleRemoveTag functions inside the component
   const handleAddTag = (setter, value) => {
-    if (value && !setter.includes(value)) {
-      setter((prev) => [...prev, value]);
-    }
+    setter((prevTags) => {
+      // Check if the tag already exists before adding
+      if (value && !prevTags.includes(value)) {
+        return [...prevTags, value];
+      }
+      return prevTags;
+    });
   };
 
   const handleRemoveTag = (setter, value) => {
-    setter((prev) => prev.filter((item) => item !== value));
+    setter((prevTags) => prevTags.filter((item) => item !== value));
   };
 
   return (
@@ -184,13 +331,19 @@ const SpecialisationCourt = ({ handleSubmit }) => {
           <input
             type="text"
             placeholder="Add specialisation"
-            onKeyDown={(e) => e.key === 'Enter' && handleAddTag(setSpecialisations, e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault(); // Prevent form submission on Enter
+                handleAddTag(setSpecialisation, e.target.value);
+                e.target.value = ''; // Clear input after adding
+              }
+            }}
           />
           <div className="tag-container">
-            {specialisations.map((tag) => (
+            {specialisation.map((tag) => (
               <span key={tag} className="tag">
                 {tag}
-                <button type="button" onClick={() => handleRemoveTag(setSpecialisations, tag)}>×</button>
+                <button type="button" onClick={() => handleRemoveTag(setSpecialisation, tag)}>×</button>
               </span>
             ))}
           </div>
@@ -203,7 +356,13 @@ const SpecialisationCourt = ({ handleSubmit }) => {
           <input
             type="text"
             placeholder="Add case type"
-            onKeyDown={(e) => e.key === 'Enter' && handleAddTag(setCasesHandled, e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault(); // Prevent form submission on Enter
+                handleAddTag(setCasesHandled, e.target.value);
+                e.target.value = ''; // Clear input after adding
+              }
+            }}
           />
           <div className="tag-container">
             {casesHandled.map((tag) => (
@@ -232,7 +391,13 @@ const SpecialisationCourt = ({ handleSubmit }) => {
           <input
             type="text"
             placeholder="Add clientele"
-            onKeyDown={(e) => e.key === 'Enter' && handleAddTag(setClientele, e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault(); // Prevent form submission on Enter
+                handleAddTag(setClientele, e.target.value);
+                e.target.value = ''; // Clear input after adding
+              }
+            }}
           />
           <div className="tag-container">
             {clientele.map((tag) => (
@@ -251,7 +416,13 @@ const SpecialisationCourt = ({ handleSubmit }) => {
           <input
             type="text"
             placeholder="Add court"
-            onKeyDown={(e) => e.key === 'Enter' && handleAddTag(setCourts, e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault(); // Prevent form submission on Enter
+                handleAddTag(setCourts, e.target.value);
+                e.target.value = ''; // Clear input after adding
+              }
+            }}
           />
           <div className="tag-container">
             {courts.map((tag) => (
@@ -269,4 +440,6 @@ const SpecialisationCourt = ({ handleSubmit }) => {
   );
 };
 
+
 export default CreateProfile;
+

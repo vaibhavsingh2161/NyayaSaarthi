@@ -51,7 +51,7 @@ function SignIn() {
       // Log successful response for debugging
       console.log("Login successful:", response.data);
 
-      // Store the token
+      // Store the token and user info
       localStorage.setItem("token", response.data.token || "");
       localStorage.setItem("userRole", role);
       localStorage.setItem("userName", response.data.name || "");
@@ -59,11 +59,16 @@ function SignIn() {
       // Alert success
       alert(`Welcome back, ${response.data.name || "User"}!`);
 
+      // Debug log
+      console.log("Redirecting user with role:", role);
+
       // Redirect based on the role
-      if (role === "plaintiff") {
-        navigate("/dashboard"); // Redirect to the plaintiff dashboard
-      } else if (role === "advocate") {
-        navigate("/dashboard"); // Redirect to the advocate portal
+      if (role === "advocate") {
+        console.log("Redirecting to advocate dashboard");
+        navigate("/advocate-dashboard");
+      } else {
+        console.log("Redirecting to plaintiff dashboard");
+        navigate("/dashboard");
       }
     } catch (error) {
       console.error("Login error:", error);

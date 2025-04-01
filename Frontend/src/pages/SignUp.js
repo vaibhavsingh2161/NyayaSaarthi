@@ -75,6 +75,12 @@ const SignUp = () => {
       // Log successful response for debugging
       console.log("Registration successful:", response.data);
 
+      // Store the token and role in localStorage
+      localStorage.setItem("token", response.data.token || "");
+      localStorage.setItem("userRole", role); 
+      // Optionally store other user info if needed, like name
+      // localStorage.setItem("userName", response.data.name || "");
+
       alert("Registration successful!");
       
       if (role === "advocate") {

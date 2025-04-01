@@ -17,14 +17,38 @@
     margin-bottom: 1.5rem;
   }
   
+  /* Added styles for edit/logout container */
+  .profile-header > div {
+    display: flex;
+    align-items: center;
+  }
+  
   .edit-link {
     color: #D4A373;
     text-decoration: none;
     font-weight: 500;
+    margin-right: 1rem; /* Add spacing between edit and logout */
   }
   
   .edit-link:hover {
     text-decoration: underline;
+  }
+  
+  /* Style for the logout button */
+  .logout-button {
+    background-color: #e74c3c; /* Red color for logout */
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: background-color 0.2s ease;
+  }
+  
+  .logout-button:hover {
+    background-color: #c0392b; /* Darker red on hover */
   }
   
   .profile-details {

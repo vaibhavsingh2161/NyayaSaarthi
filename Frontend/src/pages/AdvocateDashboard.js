@@ -1,4 +1,4 @@
-// AdvocateDashboard.js
+// Frontend/src/pages/AdvocateDashboard.js
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import '../styles/AdvocateDashboard.css';

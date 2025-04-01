@@ -135,11 +135,10 @@ const getCaseById = async (req, res) => {
 
         // Check if user has access to this case
         if (
-            userRole === "plaintiff" &&
-            caseDetails.user._id.toString() !== userId &&
-            userRole === "advocate" &&
-            (caseDetails.advocate?._id.toString() !== userId && !caseDetails.isFloating)
-        ) {
+            (userRole === "plaintiff" && caseDetails.user._id.toString() !== userId) ||
+            (userRole === "advocate" && (caseDetails.advocate?._id.toString() !== userId && !caseDetails.isFloating))
+        )
+        {
             return res.status(403).json({ message: "You don't have access to this case" });
         }
 

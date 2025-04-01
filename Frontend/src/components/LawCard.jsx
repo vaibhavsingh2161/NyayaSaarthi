@@ -1,3 +1,4 @@
+// Frontend/src/components/LawCard.jsx
 import React, { useEffect, useState } from "react";
 
 export default function LawCard({ chapter, section, sectionTitle, description, fetchChapterTitle, onFetchSections }) {

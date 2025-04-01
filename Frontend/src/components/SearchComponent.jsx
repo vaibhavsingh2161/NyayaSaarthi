@@ -1,3 +1,4 @@
+// Frontend/src/components/SearchComponent.jsx
 import { useState } from "react";
 
 export default function SearchComponent({ onSearch }) {
