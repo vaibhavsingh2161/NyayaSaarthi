@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../styles/CreateProfile.css';
+import logo from '../assets/golden nyayasarthi logo.png';
+import footerLogo from '../assets/Component 1.png';
 
 const CreateProfile = () => {
   const [step, setStep] = useState(1);
@@ -84,10 +86,14 @@ const CreateProfile = () => {
       });
 
       if (response.status === 201) {
-        navigate('/advocate-dashboard'); // Redirect to dashboard on successful profile creation
+        // Inform the user and redirect to sign-in for approval check
+        alert('Profile submitted successfully! Please wait for admin approval to sign in.');
+        navigate('/sign-in'); // Redirect to sign-in page
       }
     } catch (error) {
       console.error('Error submitting form:', error);
+      // Provide more specific error feedback if possible
+      alert(`Error submitting profile: ${error.response?.data?.message || error.message}`);
     }
   };
 
@@ -95,7 +101,7 @@ const CreateProfile = () => {
   return (
     <div className="create-profile-container">
       <div className="profile-left">
-        <img src="/images/Component 1.png" alt="Logo" className="logo" />
+        <img src={footerLogo} alt="Logo" className="logo" />
         <div className="divider"></div>
         <p className="quote">Law without justice is a wound without a cure.</p>
       </div>

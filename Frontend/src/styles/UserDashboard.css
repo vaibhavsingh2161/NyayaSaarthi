@@ -32,6 +32,7 @@
 .dashboard-nav {
   display: flex;
   gap: 25px;
+  align-items: center;
 }
 
 .dashboard-nav a {
@@ -39,6 +40,26 @@
   text-decoration: none;
   font-weight: 500;
   padding: 5px 0;
+}
+
+/* Logout button styles */
+.logout-button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #0d1238;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.logout-button:hover {
+  background-color: #c03221;
 }
 
 .dashboard-nav a.active {
@@ -295,6 +316,13 @@
     margin-top: 15px;
     justify-content: center;
     flex-wrap: wrap;
+    gap: 15px;
+  }
+  
+  .logout-button {
+    margin-top: 10px;
+    width: 100%;
+    justify-content: center;
   }
   
   .case-actions {

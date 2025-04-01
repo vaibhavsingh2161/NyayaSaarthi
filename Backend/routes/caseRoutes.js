@@ -11,7 +11,9 @@ const {
   uploadDocument,
   getCaseDocuments,
   updateCaseStatus,
-  deleteCase
+  deleteCase,
+  requestAdvocate,
+  toggleFloatingStatus
 } = require("../controllers/caseController");
 const { protect } = require("../middlewares/authMiddleware");
 const multer = require("multer");
@@ -66,12 +68,18 @@ router.get("/floating", protect, getFloatingCases);
 router.post("/submit-bid", protect, submitBid);
 router.post("/accept-bid", protect, acceptBid);
 
+// Direct advocate request route
+router.post("/:caseId/request-advocate", protect, requestAdvocate);
+
 // Document routes
 router.post("/case/:caseId/documents", protect, upload.array("documents", 5), uploadDocument);
 router.get("/case/:caseId/documents", protect, getCaseDocuments);
 
 // Status update route
 router.patch("/case/:caseId/status", protect, updateCaseStatus);
+
+// Floating status update route
+router.patch("/case/:caseId/floating", protect, toggleFloatingStatus);
 
 // Delete case route
 router.delete("/case/:caseId", protect, deleteCase);

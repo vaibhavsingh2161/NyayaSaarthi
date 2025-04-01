@@ -3,7 +3,9 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../styles/UserDashboard.css';
-import { FaTrash } from 'react-icons/fa'; // Import trash icon
+import { FaTrash, FaSignOutAlt } from 'react-icons/fa'; // Import logout icon
+import logo from '../assets/golden nyayasarthi logo.png';
+import footerLogo from '../assets/Component 1.png';
 
 function UserDashboard() {
   const [cases, setCases] = useState([]);
@@ -43,6 +45,17 @@ function UserDashboard() {
     } finally {
       setLoading(false);
     }
+  };
+
+  // Handle user logout
+  const handleLogout = () => {
+    // Clear all auth-related data from localStorage
+    localStorage.removeItem('token');
+    localStorage.removeItem('userRole');
+    localStorage.removeItem('userName');
+    
+    // Redirect to sign-in page
+    navigate('/sign-in');
   };
 
   const fetchBookmarks = async () => {
@@ -111,13 +124,16 @@ function UserDashboard() {
         {/* Header */}
         <header className="dashboard-header">
           <Link to="/">
-            <img src="/images/golden nyayasarthi logo.png" alt="NyayaSarthi Logo" className="logo" />
+            <img src={logo} alt="NyayaSarthi Logo" className="logo" />
           </Link>
           <nav className="dashboard-nav">
             <Link to="/dashboard" className="active">My Case</Link>
             <Link to="/nyaya-sanhita">Nyaya Sanhita</Link>
             <Link to="/qa">Q&A</Link>
             <Link to="/account">Account</Link>
+            <button onClick={handleLogout} className="logout-button">
+              <FaSignOutAlt /> Logout
+            </button>
           </nav>
         </header>
 
@@ -212,7 +228,7 @@ function UserDashboard() {
         {/* Footer */}
         <footer className="dashboard-footer">
           <div className="footer-logo">
-            <img src="/images/Component 1.png" alt="NyayaSarthi Logo" />
+            <img src={footerLogo} alt="NyayaSarthi Logo" />
           </div>
           <div className="footer-links">
             <div className="footer-column">

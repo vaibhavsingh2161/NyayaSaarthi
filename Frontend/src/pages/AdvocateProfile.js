@@ -25,7 +25,7 @@ const AdvocateProfile = () => {
         }
 
         // Fetch profile data from the backend
-        const response = await axios.get('/api/advocate/profile', {
+        const response = await axios.get('http://localhost:3005/api/advocate/profile', {
           headers: {
             Authorization: `Bearer ${token}`, // Send token in Authorization header
           },
@@ -57,7 +57,7 @@ const AdvocateProfile = () => {
       
       // Call the backend logout API (optional)
       if (token) {
-        await axios.post('/api/users/logout', {}, {
+        await axios.post('http://localhost:3005/api/users/logout', {}, {
           headers: {
             Authorization: `Bearer ${token}`
           }

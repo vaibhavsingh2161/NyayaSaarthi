@@ -21,7 +21,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 30px;
+  padding: 20px;
   border-bottom: 1px solid #eee;
 }
 
@@ -798,4 +798,114 @@
 
 .upload-icon {
   display: inline-block;
+}
+
+/* Add this for the logout button */
+.case-detail-header .logout-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #0d1238;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.case-detail-header .logout-button:hover {
+  background-color: #c03221;
+}
+
+/* Status Timeline Additions */
+.status-update-button {
+  background-color: #2e7d32; /* Green color for action buttons */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 12px;
+  margin-top: 8px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.status-update-button:hover {
+  background-color: #1b5e20; /* Darker green on hover */
+}
+
+.status-update-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.current-status-indicator {
+  margin-top: 20px;
+  text-align: center;
+  padding: 10px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #eee;
+}
+
+.current-status {
+  font-weight: 600;
+  color: #0d1238;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+}
+
+/* Floating case styles */
+.float-case-button {
+  background-color: #0d1238;
+  color: #D4A373;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 15px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.float-case-button:hover {
+  background-color: #161e45;
+}
+
+.float-case-button.floating-active {
+  background-color: #d32f2f; /* Red background to indicate active floating state */
+  color: white;
+}
+
+.float-case-button.floating-active:hover {
+  background-color: #b71c1c; /* Darker red on hover */
+}
+
+.float-case-button:disabled {
+  background-color: #cccccc;
+  color: #666666;
+  cursor: not-allowed;
+}
+
+.floating-status {
+  margin-top: 15px;
+  padding: 10px 15px;
+  background-color: #ffebee; /* Light red background */
+  border-radius: 4px;
+  border-left: 4px solid #d32f2f; /* Red left border */
+}
+
+.floating-badge {
+  display: inline-block;
+  background-color: #d32f2f;
+  color: white;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin-right: 8px;
 }

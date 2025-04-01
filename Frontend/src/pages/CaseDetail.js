@@ -3,6 +3,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../styles/CaseDetail.css';
+import { FaSignOutAlt } from 'react-icons/fa';
+import logo from '../assets/golden nyayasarthi logo.png';
+import footerLogo from '../assets/Component 1.png';
 
 function CaseDetail() {
     const { caseId, tab = 'details' } = useParams();
@@ -12,6 +15,8 @@ function CaseDetail() {
     const [activeTab, setActiveTab] = useState(tab); // 'details', 'notifications', 'messages', 'documents'
     const navigate = useNavigate();
     const downloadLinkRef = useRef(null);
+    const [statusUpdating, setStatusUpdating] = useState(false); // State for status update loading
+    const [floatingUpdating, setFloatingUpdating] = useState(false); // State for floating status update
 
     // Document upload states
     const [selectedFiles, setSelectedFiles] = useState([]);
@@ -22,6 +27,28 @@ function CaseDetail() {
     useEffect(() => {
         // Fetch case details based on caseId
         fetchCaseDetails();
+        
+        // Store the user ID when fetching case details
+        const getUserId = async () => {
+            try {
+                const token = localStorage.getItem('token');
+                if (!token) return;
+                
+                const response = await axios.get('http://localhost:3005/api/users/me', {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                
+                if (response.data && response.data._id) {
+                    localStorage.setItem('userId', response.data._id);
+                }
+            } catch (err) {
+                console.error('Error fetching user ID:', err);
+            }
+        };
+        
+        getUserId();
     }, [caseId]);
 
     const fetchCaseDetails = async () => {
@@ -254,6 +281,99 @@ function CaseDetail() {
         { id: 2, sender: 'You', content: 'Thank you. What additional information do you need?', timestamp: '16 Mar 2025, 15:45' },
     ];
 
+    // Handle user logout
+    const handleLogout = () => {
+        // Clear all auth-related data from localStorage
+        localStorage.removeItem('token');
+        localStorage.removeItem('userRole');
+        localStorage.removeItem('userName');
+        
+        // Redirect to sign-in page
+        navigate('/sign-in');
+    };
+
+    // Handle case floating status toggle
+    const handleFloatingToggle = async () => {
+        if (!caseData || floatingUpdating) return;
+        
+        try {
+            setFloatingUpdating(true);
+            const token = localStorage.getItem('token');
+            if (!token) {
+                navigate('/sign-in');
+                return;
+            }
+
+            // Call the API to update the floating status
+            const response = await axios.patch(
+                `http://localhost:3005/api/cases/case/${caseId}/floating`,
+                { isFloating: !caseData.isFloating }, // Toggle the current value
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
+
+            // Update the case data with the new floating status
+            setCaseData({
+                ...caseData,
+                isFloating: !caseData.isFloating
+            });
+
+            // Show success message
+            alert(`Case is now ${!caseData.isFloating ? 'floating' : 'no longer floating'}.`);
+
+        } catch (err) {
+            console.error('Error updating floating status:', err);
+            alert(err.response?.data?.message || 'Failed to update case floating status. Please try again.');
+        } finally {
+            setFloatingUpdating(false);
+        }
+    };
+
+    // Handle case status update
+    const handleStatusUpdate = async (newStatus) => {
+        if (!caseData || statusUpdating) return;
+        
+        try {
+            setStatusUpdating(true);
+            const token = localStorage.getItem('token');
+            if (!token) {
+                navigate('/sign-in');
+                return;
+            }
+
+            // Call the API to update the case status
+            const response = await axios.patch(
+                `http://localhost:3005/api/cases/case/${caseId}/status`,
+                { status: newStatus },
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
+
+            // Update the case data with the new status
+            setCaseData({
+                ...caseData,
+                status: newStatus
+            });
+
+            // Show success message
+            alert(`Case status updated to ${newStatus} successfully.`);
+
+        } catch (err) {
+            console.error('Error updating case status:', err);
+            alert(err.response?.data?.message || 'Failed to update case status. Please try again.');
+        } finally {
+            setStatusUpdating(false);
+        }
+    };
+
     if (loading) {
         return (
             <div className="case-detail-container">
@@ -276,14 +396,19 @@ function CaseDetail() {
                 {/* Header */}
                 <header className="case-detail-header">
                     <Link to="/">
-                        <img src="/images/golden nyayasarthi logo.png" alt="NyayaSarthi Logo" className="logo" />
+                        <img src={logo} alt="NyayaSarthi Logo" className="logo" />
                     </Link>
                     <nav className="case-detail-nav">
-                        <Link to="/dashboard">My Case</Link>
+                        <Link to={localStorage.getItem('userRole') === 'advocate' ? "/advocate-dashboard" : "/dashboard"}>
+                            My Cases
+                        </Link>
                         <Link to="/nyaya-sanhita">Nyaya Sanhita</Link>
                         <Link to="/qa">Q&A</Link>
                         <Link to="/account">Account</Link>
                     </nav>
+                    <button onClick={handleLogout} className="logout-button">
+                        <FaSignOutAlt />
+                    </button>
                 </header>
 
                 {/* Main content */}
@@ -383,9 +508,33 @@ function CaseDetail() {
                                         <h3>No Lawyer Assigned</h3>
                                         <p>You don't have a lawyer assigned to this case yet.</p>
                                         <div className="lawyer-actions">
-                                            <Link to="/find-a-lawyer" className="find-lawyer-button">Find a Lawyer</Link>
-                                            <Link to="/floating-case" className="float-case-button">Float This Case</Link>
+                                            <Link to={`/find-a-lawyer/${caseId}`} className="find-lawyer-button">Find a Lawyer</Link>
+                                            
+                                            {/* Only show floating option for plaintiffs */}
+                                            {localStorage.getItem('userRole') === 'plaintiff' && (
+                                                <button 
+                                                    className={`float-case-button ${caseData?.isFloating ? 'floating-active' : ''}`}
+                                                    onClick={handleFloatingToggle}
+                                                    disabled={floatingUpdating}
+                                                >
+                                                    {floatingUpdating 
+                                                        ? 'Updating...'
+                                                        : caseData?.isFloating 
+                                                            ? 'Remove from Floating Cases' 
+                                                            : 'Float This Case'}
+                                                </button>
+                                            )}
                                         </div>
+                                        
+                                        {/* Display floating status indicator */}
+                                        {caseData?.isFloating && (
+                                            <div className="floating-status">
+                                                <p>
+                                                    <span className="floating-badge">Floating</span>
+                                                    This case is visible to all advocates who can request to handle it.
+                                                </p>
+                                            </div>
+                                        )}
                                     </div>
                                 )}
 
@@ -403,11 +552,40 @@ function CaseDetail() {
                                         <div className={`status-step ${caseData?.status === 'in-progress' || caseData?.status === 'closed' ? 'completed' : ''}`}>
                                             <div className="status-indicator"></div>
                                             <p>In Progress</p>
+                                            {/* Show update button for assigned advocate if case is in 'assigned' state */}
+                                            {caseData?.status === 'assigned' && 
+                                             localStorage.getItem('userRole') === 'advocate' &&
+                                             caseData?.advocate?._id === localStorage.getItem('userId') && (
+                                                <button 
+                                                    className="status-update-button"
+                                                    onClick={() => handleStatusUpdate('in-progress')}
+                                                    disabled={statusUpdating}
+                                                >
+                                                    {statusUpdating ? 'Updating...' : 'Start Progress'}
+                                                </button>
+                                            )}
                                         </div>
                                         <div className={`status-step ${caseData?.status === 'closed' ? 'completed' : ''}`}>
                                             <div className="status-indicator"></div>
                                             <p>Closed</p>
+                                            {/* Show update button for assigned advocate if case is in 'in-progress' state */}
+                                            {caseData?.status === 'in-progress' && 
+                                             localStorage.getItem('userRole') === 'advocate' &&
+                                             caseData?.advocate?._id === localStorage.getItem('userId') && (
+                                                <button 
+                                                    className="status-update-button"
+                                                    onClick={() => handleStatusUpdate('closed')}
+                                                    disabled={statusUpdating}
+                                                >
+                                                    {statusUpdating ? 'Updating...' : 'Close Case'}
+                                                </button>
+                                            )}
                                         </div>
+                                    </div>
+                                    
+                                    {/* Current status indicator */}
+                                    <div className="current-status-indicator">
+                                        <p>Current Status: <span className="current-status">{caseData?.status}</span></p>
                                     </div>
                                 </div>
                             </div>
@@ -550,7 +728,7 @@ function CaseDetail() {
                 {/* Footer */}
                 <footer className="case-detail-footer">
                     <div className="footer-logo">
-                        <img src="/images/Component 1.png" alt="NyayaSarthi Logo" />
+                        <img src={footerLogo} alt="NyayaSarthi Logo" />
                     </div>
                     <div className="footer-links">
                         <div className="footer-column">

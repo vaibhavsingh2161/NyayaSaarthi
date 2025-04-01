@@ -39,7 +39,7 @@ function App() {
           <Route path="/edit-profile" element={<EditProfile />} />
           
           {/* Other Routes */}
-          <Route path="/find-a-lawyer" element={<FindALawyer />} />
+          <Route path="/find-a-lawyer/:caseId?" element={<FindALawyer />} />
           <Route path="/floating-case" element={<FloatingCase />} />
           <Route path="/nyaya-sanhita" element={<BhartiyaNyayaSanhita />} />
         </Routes>

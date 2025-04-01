@@ -78,41 +78,79 @@ const createCase = async (req, res) => {
     }
 };
 
-// Get all cases for a user
+// Get cases for the logged-in user's dashboard
 const getUserCases = async (req, res) => {
     try {
         const userId = req.user.id;
         const userRole = req.user.role;
 
-        let query = {};
+        console.log(`[getUserCases] User ID: ${userId}, Role: ${userRole}`);
 
+        let query = {};
+        
         if (userRole === "plaintiff") {
-            // If user is a plaintiff, show their cases
+            // For plaintiffs, only show cases they created
+            // Convert userId to string to ensure proper comparison
+            const userIdStr = userId.toString();
             query = { user: userId };
+            
+            console.log(`[getUserCases] Plaintiff query: { user: ${userIdStr} }`);
+            
+            // DEBUG: Log a few cases to check user field
+            const sampleCases = await Case.find().limit(3).select('_id user');
+            console.log('[getUserCases] Sample cases in DB:', 
+                sampleCases.map(c => ({ 
+                    id: c._id.toString(), 
+                    user: c.user.toString(),
+                    isMatch: c.user.toString() === userIdStr
+                }))
+            );
+            
         } else if (userRole === "advocate") {
-            // If user is an advocate, show cases assigned to them or floating cases
-            query = {
-                $or: [
-                    { advocate: userId },
-                    { isFloating: true }
-                ]
-            };
+            // For advocates, only show cases assigned to them
+            query = { advocate: userId };
+            console.log(`[getUserCases] Advocate query: { advocate: ${userId.toString()} }`);
+        } else {
+            console.log(`[getUserCases] Unknown role: ${userRole}`);
+            return res.status(403).json({ 
+                success: false, 
+                message: "Role not authorized to view cases" 
+            });
         }
 
+        // Find cases with the constructed query
         const cases = await Case.find(query)
             .populate("user", "name email")
             .populate("advocate", "name email")
             .sort({ createdAt: -1 })
-            .select('-documents.fileData'); // Exclude the file data to reduce response size
+            .select('-documents.fileData');
 
-        res.status(200).json({
+        console.log(`[getUserCases] Found ${cases.length} cases for user ${userId}`);
+        
+        // If unexpected results for plaintiff, log case details for diagnosis
+        if (userRole === "plaintiff" && cases.length > 0) {
+            console.log('[getUserCases] First few case details:',
+                cases.slice(0, 2).map(c => ({
+                    id: c._id.toString(),
+                    subject: c.subject,
+                    user: c.user._id.toString(),
+                    userMatches: c.user._id.toString() === userId.toString()
+                }))
+            );
+        }
+
+        return res.status(200).json({
             success: true,
             count: cases.length,
             cases,
         });
     } catch (error) {
-        console.error("Error fetching cases:", error);
-        res.status(500).json({ message: "Error fetching cases", error: error.message });
+        console.error("[getUserCases] Error:", error);
+        return res.status(500).json({ 
+            success: false, 
+            message: "Error fetching cases", 
+            error: error.message 
+        });
     }
 };
 
@@ -122,33 +160,79 @@ const getCaseById = async (req, res) => {
         const caseId = req.params.id;
         const userId = req.user.id;
         const userRole = req.user.role;
+        
+        console.log(`[getCaseById] Fetching case ID: ${caseId} for user: ${userId}, role: ${userRole}`);
 
         const caseDetails = await Case.findById(caseId)
             .populate("user", "name email phone")
             .populate("advocate", "name email phone")
+            .populate("pendingAdvocate", "name email phone")
             .select('-documents.fileData'); // Exclude file data to reduce response size
 
         // Check if case exists
         if (!caseDetails) {
-            return res.status(404).json({ message: "Case not found" });
+            console.log(`[getCaseById] Case not found with ID: ${caseId}`);
+            return res.status(404).json({ 
+                success: false,
+                message: "Case not found" 
+            });
         }
+        
+        // Log case details for debugging
+        console.log(`[getCaseById] Case found: 
+            Owner: ${caseDetails.user?._id}
+            Advocate: ${caseDetails.advocate?._id}
+            Pending Advocate: ${caseDetails.pendingAdvocate?._id}
+            Status: ${caseDetails.status}
+            Request Status: ${caseDetails.requestStatus}
+        `);
 
         // Check if user has access to this case
-        if (
-            (userRole === "plaintiff" && caseDetails.user._id.toString() !== userId) ||
-            (userRole === "advocate" && (caseDetails.advocate?._id.toString() !== userId && !caseDetails.isFloating))
-        )
-        {
-            return res.status(403).json({ message: "You don't have access to this case" });
+        let hasAccess = false;
+        
+        if (userRole === "plaintiff") {
+            // Plaintiff can access if they are the case owner
+            hasAccess = caseDetails.user._id.toString() === userId;
+            console.log(`[getCaseById] Plaintiff access check: ${hasAccess}`);
+        } 
+        else if (userRole === "advocate") {
+            // Advocate can access if:
+            // 1. They are the assigned advocate, OR
+            // 2. They are the pending advocate for this case, OR
+            // 3. The case is floating
+            const isAssignedAdvocate = caseDetails.advocate && caseDetails.advocate._id.toString() === userId;
+            const isPendingAdvocate = caseDetails.pendingAdvocate && caseDetails.pendingAdvocate._id.toString() === userId;
+            const isCaseFloating = caseDetails.isFloating;
+            
+            hasAccess = isAssignedAdvocate || isPendingAdvocate || isCaseFloating;
+            
+            console.log(`[getCaseById] Advocate access check: 
+                Is Assigned: ${isAssignedAdvocate} 
+                Is Pending: ${isPendingAdvocate} 
+                Is Floating: ${isCaseFloating}
+                Has Access: ${hasAccess}`);
+        }
+        
+        if (!hasAccess) {
+            console.log(`[getCaseById] Access denied for user ${userId} to case ${caseId}`);
+            return res.status(403).json({ 
+                success: false,
+                message: "You don't have access to this case" 
+            });
         }
 
-        res.status(200).json({
+        console.log(`[getCaseById] Access granted for user ${userId} to case ${caseId}`);
+        return res.status(200).json({
             success: true,
             case: caseDetails,
         });
     } catch (error) {
-        console.error("Error fetching case details:", error);
-        res.status(500).json({ message: "Error fetching case details", error: error.message });
+        console.error("[getCaseById] Error:", error);
+        return res.status(500).json({ 
+            success: false,
+            message: "Error fetching case details", 
+            error: error.message 
+        });
     }
 };
 
@@ -551,6 +635,179 @@ const updateCaseStatus = async (req, res) => {
     }
 };
 
+// Initiate a request for a specific advocate for a case
+const requestAdvocate = async (req, res) => {
+    try {
+        const { caseId } = req.params;
+        const { advocateId } = req.body;
+        const userId = req.user.id; // Plaintiff's ID from token
+        
+        console.log(`[requestAdvocate] Case ID: ${caseId}, Advocate ID: ${advocateId}, User ID: ${userId.toString()}`);
+
+        // Validate input
+        if (!advocateId) {
+            return res.status(400).json({ 
+                success: false,
+                message: "Advocate ID is required." 
+            });
+        }
+
+        // Find the case
+        const targetCase = await Case.findById(caseId);
+
+        // Check if case exists
+        if (!targetCase) {
+            console.log(`[requestAdvocate] Case not found with ID: ${caseId}`);
+            return res.status(404).json({ 
+                success: false,
+                message: "Case not found" 
+            });
+        }
+
+        // Log the case owner and requesting user for comparison
+        const caseOwnerId = targetCase.user?.toString();
+        const requestingUserId = userId.toString();
+        console.log(`[requestAdvocate] Case Owner ID: ${caseOwnerId}, Requesting User ID: ${requestingUserId}`);
+        console.log(`[requestAdvocate] IDs match? ${caseOwnerId === requestingUserId}`);
+
+        // Check if the user requesting is the owner of the case
+        if (caseOwnerId !== requestingUserId) {
+            return res.status(403).json({ 
+                success: false,
+                message: "You do not have permission to modify this case." 
+            });
+        }
+
+        // Check if the case is already assigned to an advocate
+        if (targetCase.advocate) {
+            console.log(`[requestAdvocate] Case already has advocate assigned: ${targetCase.advocate.toString()}`);
+            return res.status(400).json({ 
+                success: false,
+                message: "Case already has an advocate assigned." 
+            });
+        }
+
+        // Check if the case already has a pending request
+        if (targetCase.pendingAdvocate) {
+            console.log(`[requestAdvocate] Case already has pending request to advocate: ${targetCase.pendingAdvocate.toString()}`);
+            return res.status(400).json({ 
+                success: false,
+                message: "Case already has a pending advocate request." 
+            });
+        }
+
+        // Check if the target advocate exists and has the 'advocate' role
+        const advocateUser = await User.findById(advocateId);
+        if (!advocateUser) {
+            console.log(`[requestAdvocate] Advocate not found with ID: ${advocateId}`);
+            return res.status(404).json({ 
+                success: false,
+                message: "Advocate not found." 
+            });
+        }
+        
+        if (advocateUser.role !== 'advocate') {
+            console.log(`[requestAdvocate] User is not an advocate. Role: ${advocateUser.role}`);
+            return res.status(400).json({ 
+                success: false,
+                message: "Selected user is not an advocate." 
+            });
+        }
+
+        // Update the case with the pending request
+        targetCase.pendingAdvocate = advocateId;
+        targetCase.requestStatus = 'pending';
+        await targetCase.save();
+
+        console.log(`[requestAdvocate] Request saved successfully for case ${caseId} to advocate ${advocateId}`);
+
+        return res.status(200).json({
+            success: true,
+            message: `Request sent to advocate ${advocateUser.name} successfully.`,
+        });
+
+    } catch (error) {
+        console.error("[requestAdvocate] Error:", error);
+        return res.status(500).json({ 
+            success: false,
+            message: "Error requesting advocate", 
+            error: error.message 
+        });
+    }
+};
+
+// Toggle floating status of a case
+const toggleFloatingStatus = async (req, res) => {
+    try {
+        const { caseId } = req.params;
+        const { isFloating } = req.body;
+        const userId = req.user.id;
+        const userRole = req.user.role;
+
+        console.log(`[toggleFloatingStatus] Case ID: ${caseId}, User ID: ${userId}, isFloating: ${isFloating}`);
+
+        // Only plaintiffs can toggle floating status
+        if (userRole !== "plaintiff") {
+            console.log(`[toggleFloatingStatus] User role ${userRole} not authorized`);
+            return res.status(403).json({
+                success: false,
+                message: "Only plaintiffs can make a case floating"
+            });
+        }
+
+        // Find the case
+        const caseDetails = await Case.findById(caseId);
+
+        if (!caseDetails) {
+            console.log(`[toggleFloatingStatus] Case not found: ${caseId}`);
+            return res.status(404).json({
+                success: false,
+                message: "Case not found"
+            });
+        }
+
+        // Check if the user owns this case
+        if (caseDetails.user.toString() !== userId) {
+            console.log(`[toggleFloatingStatus] User ${userId} not owner of case ${caseId}`);
+            return res.status(403).json({
+                success: false,
+                message: "You don't have permission to modify this case"
+            });
+        }
+
+        // Cannot make a case floating if it already has an advocate assigned
+        if (isFloating && caseDetails.advocate) {
+            console.log(`[toggleFloatingStatus] Case ${caseId} already has advocate assigned`);
+            return res.status(400).json({
+                success: false,
+                message: "Cannot make a case floating when an advocate is already assigned"
+            });
+        }
+
+        // Update the case
+        caseDetails.isFloating = isFloating;
+        await caseDetails.save();
+
+        console.log(`[toggleFloatingStatus] Case ${caseId} floating status updated to ${isFloating}`);
+        return res.status(200).json({
+            success: true,
+            message: `Case is now ${isFloating ? 'floating' : 'not floating'}`,
+            case: {
+                _id: caseDetails._id,
+                subject: caseDetails.subject,
+                isFloating: caseDetails.isFloating
+            }
+        });
+    } catch (error) {
+        console.error("[toggleFloatingStatus] Error:", error);
+        return res.status(500).json({
+            success: false,
+            message: "Error updating case floating status",
+            error: error.message
+        });
+    }
+};
+
 module.exports = {
     createCase,
     getUserCases,
@@ -562,5 +819,7 @@ module.exports = {
     uploadDocument,
     getCaseDocuments,
     updateCaseStatus,
-    deleteCase
+    deleteCase,
+    requestAdvocate,
+    toggleFloatingStatus
 };

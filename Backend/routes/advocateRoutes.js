@@ -7,6 +7,12 @@ const multer = require('multer'); // Import multer
 const path = require('path'); // Import path
 // const cors = require('cors'); // REMOVE cors import
 const AdvocateDetails = require('../models/AdvocateDetails');
+const { protect, advocateOnly } = require('../middlewares/authMiddleware'); // Import protect and advocateOnly middleware
+const {
+    getPendingCaseRequests,
+    acceptCaseRequest,
+    denyCaseRequest,
+} = require('../controllers/advocateController'); // Import advocate-specific case controllers
 
 // REMOVE CORS options and middleware application for this router
 // const corsOptions = {
@@ -33,24 +39,15 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage }); // Initialize multer with the storage configuration
 
-// Middleware to verify JWT
-const verifyToken = (req, res, next) => {
-  const token = req.headers.authorization?.split(' ')[1];
-  if (!token) {
-    return res.status(403).send('Token is required');
-  }
-
-  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-    if (err) {
-      return res.status(403).send('Invalid token');
-    }
-    req.userId = decoded.id; // Store user ID in request
-    next();
-  });
+// Middleware to verify JWT and ensure user is an advocate
+const verifyAdvocateToken = (req, res, next) => {
+    protect(req, res, () => {
+        advocateOnly(req, res, next);
+    });
 };
 
 // POST route for creating advocate profile - Use multer middleware for single file upload
-router.post('/createProfile', verifyToken, upload.single('profilePicture'), async (req, res) => {
+router.post('/createProfile', protect, advocateOnly, upload.single('profilePicture'), async (req, res) => {
   // Text fields are now in req.body, file info is in req.file
   const {
     languages, // Sent as JSON string
@@ -73,7 +70,7 @@ router.post('/createProfile', verifyToken, upload.single('profilePicture'), asyn
 
   try {
     // Check if the user already has a profile
-    const existingProfile = await AdvocateDetails.findOne({ userId: req.userId });
+    const existingProfile = await AdvocateDetails.findOne({ userId: req.user.id });
     if (existingProfile) {
       return res.status(400).send('Profile already exists for this user');
     }
@@ -90,7 +87,7 @@ router.post('/createProfile', verifyToken, upload.single('profilePicture'), asyn
 
     // Create a new advocate profile
     const advocateDetails = new AdvocateDetails({
-      userId: req.userId,
+      userId: req.user.id,
       languages: parsedLanguages,
       dob,
       location,
@@ -122,10 +119,10 @@ router.post('/createProfile', verifyToken, upload.single('profilePicture'), asyn
 });
 
 // GET route to fetch advocate profile details
-router.get('/profile', verifyToken, async (req, res) => {
+router.get('/profile', protect, advocateOnly, async (req, res) => {
   try {
     // Find the advocate profile and populate the userId field to get user details
-    const advocateProfile = await AdvocateDetails.findOne({ userId: req.userId }).populate('userId', 'name email phone role barCouncilRegNo');
+    const advocateProfile = await AdvocateDetails.findOne({ userId: req.user.id }).populate('userId', 'name email phone role barCouncilRegNo');
 
     if (!advocateProfile) {
       return res.status(404).send('Advocate profile not found for this user.');
@@ -140,10 +137,10 @@ router.get('/profile', verifyToken, async (req, res) => {
 });
 
 // PUT route to update advocate profile
-router.put('/profile', verifyToken, async (req, res) => {
+router.put('/profile', protect, advocateOnly, async (req, res) => {
   try {
     // Find the advocate profile to update
-    const advocateProfile = await AdvocateDetails.findOne({ userId: req.userId });
+    const advocateProfile = await AdvocateDetails.findOne({ userId: req.user.id });
 
     if (!advocateProfile) {
       return res.status(404).send('Advocate profile not found for this user.');
@@ -177,7 +174,7 @@ router.put('/profile', verifyToken, async (req, res) => {
   }
 });
 
-// GET route to fetch a list of all advocate profiles
+// GET route to fetch a list of all advocate profiles (public route, no token needed)
 router.get('/list', async (req, res) => {
   try {
     // Find all advocate profiles and populate the userId field to get user details (name, etc.)
@@ -197,5 +194,16 @@ router.get('/list', async (req, res) => {
     res.status(500).send('Server error fetching advocate list.');
   }
 });
+
+// --- Case Request Routes ---
+
+// GET route for advocates to see their pending case requests
+router.get('/case-requests', protect, advocateOnly, getPendingCaseRequests);
+
+// POST route for advocates to accept a case request
+router.post('/accept-case', protect, advocateOnly, acceptCaseRequest);
+
+// POST route for advocates to deny a case request
+router.post('/deny-case', protect, advocateOnly, denyCaseRequest);
 
 module.exports = router;

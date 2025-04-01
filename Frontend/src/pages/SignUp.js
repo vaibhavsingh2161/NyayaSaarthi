@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/SignUp.css";
+import logo from '../assets/golden nyayasarthi logo.png';
+import footerLogo from '../assets/Component 1.png';
 
 const SignUp = () => {
   const [role, setRole] = useState("");
@@ -101,7 +103,7 @@ const SignUp = () => {
   return (
     <div className="signup-container">
       <div className="profile-left">
-        <img src="/images/Component 1.png" alt="Logo" className="logo" />
+        <img src={logo} alt="Logo" className="logo" />
         <div className="divider"></div>
         <p className="quote">Law without justice is a wound without a cure.</p>
       </div>

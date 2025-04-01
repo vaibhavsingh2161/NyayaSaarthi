@@ -71,6 +71,17 @@ const caseSchema = mongoose.Schema(
         },
       },
     ],
+    // Add fields for direct advocate request
+    pendingAdvocate: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      default: null,
+    },
+    requestStatus: {
+      type: String,
+      enum: ["pending", "accepted", "denied", null], // Status of the direct request
+      default: null,
+    },
   },
   { timestamps: true }
 );

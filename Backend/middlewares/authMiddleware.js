@@ -26,11 +26,6 @@ const protect = async (req, res, next) => {
         return res.status(401).json({ message: "User not found" });
       }
 
-      // For advocates, check if they're approved
-      if (req.user.role === "advocate" && !req.user.isApproved) {
-        return res.status(403).json({ message: "Advocate account pending approval" });
-      }
-
       next();
     } catch (error) {
       console.error(error);
@@ -53,4 +48,7 @@ const restrictTo = (...roles) => {
   };
 };
 
-module.exports = { protect, restrictTo };
+// Specific middleware for advocates
+const advocateOnly = restrictTo('advocate');
+
+module.exports = { protect, restrictTo, advocateOnly };

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/SignIn.css";
-
+import logo from '../assets/golden nyayasarthi logo.png';
 function SignIn() {
   const [formData, setFormData] = useState({
     email: "",
@@ -85,7 +85,7 @@ function SignIn() {
     <div className="create-profile-container">
       {/* Profile Left Section */}
       <div className="profile-left">
-        <img src="/images/golden nyayasarthi logo.png" alt="Logo" className="logo" />
+        <img src={logo} alt="Logo" className="logo" />
         <div className="divider"></div>
         <p className="quote">Law without justice is a wound without a cure.</p>
       </div>

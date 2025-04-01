@@ -4,6 +4,8 @@ import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import '../styles/CreateCase.css';
 import { FaMicrophone, FaStopCircle } from 'react-icons/fa';
+import logo from '../assets/golden nyayasarthi logo.png';
+import footerLogo from '../assets/Component 1.png';
 
 function CreateCase() {
   const [formData, setFormData] = useState({
@@ -186,7 +188,7 @@ function CreateCase() {
   return (
     <div className="create-case-page">
       <header className="create-case-header">
-        <img src="/images/golden nyayasarthi logo.png" alt="NyayaSarthi Logo" className="logo" />
+        <img src={logo} alt="NyayaSarthi Logo" className="logo" />
         <nav className="header-nav">
           <a href="/dashboard">My Case</a>
           <a href="/nyaya-sanhita">Nyaya Sanhita</a>
@@ -295,7 +297,7 @@ function CreateCase() {
 
       <footer className="create-case-footer">
         <div className="footer-logo">
-          <img src="/images/Component 1.png" alt="NyayaSarthi Logo" />
+          <img src={footerLogo} alt="NyayaSarthi Logo" />
         </div>
         <div className="footer-links">
           <div className="footer-column">

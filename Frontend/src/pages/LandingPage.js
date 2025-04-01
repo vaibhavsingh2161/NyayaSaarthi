@@ -1,6 +1,9 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './LandingPage.css'; 
+import logo from '../assets/golden nyayasarthi logo.png';
+import footerLogo from '../assets/Component 1.png';
+
 function LandingPage() {
   const navigate = useNavigate();
 
@@ -8,7 +11,7 @@ function LandingPage() {
     <div className="landing-page">
       {/* Header Section */}
       <header className="header">
-        <img src="images/golden nyayasarthi logo.png" alt="Nyayasarthi Logo" className="logo" />
+        <img src={logo} alt="Nyayasarthi Logo" className="logo" />
         <nav className="nav">
           <a href="#about">About Us</a>
           <a href="#nyaya-sanhita">Nyaya Sanhita</a>
@@ -128,7 +131,7 @@ function LandingPage() {
        {/* Footer */}
        <footer className="footer">
         <div className="footer-logo">
-          <img src="/images/Component 1.png" alt="Nyayasarthi Logo" />
+          <img src={footerLogo} alt="Nyayasarthi Logo" />
         </div>
         <div className="footer-links">
           <div className="footer-column">
