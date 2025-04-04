@@ -1,178 +1,193 @@
-/* AdvocateProfile.css */
-
 .profile-container {
-    font-family: 'Inter', sans-serif;
-    color: #333A56;
-    display: flex;
-    flex-direction: column;
-    height: 100vh; /* Full viewport height */
-    overflow-y: hidden; /* Prevent outer container from scrolling */
-    padding: 1rem 2rem;
-  }
-  
-  .profile-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.5rem;
-  }
-  
-  /* Added styles for edit/logout container */
-  .profile-header > div {
-    display: flex;
-    align-items: center;
-  }
-  
-  .edit-link {
-    color: #D4A373;
-    text-decoration: none;
-    font-weight: 500;
-    margin-right: 1rem; /* Add spacing between edit and logout */
-  }
-  
-  .edit-link:hover {
-    text-decoration: underline;
-  }
-  
-  /* Style for the logout button */
-  .logout-button {
-    background-color: #e74c3c; /* Red color for logout */
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: 500;
-    font-size: 0.9rem;
-    transition: background-color 0.2s ease;
-  }
-  
-  .logout-button:hover {
-    background-color: #c0392b; /* Darker red on hover */
-  }
-  
-  .profile-details {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 2rem;
-    background-color: #f9f9f9;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    flex-grow: 1;
-    overflow-y: auto; /* Enable scrolling in the main content area */
-    margin-bottom: 1.5rem;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: "Inter", sans-serif;
+  color: #333a56;
+  background-color: #f4f7fc;
+}
+
+.profile-details {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding-bottom: 2rem;
+}
+
+.footer {
+  background-color: #0d1238;
+  color: #d4a373;
+  padding: 2rem;
+  display: flex;
+  justify-content: space-between;
+  margin-top: auto;
+  position: relative;
+  width: 100%;
+}
+
+.profile-header {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #ddd;
+}
+
+.profile-header h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #1a237e;
+  text-align: center;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+}
+
+.profile-header-buttons {
+  display: flex;
+  gap: 0.3rem;
+  justify-content: center;
+
+  align-items: center;
+}
+
+.edit-link {
+  color: #1a73e8;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.edit-link:hover {
+  text-decoration: underline;
+}
+
+.logout-button {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease;
+}
+
+.logout-button:hover {
+  background-color: #c0392b;
+}
+
+.profile-card {
+  display: flex;
+  align-items: center;
+  padding: 1.5rem;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  margin-bottom: 1.5rem;
+}
+
+.profile-picture {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 3px solid #1a237e;
+  margin-right: 1.5rem;
+}
+
+.profile-info h3 {
+  font-size: 1.8rem;
+  color: #1a237e;
+  font-weight: 600;
+}
+
+.profile-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-size: 1rem;
+  color: #555;
+  margin-top: 0.5rem;
+}
+
+.profile-sections {
+  margin-top: 1.5rem;
+}
+
+.profile-section {
+  background: #ffffff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  margin-bottom: 1rem;
+}
+
+.profile-section h4 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #1a237e;
+  margin-bottom: 0.8rem;
+}
+
+.profile-section p,
+.profile-section ul {
+  color: #666;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.footer-logo img {
+  width: 300px;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.footer-column {
+  margin-left: 2rem;
+}
+
+.footer-column h4 {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.footer-column a {
+  display: block;
+  color: #d4a373;
+  text-decoration: none;
+  font-size: 0.9rem;
+  margin-bottom: 0.3rem;
+}
+
+.footer-column a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
   .profile-card {
-    display: flex;
+    flex-direction: column;
     align-items: center;
-    margin-bottom: 1.5rem;
+    text-align: center;
   }
-  
   .profile-picture {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    background-color: #f0f0f0;
-    border: 2px solid #ddd;
-    margin-right: 2rem;
+    margin-bottom: 1rem;
   }
-  
-  .profile-info h3 {
-    font-size: 1.8rem;
-    color: #333A56;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-  }
-  
-  .profile-rating {
-    display: flex;
-    align-items: center;
-    font-size: 1rem;
-    color: #FFA500;
-    margin-bottom: 0.8rem;
-  }
-  
   .profile-meta {
-    display: flex;
-    gap: 1.5rem;
-    font-size: 1rem;
-    color: #666;
+    justify-content: center;
   }
-  
-  .profile-meta p {
-    display: flex;
+  .footer {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .footer-links {
+    flex-direction: column;
     align-items: center;
   }
-  
-  .star-icon {
-    color: #D4A373;
-    margin-right: 5px;
-  }
-  
-  .profile-id {
-    font-size: 1rem;
-    color: #333A56;
-    margin-top: 0.5rem;
-  }
-  
-  .profile-sections {
-    margin-top: 1.5rem;
-  }
-  
-  .profile-section {
-    margin-top: 1.5rem;
-  }
-  
-  .profile-section h4 {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: #333A56;
-    margin-bottom: 0.5rem;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 0.5rem;
-  }
-  
-  .profile-section p {
-    color: #666;
-    font-size: 1rem;
-    line-height: 1.6;
-  }
-  
-  /* Footer */
-  .footer {
-    background-color: #0d1238;
-    color: #D4A373;
-    padding: 2rem;
-    display: flex;
-    justify-content: space-between;
-    margin-top: auto;
-  }
-  
-  .footer-logo img {
-    width: 350px;
-  }
-  
-  .footer-links {
-    display: flex;
-  }
-  
   .footer-column {
-    margin-left: 2rem;
+    margin-left: 0;
+    margin-top: 1rem;
   }
-  
-  .footer-column h4 {
-    font-size: 1rem;
-    margin-bottom: 0.5rem;
-  }
-  
-  .footer-column a {
-    display: block;
-    color: #D4A373;
-    text-decoration: none;
-    font-size: 0.9rem;
-    margin-bottom: 0.3rem;
-  }
-  
-  .footer-column a:hover {
-    text-decoration: underline;
-  }
+}

@@ -1,10 +1,8 @@
-/* src/styles/UserDashboard.css */
-
 .dashboard-container {
-  font-family: 'Inter', sans-serif;
-  background-color: #f7f7f7;
+  font-family: "Inter", sans-serif;
   min-height: 100vh;
   padding: 20px;
+  background-image: linear-gradient(to top, #e6b980 0%, #eacda3 100%);
 }
 
 .dashboard-content {
@@ -14,9 +12,9 @@
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   overflow: hidden;
+  backdrop-filter: blur(8px);
 }
 
-/* Header Styles */
 .dashboard-header {
   display: flex;
   justify-content: space-between;
@@ -26,7 +24,8 @@
 }
 
 .logo {
-  width: 150px;
+  width: auto;
+  height: 4rem;
 }
 
 .dashboard-nav {
@@ -42,7 +41,6 @@
   padding: 5px 0;
 }
 
-/* Logout button styles */
 .logout-button {
   display: flex;
   align-items: center;
@@ -64,14 +62,13 @@
 
 .dashboard-nav a.active {
   color: #0d1238;
-  border-bottom: 2px solid #D4A373;
+  border-bottom: 2px solid #d4a373;
 }
 
 .dashboard-nav a:hover {
   color: #0d1238;
 }
 
-/* Main Content Styles */
 .dashboard-main {
   padding: 20px 30px;
 }
@@ -81,17 +78,22 @@
 }
 
 .dashboard-section h2 {
-  font-size: 1.2rem;
-  font-weight: 600;
+  font-size: 1.7rem;
+  font-weight: bolder;
   color: #0d1238;
   margin-bottom: 15px;
+  display: flex;
+  justify-content: center;
+  font-family: cursive;
 }
 
-/* Case List Styles */
-.case-list {
-  border: 1px solid #eee;
-  border-radius: 8px;
+.case-listu {
+  border: 1px solid #0d1238;
+  border-radius: 18px;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .case-table {
@@ -100,7 +102,7 @@
 }
 
 .case-item {
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #0d1238;
 }
 
 .case-item:last-child {
@@ -110,17 +112,22 @@
 .case-index {
   padding: 12px 15px;
   width: 30px;
-  color: #666;
+  font-size: 1.2rem;
+  color: #333a56;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
 }
 
 .case-title {
   padding: 12px 10px;
-  font-weight: 500;
+  font-weight: bold;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 1.2rem;
+  width: 16rem;
 }
 
 .case-date {
   padding: 12px;
-  color: #666;
+  color: #494949;
   width: 120px;
   text-align: right;
 }
@@ -129,6 +136,8 @@
   padding: 12px;
   text-align: right;
   white-space: nowrap;
+  display: flex;
+  flex-direction: row;
 }
 
 .case-actions a {
@@ -150,23 +159,26 @@
   padding: 12px 15px;
   display: flex;
   justify-content: flex-start;
-  background-color: #f9f9f9;
+  background-color: #e2b45d;
 }
 
 .create-case-link a {
-  color: #0d1238;
+  color: #ffffff;
   text-decoration: none;
   display: flex;
   align-items: center;
-  font-size: 0.9rem;
+  font-size: 1.2rem;
+  font-weight: bolder;
+  gap: 7px;
 }
 
 .plus-icon {
   display: inline-block;
-  width: 16px;
-  height: 16px;
+  width: 24px;
+  height: 24px;
   text-align: center;
-  line-height: 14px;
+  line-height: 21px;
+  font-size: x-large;
   border-radius: 50%;
   background-color: #0d1238;
   color: #fff;
@@ -174,10 +186,13 @@
   font-weight: bold;
 }
 
-.loading, .error-message {
-  padding: 20px;
+.loading,
+.error-message {
+  padding: 10px;
   text-align: center;
-  color: #666;
+  color: #575757;
+  font-size: 20px;
+  font-weight: bold;
 }
 
 .error-message {
@@ -190,7 +205,6 @@
   color: #666;
 }
 
-/* Delete button */
 .delete-button {
   background: none;
   border: none;
@@ -203,19 +217,22 @@
 }
 
 .delete-button:hover {
-  color: #c0392b;
+  color: #ffffff;
 }
 
-/* Bookmarks Styles */
 .bookmarks-container {
-  border: 1px solid #eee;
+  border: 2px solid #0d1238;
   border-radius: 8px;
   overflow: hidden;
+  padding: 10px;
+  color: #0d1238;
 }
 
 .bookmark-item {
   padding: 15px;
-  border-bottom: 1px solid #eee;
+  border: 1px solid #ffffff;
+  background-color: #594fcb67;
+  border-radius: 10px;
 }
 
 .bookmark-item:last-of-type {
@@ -223,27 +240,37 @@
 }
 
 .view-more {
-  padding: 10px;
+  padding: 10px 24px;
   text-align: center;
-  background-color: #f9f9f9;
-  border-top: 1px solid #eee;
+  background-color: #e2b45d;
+  border-radius: 10px;
+}
+
+.wrap-view-more {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .view-more a {
-  color: #0d1238;
+  color: #ffffff;
   text-decoration: none;
-  font-size: 0.9rem;
+  font-size: 1.2rem;
+  font-weight: bolder;
 }
 
-/* News Styles */
 .news-container {
-  border: 1px solid #eee;
+  border: 2px solid #0d1238;
   border-radius: 8px;
   padding: 15px;
 }
 
 .news-item {
   margin-bottom: 15px;
+  background-color: #fcc155a5;
+  padding: 10px;
+  border-radius: 10px;
 }
 
 .news-item h3 {
@@ -263,10 +290,9 @@
   color: #999;
 }
 
-/* Footer Styles */
 .dashboard-footer {
   background-color: #0d1238;
-  color: #D4A373;
+  color: #d4a373;
   padding: 30px;
   display: flex;
   justify-content: space-between;
@@ -285,16 +311,14 @@
   text-align: left;
 }
 
-/* src/styles/UserDashboard.css (continued) */
-
 .footer-column h4 {
-  color: #D4A373;
+  color: #d4a373;
   margin-bottom: 15px;
   font-size: 1rem;
 }
 
 .footer-column a {
-  color: #D4A373;
+  color: #d4a373;
   text-decoration: none;
   font-size: 0.9rem;
   display: block;
@@ -305,54 +329,51 @@
   text-decoration: underline;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
   .dashboard-header {
     flex-direction: column;
     text-align: center;
   }
-  
+
   .dashboard-nav {
     margin-top: 15px;
     justify-content: center;
     flex-wrap: wrap;
     gap: 15px;
   }
-  
+
   .logout-button {
     margin-top: 10px;
     width: 100%;
     justify-content: center;
   }
-  
+
   .case-actions {
     display: flex;
     flex-direction: column;
     gap: 8px;
     align-items: flex-end;
   }
-  
-  .case-actions a, 
+
+  .case-actions a,
   .delete-button {
     margin-left: 0;
   }
-  
+
   .dashboard-footer {
     flex-direction: column;
   }
-  
+
   .footer-logo {
     margin-bottom: 20px;
     text-align: center;
   }
-  
+
   .footer-links {
     flex-direction: column;
     gap: 20px;
   }
 }
-
-/* Add these styles to your src/styles/UserDashboard.css file */
 
 .case-actions {
   display: flex;
@@ -363,7 +384,7 @@
 
 .details-button {
   background-color: #0d1238;
-  color: #D4A373 !important;
+  color: #d4a373 !important;
   border: none;
   padding: 6px 12px;
   border-radius: 4px;
@@ -398,15 +419,15 @@
   color: #c0392b;
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
   .case-actions {
     flex-direction: row;
     justify-content: flex-end;
     gap: 10px;
   }
-  
-  .details-button, .delete-button {
+
+  .details-button,
+  .delete-button {
     margin-left: 0;
   }
 }

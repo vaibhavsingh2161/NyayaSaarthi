@@ -1,43 +1,41 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import '../styles/CreateProfile.css';
-import logo from '../assets/golden nyayasarthi logo.png';
-import footerLogo from '../assets/Component 1.png';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import "../styles/CreateProfile.css";
+import logo from "../assets/golden nyayasarthi logo.png";
+import footerLogo from "../assets/Component 1.png";
 
 const CreateProfile = () => {
   const [step, setStep] = useState(1);
-  const [selectedLanguages, setSelectedLanguages] = useState(['English']);
-  const [languageInput, setLanguageInput] = useState('');
-  const [dob, setDob] = useState('');
-  const [location, setLocation] = useState('');
+  const [selectedLanguages, setSelectedLanguages] = useState(["English"]);
+  const [languageInput, setLanguageInput] = useState("");
+  const [dob, setDob] = useState("");
+  const [location, setLocation] = useState("");
   const [profilePicture, setProfilePicture] = useState(null);
-  const [enrolmentNo, setEnrolmentNo] = useState('');
-  const [barCouncilRegNo, setBarCouncilRegNo] = useState('');
-  const [yearsOfExperience, setYearsOfExperience] = useState('');
+  const [enrolmentNo, setEnrolmentNo] = useState("");
+  const [barCouncilRegNo, setBarCouncilRegNo] = useState("");
+  const [yearsOfExperience, setYearsOfExperience] = useState("");
   const [education, setEducation] = useState([]);
   const [workExperience, setWorkExperience] = useState([]);
   const [specialisation, setSpecialisation] = useState([]);
   const [casesHandled, setCasesHandled] = useState([]);
-  const [description, setDescription] = useState('');
+  const [description, setDescription] = useState("");
   const [clientele, setClientele] = useState([]);
   const [courts, setCourts] = useState([]);
   const navigate = useNavigate();
 
-  // Language handling
   const handleAddLanguage = (e) => {
     e.preventDefault();
     if (languageInput && !selectedLanguages.includes(languageInput)) {
       setSelectedLanguages([...selectedLanguages, languageInput]);
     }
-    setLanguageInput('');
+    setLanguageInput("");
   };
 
   const handleRemoveLanguage = (language) => {
     setSelectedLanguages(selectedLanguages.filter((lang) => lang !== language));
   };
 
-  // Tag handling (for specialization, cases handled, etc.)
   const handleAddTag = (setter, value) => {
     setter((prevTags) => {
       if (value && !prevTags.includes(value)) {
@@ -51,52 +49,57 @@ const CreateProfile = () => {
     setter((prevTags) => prevTags.filter((item) => item !== value));
   };
 
-  // Move to next step in the form
   const nextStep = () => {
     setStep(step + 1);
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Prepare FormData for file upload and other data
     const formData = new FormData();
-    formData.append('languages', JSON.stringify(selectedLanguages));
-    formData.append('dob', dob);
-    formData.append('location', location);
-    formData.append('profilePicture', profilePicture);
-    formData.append('enrolmentNo', enrolmentNo);
-    formData.append('barCouncilRegNo', barCouncilRegNo);
-    formData.append('yearsOfExperience', yearsOfExperience);
-    formData.append('education', JSON.stringify(education));
-    formData.append('workExperience', JSON.stringify(workExperience));
-    formData.append('specialisation', JSON.stringify(specialisation));
-    formData.append('casesHandled', JSON.stringify(casesHandled));
-    formData.append('description', description);
-    formData.append('clientele', JSON.stringify(clientele));
-    formData.append('courts', JSON.stringify(courts));
+    formData.append("languages", JSON.stringify(selectedLanguages));
+    formData.append("dob", dob);
+    formData.append("location", location);
+    formData.append("profilePicture", profilePicture);
+    formData.append("enrolmentNo", enrolmentNo);
+    formData.append("barCouncilRegNo", barCouncilRegNo);
+    formData.append("yearsOfExperience", yearsOfExperience);
+    formData.append("education", JSON.stringify(education));
+    formData.append("workExperience", JSON.stringify(workExperience));
+    formData.append("specialisation", JSON.stringify(specialisation));
+    formData.append("casesHandled", JSON.stringify(casesHandled));
+    formData.append("description", description);
+    formData.append("clientele", JSON.stringify(clientele));
+    formData.append("courts", JSON.stringify(courts));
 
     try {
-      const response = await axios.post('http://localhost:3005/api/advocate/createProfile', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          Authorization: `Bearer ${localStorage.getItem('token')}`, // Use token for authentication
-        },
-      });
+      const response = await axios.post(
+        "http://localhost:3005/api/advocate/createProfile",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
 
       if (response.status === 201) {
-        // Inform the user and redirect to sign-in for approval check
-        alert('Profile submitted successfully! Please wait for admin approval to sign in.');
-        navigate('/sign-in'); // Redirect to sign-in page
+        alert(
+          "Profile submitted successfully! Please wait for admin approval to sign in."
+        );
+        navigate("/sign-in");
       }
     } catch (error) {
-      console.error('Error submitting form:', error);
-      // Provide more specific error feedback if possible
-      alert(`Error submitting profile: ${error.response?.data?.message || error.message}`);
+      console.error("Error submitting form:", error);
+
+      alert(
+        `Error submitting profile: ${
+          error.response?.data?.message || error.message
+        }`
+      );
     }
   };
-
 
   return (
     <div className="create-profile-container">
@@ -109,11 +112,15 @@ const CreateProfile = () => {
       <div className="profile-right">
         <h2>Create Profile</h2>
         <div className="progress">
-          <span className={`step ${step === 1 ? 'active' : ''}`}>1</span>
-          <span className={`step ${step === 2 ? 'active' : ''}`}>2</span>
-          <span className={`step ${step === 3 ? 'active' : ''}`}>3</span>
+          <span className={`step ${step === 1 ? "active" : ""}`}>1</span>
+          <span className={`step ${step === 2 ? "active" : ""}`}>2</span>
+          <span className={`step ${step === 3 ? "active" : ""}`}>3</span>
           <span className="step-label">
-            {step === 1 ? 'Basic Details' : step === 2 ? 'Professional Details' : 'Specialisation & Court'}
+            {step === 1
+              ? "Basic Details"
+              : step === 2
+              ? "Professional Details"
+              : "Specialisation & Court"}
           </span>
         </div>
 
@@ -137,8 +144,6 @@ const CreateProfile = () => {
           <ProfessionalDetails
             enrolmentNo={enrolmentNo}
             setEnrolmentNo={setEnrolmentNo}
-            barCouncilRegNo={barCouncilRegNo}
-            setBarCouncilRegNo={setBarCouncilRegNo}
             yearsOfExperience={yearsOfExperience}
             setYearsOfExperience={setYearsOfExperience}
             education={education}
@@ -191,7 +196,9 @@ const BasicDetails = ({
         onChange={(e) => setLanguageInput(e.target.value)}
         placeholder="Add a language"
       />
-      <button onClick={handleAddLanguage} className="add-language-button">Add</button>
+      <button onClick={handleAddLanguage} className="add-language-button">
+        Add
+      </button>
       <div className="language-tags">
         {selectedLanguages.map((language) => (
           <span className="language-tag" key={language}>
@@ -204,7 +211,12 @@ const BasicDetails = ({
 
     <div className="form-group">
       <label>Date of Birth</label>
-      <input type="date" value={dob} onChange={(e) => setDob(e.target.value)} required />
+      <input
+        type="date"
+        value={dob}
+        onChange={(e) => setDob(e.target.value)}
+        required
+      />
     </div>
 
     <div className="form-group">
@@ -220,26 +232,29 @@ const BasicDetails = ({
 
     <div className="form-group">
       <label>Profile Picture</label>
-      <input type="file" onChange={(e) => setProfilePicture(e.target.files[0])} />
+      <input
+        type="file"
+        onChange={(e) => setProfilePicture(e.target.files[0])}
+      />
       <p className="file-info">10 MB Max</p>
     </div>
 
-    <button type="button" onClick={nextStep} className="next-button">Next</button>
+    <button type="button" onClick={nextStep} className="next-button">
+      Next
+    </button>
   </form>
 );
 
 const ProfessionalDetails = ({
   enrolmentNo,
   setEnrolmentNo,
-  barCouncilRegNo,
-  setBarCouncilRegNo,
   yearsOfExperience,
   setYearsOfExperience,
   education,
   setEducation,
   workExperience,
   setWorkExperience,
-  nextStep
+  nextStep,
 }) => (
   <form className="profile-form">
     <div className="form-group">
@@ -249,16 +264,6 @@ const ProfessionalDetails = ({
         value={enrolmentNo}
         onChange={(e) => setEnrolmentNo(e.target.value)}
         placeholder="Enrolment Number"
-        required
-      />
-    </div>
-    <div className="form-group">
-      <label>Bar Council Reg. No.</label>
-      <input
-        type="text"
-        value={barCouncilRegNo}
-        onChange={(e) => setBarCouncilRegNo(e.target.value)}
-        placeholder="Bar Council Registration Number"
         required
       />
     </div>
@@ -289,7 +294,7 @@ const ProfessionalDetails = ({
     <div className="form-group work-experience-section">
       <label>Work Experience</label>
       <div className="work-experience-box">
-      <input type="text" placeholder="Firm / Organisation" required />
+        <input type="text" placeholder="Firm / Organisation" required />
         <div className="date-group">
           <input type="date" placeholder="Start date" required />
           <input type="date" placeholder="End date" required />
@@ -297,7 +302,9 @@ const ProfessionalDetails = ({
         <input type="text" placeholder="Brief of experience" />
       </div>
     </div>
-    <button type="button" onClick={nextStep} className="next-button">Next</button>
+    <button type="button" onClick={nextStep} className="next-button">
+      Next
+    </button>
   </form>
 );
 
@@ -312,12 +319,10 @@ const SpecialisationCourt = ({
   setClientele,
   courts,
   setCourts,
-  handleSubmit
+  handleSubmit,
 }) => {
-  // Define the handleAddTag and handleRemoveTag functions inside the component
   const handleAddTag = (setter, value) => {
     setter((prevTags) => {
-      // Check if the tag already exists before adding
       if (value && !prevTags.includes(value)) {
         return [...prevTags, value];
       }
@@ -338,10 +343,10 @@ const SpecialisationCourt = ({
             type="text"
             placeholder="Add specialisation"
             onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                e.preventDefault(); // Prevent form submission on Enter
+              if (e.key === "Enter") {
+                e.preventDefault();
                 handleAddTag(setSpecialisation, e.target.value);
-                e.target.value = ''; // Clear input after adding
+                e.target.value = "";
               }
             }}
           />
@@ -349,7 +354,12 @@ const SpecialisationCourt = ({
             {specialisation.map((tag) => (
               <span key={tag} className="tag">
                 {tag}
-                <button type="button" onClick={() => handleRemoveTag(setSpecialisation, tag)}>×</button>
+                <button
+                  type="button"
+                  onClick={() => handleRemoveTag(setSpecialisation, tag)}
+                >
+                  ×
+                </button>
               </span>
             ))}
           </div>
@@ -363,10 +373,10 @@ const SpecialisationCourt = ({
             type="text"
             placeholder="Add case type"
             onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                e.preventDefault(); // Prevent form submission on Enter
+              if (e.key === "Enter") {
+                e.preventDefault();
                 handleAddTag(setCasesHandled, e.target.value);
-                e.target.value = ''; // Clear input after adding
+                e.target.value = "";
               }
             }}
           />
@@ -374,7 +384,12 @@ const SpecialisationCourt = ({
             {casesHandled.map((tag) => (
               <span key={tag} className="tag">
                 {tag}
-                <button type="button" onClick={() => handleRemoveTag(setCasesHandled, tag)}>×</button>
+                <button
+                  type="button"
+                  onClick={() => handleRemoveTag(setCasesHandled, tag)}
+                >
+                  ×
+                </button>
               </span>
             ))}
           </div>
@@ -398,10 +413,10 @@ const SpecialisationCourt = ({
             type="text"
             placeholder="Add clientele"
             onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                e.preventDefault(); // Prevent form submission on Enter
+              if (e.key === "Enter") {
+                e.preventDefault();
                 handleAddTag(setClientele, e.target.value);
-                e.target.value = ''; // Clear input after adding
+                e.target.value = "";
               }
             }}
           />
@@ -409,7 +424,12 @@ const SpecialisationCourt = ({
             {clientele.map((tag) => (
               <span key={tag} className="tag">
                 {tag}
-                <button type="button" onClick={() => handleRemoveTag(setClientele, tag)}>×</button>
+                <button
+                  type="button"
+                  onClick={() => handleRemoveTag(setClientele, tag)}
+                >
+                  ×
+                </button>
               </span>
             ))}
           </div>
@@ -423,10 +443,10 @@ const SpecialisationCourt = ({
             type="text"
             placeholder="Add court"
             onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                e.preventDefault(); // Prevent form submission on Enter
+              if (e.key === "Enter") {
+                e.preventDefault();
                 handleAddTag(setCourts, e.target.value);
-                e.target.value = ''; // Clear input after adding
+                e.target.value = "";
               }
             }}
           />
@@ -434,18 +454,23 @@ const SpecialisationCourt = ({
             {courts.map((tag) => (
               <span key={tag} className="tag">
                 {tag}
-                <button type="button" onClick={() => handleRemoveTag(setCourts, tag)}>×</button>
+                <button
+                  type="button"
+                  onClick={() => handleRemoveTag(setCourts, tag)}
+                >
+                  ×
+                </button>
               </span>
             ))}
           </div>
         </div>
       </div>
 
-      <button type="submit" className="submit-button">Submit</button>
+      <button type="submit" className="submit-button">
+        Submit
+      </button>
     </form>
   );
 };
 
-
 export default CreateProfile;
-

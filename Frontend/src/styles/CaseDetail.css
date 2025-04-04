@@ -1,10 +1,9 @@
-/* src/styles/CaseDetail.css */
-
 .case-detail-container {
-  font-family: 'Inter', sans-serif;
-  background-color: #f7f7f7;
+  font-family: "Inter", sans-serif;
+
   min-height: 100vh;
   padding: 20px;
+  background-image: linear-gradient(to top, #e6b980 0%, #eacda3 100%);
 }
 
 .case-detail-content {
@@ -16,7 +15,6 @@
   overflow: hidden;
 }
 
-/* Header Styles */
 .case-detail-header {
   display: flex;
   justify-content: space-between;
@@ -26,7 +24,8 @@
 }
 
 .logo {
-  width: 150px;
+  width: auto;
+  height: 4rem;
 }
 
 .case-detail-nav {
@@ -45,12 +44,10 @@
   color: #0d1238;
 }
 
-/* Main Content Styles */
 .case-detail-main {
   padding: 20px 30px;
 }
 
-/* Case Title Bar */
 .case-title-bar {
   margin-bottom: 25px;
 }
@@ -85,7 +82,6 @@
   color: #666;
 }
 
-/* Tabs Styles */
 .case-tabs {
   display: flex;
   border-bottom: 1px solid #eee;
@@ -105,21 +101,19 @@
 
 .case-tabs button.active {
   color: #0d1238;
-  border-bottom-color: #D4A373;
+  border-bottom-color: #d4a373;
 }
 
 .tab-content {
   min-height: 400px;
 }
 
-/* Details Tab */
 .details-tab h3 {
   font-size: 1.2rem;
   color: #0d1238;
   margin-bottom: 15px;
 }
 
-/* Horizontal case type styling */
 .case-type-section {
   margin-bottom: 25px;
 }
@@ -156,7 +150,6 @@
   color: #333;
 }
 
-/* Case actions section with delete button */
 .case-actions-section {
   margin-top: 20px;
   padding: 15px;
@@ -232,7 +225,7 @@
 
 .contact-button {
   background-color: #0d1238;
-  color: #D4A373;
+  color: #d4a373;
   border: none;
   padding: 8px 15px;
   border-radius: 5px;
@@ -257,9 +250,10 @@
   margin-top: 15px;
 }
 
-.find-lawyer-button, .float-case-button {
+.find-lawyer-button,
+.float-case-button {
   background-color: #0d1238;
-  color: #D4A373;
+  color: #d4a373;
   border: none;
   padding: 10px 20px;
   border-radius: 5px;
@@ -268,7 +262,6 @@
   text-decoration: none;
 }
 
-/* Case Status Timeline */
 .case-status-section {
   margin-bottom: 25px;
 }
@@ -281,7 +274,7 @@
 }
 
 .status-timeline::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 15px;
   left: 0;
@@ -319,7 +312,6 @@
   text-align: center;
 }
 
-/* Notifications Tab */
 .notifications-tab h3 {
   font-size: 1.2rem;
   color: #0d1238;
@@ -361,10 +353,9 @@
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background-color: #D4A373;
+  background-color: #d4a373;
 }
 
-/* Messages Tab */
 .messages-tab h3 {
   font-size: 1.2rem;
   color: #0d1238;
@@ -438,7 +429,7 @@
 
 .message-input button {
   background-color: #0d1238;
-  color: #D4A373;
+  color: #d4a373;
   border: none;
   padding: 0 20px;
   border-radius: 5px;
@@ -446,7 +437,6 @@
   cursor: pointer;
 }
 
-/* Documents Tab */
 .documents-tab h3 {
   font-size: 1.2rem;
   color: #0d1238;
@@ -462,7 +452,7 @@
 
 .upload-document-button {
   background-color: #0d1238;
-  color: #D4A373;
+  color: #d4a373;
   border: none;
   padding: 8px 15px;
   border-radius: 5px;
@@ -511,7 +501,8 @@
   gap: 10px;
 }
 
-.download-button, .open-button {
+.download-button,
+.open-button {
   background-color: transparent;
   padding: 5px 12px;
   border-radius: 5px;
@@ -539,7 +530,8 @@
   background-color: #f0fff4;
 }
 
-.download-button:disabled, .open-button:disabled {
+.download-button:disabled,
+.open-button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }
@@ -551,8 +543,8 @@
   font-style: italic;
 }
 
-/* Loading and Error States */
-.loading, .error-message {
+.loading,
+.error-message {
   padding: 30px;
   text-align: center;
   border-radius: 8px;
@@ -570,17 +562,16 @@
   border: 1px solid #fbd5d5;
 }
 
-/* Footer Styles */
 .case-detail-footer {
   background-color: #0d1238;
-  color: #D4A373;
+  color: #d4a373;
   padding: 30px;
   display: flex;
   justify-content: space-between;
 }
 
 .footer-logo img {
-  width: 300px;
+  width: 28vw;
 }
 
 .footer-links {
@@ -593,13 +584,13 @@
 }
 
 .footer-column h4 {
-  color: #D4A373;
+  color: #d4a373;
   margin-bottom: 15px;
   font-size: 1rem;
 }
 
 .footer-column a {
-  color: #D4A373;
+  color: #d4a373;
   text-decoration: none;
   font-size: 0.9rem;
   display: block;
@@ -610,76 +601,73 @@
   text-decoration: underline;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
   .case-detail-header {
     flex-direction: column;
     text-align: center;
   }
-  
+
   .case-detail-nav {
     margin-top: 15px;
   }
-  
+
   .case-header {
     flex-direction: column;
     align-items: flex-start;
   }
-  
+
   .case-status {
     margin-top: 10px;
   }
-  
+
   .case-tabs {
     overflow-x: auto;
   }
-  
+
   .lawyer-card {
     flex-direction: column;
     text-align: center;
   }
-  
+
   .lawyer-image {
     margin-right: 0;
     margin-bottom: 15px;
   }
-  
+
   .status-timeline {
     flex-direction: column;
     align-items: flex-start;
     gap: 20px;
   }
-  
+
   .status-timeline::before {
     display: none;
   }
-  
+
   .status-step {
     width: 100%;
     flex-direction: row;
   }
-  
+
   .status-indicator {
     margin-right: 15px;
     margin-bottom: 0;
   }
-  
+
   .case-detail-footer {
     flex-direction: column;
   }
-  
+
   .footer-logo {
     margin-bottom: 20px;
     text-align: center;
   }
-  
+
   .footer-links {
     flex-direction: column;
     gap: 20px;
   }
 }
-
-/* Add these styles to your CaseDetail.css file */
 
 .documents-header {
   display: flex;
@@ -697,7 +685,7 @@
 
 .upload-document-button {
   background-color: #0d1238;
-  color: #D4A373;
+  color: #d4a373;
   border: none;
   padding: 8px 15px;
   border-radius: 5px;
@@ -800,7 +788,6 @@
   display: inline-block;
 }
 
-/* Add this for the logout button */
 .case-detail-header .logout-button {
   display: flex;
   align-items: center;
@@ -819,9 +806,8 @@
   background-color: #c03221;
 }
 
-/* Status Timeline Additions */
 .status-update-button {
-  background-color: #2e7d32; /* Green color for action buttons */
+  background-color: #2e7d32;
   color: white;
   border: none;
   border-radius: 4px;
@@ -833,7 +819,7 @@
 }
 
 .status-update-button:hover {
-  background-color: #1b5e20; /* Darker green on hover */
+  background-color: #1b5e20;
 }
 
 .status-update-button:disabled {
@@ -857,10 +843,9 @@
   font-size: 0.9rem;
 }
 
-/* Floating case styles */
 .float-case-button {
   background-color: #0d1238;
-  color: #D4A373;
+  color: #d4a373;
   border: none;
   border-radius: 4px;
   padding: 10px 15px;
@@ -877,12 +862,12 @@
 }
 
 .float-case-button.floating-active {
-  background-color: #d32f2f; /* Red background to indicate active floating state */
+  background-color: #d32f2f;
   color: white;
 }
 
 .float-case-button.floating-active:hover {
-  background-color: #b71c1c; /* Darker red on hover */
+  background-color: #b71c1c;
 }
 
 .float-case-button:disabled {
@@ -894,9 +879,9 @@
 .floating-status {
   margin-top: 15px;
   padding: 10px 15px;
-  background-color: #ffebee; /* Light red background */
+  background-color: #ffebee;
   border-radius: 4px;
-  border-left: 4px solid #d32f2f; /* Red left border */
+  border-left: 4px solid #d32f2f;
 }
 
 .floating-badge {

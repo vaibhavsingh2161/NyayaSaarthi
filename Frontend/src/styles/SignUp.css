@@ -1,16 +1,13 @@
-/* src/styles/SignUp.css */
-
 .signup-container {
   display: flex;
   height: 100vh;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 }
 
-/* Left Section (Profile Left) */
 .profile-left {
   flex: 1;
-  background-color: #0d1238; /* Dark blue background */
-  color: #D4A373; /* Gold color for text */
+  background-color: #0d1238;
+  color: #d4a373;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -19,30 +16,31 @@
 }
 
 .profile-left .logo {
-  width: 400px; /* Increased width for larger logo */
-  margin-bottom: 20px;
+  width: 25rem;
+  height: auto;
+  margin-bottom: 2rem;
 }
 
 .profile-left .divider {
   width: 70%;
   height: 1px;
-  background-color: #D4A373; /* Gold color */
-  margin: 20px 0; /* Space between logo and quote */
+  background-color: #d4a373;
+  margin: 20px 0;
 }
 
 .profile-left .quote {
-  font-size: 2rem; /* Larger font for the quote */
+  font-size: 3rem;
   font-weight: 500;
   text-align: center;
   line-height: 1.5;
   margin-top: 1.5rem;
+  font-family: cursive;
   max-width: 80%;
 }
 
-/* Right Section (Profile Right) */
 .profile-right {
   flex: 1;
-  background-color: #FFFFFF; /* White background */
+  background-color: #ffffff;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -51,13 +49,12 @@
 }
 
 .profile-right h2 {
-  font-size: 2.4rem; /* Larger heading font */
+  font-size: 2.4rem;
   font-weight: 600;
-  color: #0d1238; /* Dark blue for heading */
+  color: #0d1238;
   margin-bottom: 1.5rem;
 }
 
-/* Material-style form container */
 .signup-form-container {
   width: 80%;
   max-width: 450px;
@@ -68,7 +65,6 @@
   background-color: #fff;
 }
 
-/* Form Styling */
 .signup-form {
   display: flex;
   flex-direction: column;
@@ -77,40 +73,39 @@
 .signup-form input {
   margin-bottom: 1.2rem;
   padding: 1rem;
-  font-size: 1.1rem; /* Larger font for input */
+  font-size: 1.1rem;
   font-weight: 400;
   border: 1px solid #ccc;
   border-radius: 5px;
 }
 
-/* Role Selection Styling */
 .role-selection {
   display: flex;
   justify-content: space-around;
   align-items: center;
   margin: 1rem 0;
-  gap: 1rem; /* Add a gap between the two labels */
+  gap: 1rem;
 }
 
 .role-selection label {
   font-size: 1.1rem;
-  color: #0d1238; /* Dark blue for text */
+  color: #0d1238;
   font-weight: 500;
   display: flex;
   align-items: center;
-  gap: 0.3rem; /* Add a small gap between radio button and label text */
+  gap: 0.3rem;
 }
 
 .role-selection input[type="radio"] {
-  margin-right: 0; /* Remove default margin to bring label text closer */
-  accent-color: #0d1238; /* Dark blue for radio button */
+  margin-right: 0;
+  accent-color: #0d1238;
 }
-/* Sign Up Button */
+
 .signup-button {
-  background-color: #0d1238; /* Dark blue button */
-  color: #D4A373; /* Gold color for text */
+  background-color: #0d1238;
+  color: #d4a373;
   padding: 0.8rem;
-  font-size: 1.1rem; /* Slightly larger font for button */
+  font-size: 1.1rem;
   font-weight: 500;
   border: none;
   border-radius: 5px;
@@ -119,12 +114,11 @@
 }
 
 .signup-button:hover {
-  background-color: #333A56; /* Slightly lighter shade on hover */
+  background-color: #333a56;
 }
 
-/* Link to Sign In */
 .login-link {
-  font-size: 1rem; /* Increased font size for login link */
+  font-size: 1rem;
   font-weight: 400;
   color: #666;
   text-align: center;
@@ -132,7 +126,7 @@
 }
 
 .login-link a {
-  color: #0d1238; /* Dark blue for link */
+  color: #0d1238;
   font-weight: 500;
   text-decoration: none;
 }

@@ -1,7 +1,5 @@
-/* src/styles/CreateCase.css */
-
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   margin: 0;
   padding: 0;
   background-color: #f7f7f7;
@@ -14,7 +12,6 @@ body {
   min-height: 100vh;
 }
 
-/* Header Styling */
 .create-case-header {
   display: flex;
   justify-content: space-between;
@@ -25,7 +22,8 @@ body {
 }
 
 .logo {
-  width: 150px;
+  width: auto;
+  height: 4rem;
 }
 
 .header-nav a {
@@ -39,7 +37,6 @@ body {
   color: #0d1238;
 }
 
-/* Main Content */
 .create-case-content {
   flex: 1;
   padding: 40px;
@@ -72,7 +69,6 @@ body {
   box-sizing: border-box;
 }
 
-/* Form Group for Case Type */
 .form-group {
   display: flex;
   flex-direction: column;
@@ -94,10 +90,8 @@ body {
   border: 1px solid #ccc;
   border-radius: 4px;
   background-color: #fff;
-  /* appearance: menulist;  */
 }
 
-/* Textarea container with mic button */
 .textarea-container {
   position: relative;
   width: 100%;
@@ -106,10 +100,9 @@ body {
 .case-textarea {
   height: 200px;
   resize: none;
-  padding-right: 50px; /* Make room for the mic button */
+  padding-right: 50px;
 }
 
-/* Speech button styling */
 .speech-button {
   position: absolute;
   right: 15px;
@@ -194,12 +187,12 @@ body {
 
 .form-buttons {
   display: flex;
-  justify-content: flex-end; /* Align to the right */
+  justify-content: flex-end;
   margin-top: 10px;
 }
 
 .create-button {
-  width: 200px; /* Fixed width */
+  width: 200px;
   padding: 12px;
   font-size: 1em;
   border: none;
@@ -220,10 +213,9 @@ body {
   cursor: not-allowed;
 }
 
-/* Footer Styling */
 .create-case-footer {
   background-color: #0d1238;
-  color: #D4A373;
+  color: #d4a373;
   padding: 40px;
   display: flex;
   justify-content: space-between;
@@ -243,13 +235,13 @@ body {
 }
 
 .footer-column h4 {
-  color: #D4A373;
+  color: #d4a373;
   margin-bottom: 15px;
   font-size: 1.1em;
 }
 
 .footer-column a {
-  color: #D4A373;
+  color: #d4a373;
   text-decoration: none;
   font-size: 0.9em;
   display: block;
@@ -260,29 +252,28 @@ body {
   text-decoration: underline;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
   .create-case-header {
     flex-direction: column;
     padding: 15px;
   }
-  
+
   .header-nav {
     margin-top: 15px;
   }
-  
+
   .create-case-content {
     padding: 20px;
   }
-  
+
   .create-case-footer {
     flex-direction: column;
   }
-  
+
   .footer-logo {
     margin-bottom: 20px;
   }
-  
+
   .footer-links {
     flex-direction: column;
     gap: 20px;
@@ -295,7 +286,7 @@ body {
   background-repeat: no-repeat;
   background-position: right 10px center;
   background-size: 16px;
-  padding-right: 30px; /* Make room for the arrow */
+  padding-right: 30px;
   border: 1px solid #d0d0d0;
   border-radius: 8px;
   padding: 12px 40px 12px 15px;

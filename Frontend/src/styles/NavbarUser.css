@@ -1,0 +1,108 @@
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  background-color: #ffffff;
+  box-shadow: 0 1px 10px #fcc255;
+  border-radius: 15px;
+  height: 6rem;
+}
+
+.logo {
+  width: auto;
+  height: 4rem;
+}
+
+.dashboard-nav {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.dashboard-nav a {
+  color: #333;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease-in-out;
+}
+
+.dashboard-nav a:hover,
+.dashboard-nav .active {
+  color: #0d1238;
+  font-weight: 600;
+}
+
+.logout-button {
+  background: none;
+  border: none;
+  color: #d9534f;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.logout-button:hover {
+  color: #ffffff;
+}
+
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.dashboard-nav a {
+  color: #333;
+  text-decoration: none;
+  font-weight: 500;
+  position: relative;
+  transition: color 0.3s ease-in-out;
+}
+
+.dashboard-nav a::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -3px;
+  width: 0;
+  height: 2px;
+  background-color: #0d1238;
+  transition: width 0.3s ease-in-out, left 0.3s ease-in-out;
+}
+
+.dashboard-nav a:hover::after,
+.dashboard-nav .active::after {
+  width: 100%;
+  left: 0;
+}
+
+.dashboard-nav a:hover {
+  color: #0d1238;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .dashboard-nav {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    background: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    border-radius: 8px;
+  }
+
+  .dashboard-nav.open {
+    display: flex;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+}

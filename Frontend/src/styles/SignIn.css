@@ -1,14 +1,13 @@
 .create-profile-container {
   display: flex;
   height: 100vh;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 }
 
-/* Left Section */
 .profile-left {
   flex: 1;
-  background-color: #0d1238; /* Dark blue background */
-  color: #D4A373; /* Gold color for text */
+  background-color: #0d1238;
+  color: #d4a373;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -17,93 +16,91 @@
 }
 
 .profile-left .logo {
-  width: 300px; /* Adjusted size for better proportions */
-  margin-bottom: 20px;
+  width: 25rem;
+  height: auto;
+  margin-bottom: 2rem;
 }
 
 .profile-left .divider {
   width: 70%;
   height: 1px;
-  background-color: #D4A373;
+  background-color: #d4a373;
   margin: 20px 0;
 }
 
 .profile-left .quote {
-  font-size: 1.6rem; /* Adjusted for symmetry */
+  font-size: 3rem;
   font-weight: 500;
   text-align: center;
   line-height: 1.5;
   margin-top: 1.5rem;
   max-width: 80%;
+  font-family: cursive;
 }
 
-/* Right Section */
 .profile-right {
   flex: 1;
   display: flex;
   justify-content: center;
-  align-items: center; /* Ensures vertical centering */
-  background-color: #FFFFFF; /* White background */
+  align-items: center;
+  background-color: #ffffff;
   padding: 2rem;
-  position: relative; /* Allows precise positioning if needed */
+  position: relative;
 }
 
 .profile-right h2 {
   font-size: 2.4rem;
   font-weight: 600;
-  color: #0d1238; /* Dark blue for heading */
+  color: #0d1238;
   margin-bottom: 1.5rem;
   text-align: center;
 }
 
-/* Material-style form container */
 .signin-form-container {
   width: 100%;
-  max-width: 350px; /* Matches the button and input max width */
+  max-width: 350px;
   padding: 2rem;
   border: 1px solid #ddd;
   border-radius: 8px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   background-color: #fff;
   text-align: center;
-  position: relative; /* Allows precise centering adjustments */
+  position: relative;
 }
 
 .profile-form {
   display: flex;
   flex-direction: column;
-  gap: 1.2rem; /* Consistent spacing between fields */
+  gap: 1.2rem;
 }
 
 .profile-form input {
-  width: 100%; /* Full width of the container */
+  width: 100%;
   padding: 1rem;
   font-size: 1.1rem;
   border: 2px solid #ccc;
   border-radius: 6px;
-  box-sizing: border-box; /* Ensures consistent padding calculation */
+  box-sizing: border-box;
 }
 
-/* Adjusted Sign-In Button */
 .submit-button {
-  background-color: #0d1238; /* Dark blue button */
-  color: #D4A373; /* Gold color for text */
-  padding: 1.2rem; /* Increased padding for a larger button */
-  font-size: 1.2rem; /* Slightly larger font size */
-  font-weight: 600; /* Bolder text for emphasis */
+  background-color: #0d1238;
+  color: #d4a373;
+  padding: 1.2rem;
+  font-size: 1.2rem;
+  font-weight: 600;
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  width: 100%; /* Full width to match the input fields */
-  max-width: 450px; /* Matches the form container's max width */
-  margin: 0 auto; /* Centers the button */
+  width: 100%;
+  max-width: 450px;
+  margin: 0 auto;
 }
 
 .submit-button:hover {
-  background-color: #333A56; /* Slightly lighter shade on hover */
+  background-color: #333a56;
 }
 
-/* Sign Up Prompt */
 .signup-prompt {
   font-size: 1rem;
   color: #666;
@@ -111,7 +108,7 @@
 }
 
 .signup-prompt a {
-  color: #0d1238; /* Dark blue for link */
+  color: #0d1238;
   font-weight: 500;
   text-decoration: none;
 }
@@ -120,10 +117,9 @@
   text-decoration: underline;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
   .profile-left {
-    display: none; /* Hide the left section on smaller screens */
+    display: none;
   }
 
   .profile-right {
@@ -132,36 +128,35 @@
   }
 
   .signin-form-container {
-    width: 90%; /* Adjust the form container width for smaller screens */
+    width: 90%;
   }
 
   .profile-form input,
   .submit-button {
-    width: 100%; /* Ensure inputs and button take full width */
+    width: 100%;
   }
 }
 
-/* Align radio buttons properly */
 .role-selection {
   display: flex;
-  gap: 16px; /* Space between the radio button groups */
-  margin: 16px 0; /* Space above and below the radio button group */
+  gap: 16px;
+  margin: 16px 0;
 }
 
 .role-selection label {
   display: flex;
-  align-items: center; /* Vertically center-align text and radio buttons */
-  font-size: 14px; /* Adjust text size */
-  color: #333; /* Text color */
+  align-items: center;
+  font-size: 14px;
+  color: #333;
   cursor: pointer;
 }
 
 input[type="radio"] {
-  width: 16px; /* Fixed width for proper size */
-  height: 16px; /* Fixed height for proper size */
-  margin: 0; /* Remove default margin */
-  margin-right: 8px; /* Space between the button and the label text */
-  -webkit-appearance: radio; /* Ensures the default circular appearance in webkit browsers */
-  appearance: radio; /* Ensures the default circular appearance in modern browsers */
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  margin-right: 8px;
+  -webkit-appearance: radio;
+  appearance: radio;
   cursor: pointer;
 }

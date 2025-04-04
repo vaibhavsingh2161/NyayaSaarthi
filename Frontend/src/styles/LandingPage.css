@@ -1,18 +1,15 @@
-/* LandingPage.css */
-
-/* Global Styles */
-body, html {
+body,
+html {
   margin: 0;
   padding: 0;
-  font-family: 'Georgia', serif;
+  font-family: "Georgia", serif;
 }
 
 .landing-page {
   text-align: left;
-  font-family: 'Georgia', serif;
+  font-family: "Georgia", serif;
 }
 
-/* Header */
 .header {
   display: flex;
   justify-content: space-between;
@@ -22,7 +19,8 @@ body, html {
 }
 
 .logo {
-  width: 200px;
+  width: auto;
+  height: 4rem;
 }
 
 .nav {
@@ -63,7 +61,6 @@ body, html {
   color: #fff;
 }
 
-/* Hero Section */
 .hero {
   display: flex;
   align-items: center;
@@ -84,8 +81,7 @@ body, html {
 }
 
 .highlight {
-  color: #4a3b99;
-  border-bottom: 3px solid #333;
+  color: #3c4798;
 }
 
 .hero-text p {
@@ -99,7 +95,6 @@ body, html {
   height: auto;
 }
 
-/* Adjust Button Styles */
 button:focus {
   outline: none;
 }
@@ -107,8 +102,7 @@ button:focus {
 button:hover {
   opacity: 0.9;
 }
-  
-  /* Legal Help Section */
+
 .legal-help-section {
   background-color: #f4f7fb;
   padding: 60px 40px;
@@ -203,10 +197,9 @@ button:hover {
   color: #666;
   margin-top: 5px;
 }
-  
- /* Indian Law Search Portal Section */
+
 .law-search-portal {
-  background-color: #faf1dc; /* Light cream background */
+  background-color: #faf1dc;
   padding: 80px 20px;
   text-align: center;
   position: relative;
@@ -245,7 +238,7 @@ button:hover {
 }
 
 .law-search-content .highlight {
-  color: #b87437; /* Highlight color for keywords */
+  color: #b87437;
   font-weight: bold;
 }
 
@@ -258,24 +251,22 @@ button:hover {
   opacity: 0.9;
 }
 
-/* Optional: Background illustration for atmosphere */
 .law-search-portal::before {
   content: "";
   position: absolute;
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  /* background-image: url('/images/background-illustration.png'); Placeholder for background illustration */
+
   background-size: cover;
   width: 100%;
   height: 100%;
   opacity: 0.2;
   z-index: -1;
 }
-  
- /* Best Features Section */
+
 .features-section {
-  background: linear-gradient(to right, #eef0f8, #faf5ff); /* Light gradient background */
+  background: linear-gradient(to right, #eef0f8, #faf5ff);
   padding: 80px 20px;
   text-align: center;
 }
@@ -338,7 +329,6 @@ button:hover {
   color: #333;
 }
 
-/* Responsive Adjustments */
 @media (max-width: 768px) {
   .features-cards {
     flex-direction: column;
@@ -349,22 +339,22 @@ button:hover {
     width: 90%;
   }
 }
-  
-  .footer {
-    background-color: #0d1238;
-    color: #ffffff;
-    padding: 40px 20px;
-  }
-  
-  .footer-links {
-    display: flex;
-    justify-content: space-around;
-    padding-top: 20px;
-  }
-  
-  .footer-links a {
-    color: #ccc;  /* Changed from #ccw to #ccc for light gray */
-    text-decoration: none;
-    display: block;
-    margin-top: 10px;
+
+.footer {
+  background-color: #0d1238;
+  color: #ffffff;
+  padding: 40px 20px;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: space-around;
+  padding-top: 20px;
+}
+
+.footer-links a {
+  color: #ccc;
+  text-decoration: none;
+  display: block;
+  margin-top: 10px;
 }

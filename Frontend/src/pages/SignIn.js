@@ -2,36 +2,32 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/SignIn.css";
-import logo from '../assets/golden nyayasarthi logo.png';
+import logo from "../assets/golden nyayasarthi logo.png";
 function SignIn() {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
-  const [error, setError] = useState(""); // State to track error messages
-  const [role, setRole] = useState(""); // State to track selected role
+  const [error, setError] = useState("");
+  const [role, setRole] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate(); // For redirecting after successful login
+  const navigate = useNavigate();
 
-  // Handle input change
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  // Handle role selection
   const handleRoleChange = (e) => {
     setRole(e.target.value);
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setIsLoading(true);
 
-    // Validation for missing fields
     if (!formData.email || !formData.password || !role) {
       setError("Please fill in all fields, including selecting your role.");
       setIsLoading(false);
@@ -39,30 +35,23 @@ function SignIn() {
     }
 
     try {
-      // Log the request being made for debugging
       console.log("Sending login request with:", { ...formData, role });
-      
-      // Make API call to login
+
       const response = await axios.post(
         "http://localhost:3005/api/users/login",
         { ...formData, role }
       );
 
-      // Log successful response for debugging
       console.log("Login successful:", response.data);
 
-      // Store the token and user info
       localStorage.setItem("token", response.data.token || "");
       localStorage.setItem("userRole", role);
       localStorage.setItem("userName", response.data.name || "");
 
-      // Alert success
       alert(`Welcome back, ${response.data.name || "User"}!`);
 
-      // Debug log
       console.log("Redirecting user with role:", role);
 
-      // Redirect based on the role
       if (role === "advocate") {
         console.log("Redirecting to advocate dashboard");
         navigate("/advocate-dashboard");
@@ -83,18 +72,18 @@ function SignIn() {
 
   return (
     <div className="create-profile-container">
-      {/* Profile Left Section */}
+      {}
       <div className="profile-left">
         <img src={logo} alt="Logo" className="logo" />
         <div className="divider"></div>
         <p className="quote">Law without justice is a wound without a cure.</p>
       </div>
 
-      {/* Profile Right Section */}
+      {}
       <div className="profile-right">
         <h2>Sign In</h2>
         <div className="signin-form-container">
-          {/* Error message */}
+          {}
           {error && <p className="error-message">{error}</p>}
 
           <form className="profile-form" onSubmit={handleSubmit}>
@@ -138,8 +127,8 @@ function SignIn() {
                 Plaintiff
               </label>
             </div>
-            <button 
-              type="submit" 
+            <button
+              type="submit"
               className="submit-button"
               disabled={isLoading}
             >

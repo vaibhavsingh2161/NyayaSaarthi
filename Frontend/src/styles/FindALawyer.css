@@ -1,201 +1,333 @@
 .find-a-lawyer-container {
-    padding: 20px;
-    font-family: 'Inter', sans-serif;
-  }
-  
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
-  .logo {
-    width: 200px;
-  }
-  
-  .header-nav {
-    display: flex;
-    gap: 20px;
-  }
-  
-  .header-nav a {
-    text-decoration: none;
-    font-size: 1rem;
-    color: #0d1238;
-    font-weight: bold;
-  }
-  
-  .header-nav a:hover {
-    text-decoration: underline;
-  }
-  
-  .filter-bar {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin: 20px 0 30px;
-    padding: 20px;
-    background-color: #f8f9fa;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-  }
-  
-  .filter-select {
-    padding: 12px 15px;
-    font-size: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    flex: 1;
-    max-width: 300px;
-    background-color: white;
-    transition: border-color 0.2s ease;
-    appearance: menulist; /* Show dropdown arrow */
-  }
-  
-  .filter-select:focus {
-    outline: none;
-    border-color: #0d1238;
-    box-shadow: 0 0 0 2px rgba(13, 18, 56, 0.1);
-  }
-  
-  .search-button {
-    padding: 12px 20px;
-    font-size: 1.1rem;
-    background-color: #0d1238;
-    color: #D4A373;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.2s ease, transform 0.1s ease;
-  }
-  
-  .search-button:hover {
-    background-color: #161d42;
-    transform: translateY(-1px);
-  }
-  
-  .search-button:active {
-    transform: translateY(1px);
-  }
-  
-  /* Lawyer profile styling */
-  .lawyer-list {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-  
-  .lawyer-profile {
-    display: flex;
-    align-items: center;
-    padding: 20px;
-    border: 2px solid #0d1238; /* Bold border for material style */
-    border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-  }
-  
-  .profile-image {
-    width: 100px;
-    height: 100px;
-    background-color: #f0f0f0;
-    border-radius: 10px;
-    overflow: hidden;
-  }
-  
-  .profile-pic {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
-  .profile-details {
-    flex: 1;
-    padding: 0 20px;
-  }
-  
-  .lawyer-name {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #0d1238;
-  }
-  
-  .area-of-practice {
-    font-size: 0.9rem;
-    color: #333;
-  }
-  
-  .rating {
-    display: flex;
-    align-items: center;
-    font-size: 1rem;
-    color: #333;
-  }
-  
-  .rating-score {
-    font-weight: bold;
-    margin-left: 5px;
-  }
-  
-  .rating-count {
-    color: #666;
-    margin-left: 5px;
-  }
-  
-  .location,
-  .experience {
-    font-size: 0.9rem;
-    color: #666;
-  }
-  
-  .contact-button {
-    padding: 10px 15px;
-    font-size: 1rem;
-    color: #D4A373;
-    background-color: #0d1238;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-  }
-  
-  .footer {
-    margin-top: 40px;
-    text-align: center;
-    font-size: 0.9rem;
-    color: #666;
-  }
-  
-  /* Filter indicator and clear button styles */
-  .filter-indicator {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-    font-size: 0.9rem;
-    color: #333;
-  }
-  
-  .filter-tag {
-    display: inline-block;
-    background-color: #0d1238;
-    color: #D4A373;
-    padding: 4px 10px;
-    border-radius: 15px;
-    margin: 0 5px;
-    font-weight: 500;
-  }
-  
-  .clear-filter-button {
-    padding: 12px 15px;
-    font-size: 0.9rem;
-    background-color: #f0f0f0;
-    color: #333;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-  }
-  
-  .clear-filter-button:hover {
-    background-color: #e0e0e0;
-  }
+  padding: 20px;
+  font-family: "Inter", sans-serif;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  width: auto;
+  height: 4rem;
+}
+
+main h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #0d1238;
+  margin: 2rem 0 1rem 0;
+  text-align: center;
+}
+.header-nav {
+  display: flex;
+  gap: 20px;
+}
+
+.header-nav a {
+  text-decoration: none;
+  font-size: 1rem;
+  color: #0d1238;
+  font-weight: bold;
+}
+
+.header-nav a:hover {
+  text-decoration: underline;
+}
+
+.filter-bar {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin: 20px 0 30px;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.filter-select {
+  padding: 12px 15px;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  flex: 1;
+  max-width: 300px;
+  background-color: white;
+  transition: border-color 0.2s ease;
+}
+
+.filter-select:focus {
+  outline: none;
+  border-color: #0d1238;
+  box-shadow: 0 0 0 2px rgba(13, 18, 56, 0.1);
+}
+
+.search-button {
+  padding: 12px 20px;
+  font-size: 1.1rem;
+  background-color: #0d1238;
+  color: #d4a373;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.search-button:hover {
+  background-color: #161d42;
+  transform: translateY(-1px);
+}
+
+.search-button:active {
+  transform: translateY(1px);
+}
+
+.lawyer-profile {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  border: 2px solid #0d1238;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+
+.profile-image {
+  width: 100px;
+  height: 100px;
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.profile-pic {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-details {
+  flex: 1;
+  padding: 0 20px;
+}
+
+.lawyer-name {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #0d1238;
+}
+
+.area-of-practice {
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  color: #333;
+}
+
+.rating-score {
+  font-weight: bold;
+  margin-left: 5px;
+}
+
+.rating-count {
+  color: #666;
+  margin-left: 5px;
+}
+
+.location,
+.experience {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.contact-button {
+  padding: 10px 15px;
+  font-size: 1rem;
+  color: #d4a373;
+  background-color: #0d1238;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.dashboard-footer {
+  background-color: #0d1238;
+  color: #d4a373;
+  padding: 30px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.footer-logo img {
+  width: 300px;
+}
+
+.footer-links {
+  display: flex;
+  gap: 40px;
+}
+
+.footer-column {
+  text-align: left;
+}
+
+.footer-column h4 {
+  color: #d4a373;
+  margin-bottom: 15px;
+  font-size: 1rem;
+}
+
+.footer-column a {
+  color: #d4a373;
+  text-decoration: none;
+  font-size: 0.9rem;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.footer-column a:hover {
+  text-decoration: underline;
+}
+
+.filter-indicator {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.filter-tag {
+  display: inline-block;
+  background-color: #0d1238;
+  color: #d4a373;
+  padding: 4px 10px;
+  border-radius: 15px;
+  margin: 0 5px;
+  font-weight: 500;
+}
+
+.clear-filter-button {
+  padding: 12px 15px;
+  font-size: 0.9rem;
+  background-color: #f0f0f0;
+  color: #333;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.clear-filter-button:hover {
+  background-color: #e0e0e0;
+}
+
+.lawyer-list-container {
+  padding: 20px;
+  text-align: center;
+}
+
+.no-lawyers-msg {
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.lawyer-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.lawyer-card {
+  display: flex;
+  align-items: center;
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  border: 2px solid #e0e0e0;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.lawyer-card:hover {
+  transform: translateY(-3px);
+  border-color: #0d1238;
+}
+
+.profile-image {
+  width: 80px;
+  height: 80px;
+  border-radius: 10%;
+  overflow: hidden;
+  margin-right: 20px;
+  flex-shrink: 0;
+}
+
+.profile-pic {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20%;
+  border: 3px solid #0d1238;
+}
+
+.profile-details {
+  flex: 1;
+  text-align: left;
+  margin: 1rem;
+}
+
+.lawyer-name {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #0d1238;
+  margin-bottom: 5px;
+}
+
+.lawyer-specialisation {
+  font-size: 0.9rem;
+  color: #444;
+  margin-bottom: 5px;
+}
+
+.lawyer-location,
+.lawyer-experience,
+.lawyer-languages {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.rating {
+  font-size: 1rem;
+  color: gold;
+  margin-top: 5px;
+}
+
+.contact-button {
+  padding: 10px 15px;
+  font-size: 1rem;
+  color: white;
+  background-color: #0d1238;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.contact-button:hover {
+  background-color: #161d42;
+}
+
+.contact-button.disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}

@@ -1,8 +1,6 @@
-/* EditProfile.css */
-
 .edit-profile-container {
-  font-family: 'Inter', sans-serif;
-  color: #333A56;
+  font-family: "Inter", sans-serif;
+  color: #333a56;
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -19,7 +17,7 @@
 
 .profile-header h2 {
   font-size: 1.8rem;
-  color: #333A56;
+  color: #333a56;
   font-weight: 600;
 }
 
@@ -55,12 +53,12 @@
   margin-bottom: 1.5rem;
   padding: 1.5rem;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .form-section h3 {
   font-size: 1.2rem;
-  color: #333A56;
+  color: #333a56;
   margin-bottom: 1rem;
   border-bottom: 1px solid #eee;
   padding-bottom: 0.5rem;
@@ -92,7 +90,7 @@
 .form-group textarea:focus,
 .form-group select:focus {
   outline: none;
-  border-color: #D4A373;
+  border-color: #d4a373;
   box-shadow: 0 0 0 2px rgba(212, 163, 115, 0.2);
 }
 
@@ -107,7 +105,7 @@
 }
 
 .add-tag-btn {
-  background-color: #D4A373;
+  background-color: #d4a373;
   color: white;
   border: none;
   padding: 0.5rem 1rem;
@@ -157,7 +155,7 @@
 }
 
 .add-complex-btn {
-  background-color: #D4A373;
+  background-color: #d4a373;
   color: white;
   border: none;
   padding: 0.5rem 1rem;
@@ -219,11 +217,11 @@
 }
 
 .save-btn {
-  background-color: #333A56;
+  background-color: #333a56;
   color: white;
   border: none;
   padding: 0.75rem 1.5rem;
   border-radius: 4px;
   cursor: pointer;
   font-weight: 500;
-} 
+}
