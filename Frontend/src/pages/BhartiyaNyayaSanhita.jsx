@@ -1,12 +1,13 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import SearchComponent from "../components/SearchComponent";
 import LawCard from "../components/LawCard";
 import NavbarUser from "../components/NavbarUser";
 import NavbarAdv from "../components/NavbarAdv";
-import logo from "../assets/golden nyayasarthi logo.png";
-import { useNavigate } from "react-router-dom";
-import bgg from "../assets/bg2.png";
 import axios from "axios";
+import "../styles/BhartiyaNyayaSanhita.css";
+import logo from "../assets/golden nyayasarthi logo.png";
+import footerLogo from "../assets/Component 1.png";
 
 export default function BhartiyaNyayaSanhita() {
   const [query, setQuery] = useState("");
@@ -15,6 +16,16 @@ export default function BhartiyaNyayaSanhita() {
   const [selectedChapter, setSelectedChapter] = useState("");
   const [chapterTitle, setChapterTitle] = useState("");
   const [loading, setLoading] = useState(false);
+  const [popularSearches, setPopularSearches] = useState([
+    "Criminal Defamation", "Domestic Violence", "Cyber Crime", 
+    "Property Dispute", "Murder", "Theft", "Traffic Violation"
+  ]);
+  const [recentChapters, setRecentChapters] = useState([
+    { chapter: "9", title: "Offences Against Property" },
+    { chapter: "5", title: "Offences Against Public Order" },
+    { chapter: "16", title: "Offences Affecting Life" }
+  ]);
+  const [showIntroduction, setShowIntroduction] = useState(true);
   const [userRole, setUserRole] = useState(localStorage.getItem("userRole"));
   const navigate = useNavigate();
 
@@ -25,6 +36,7 @@ export default function BhartiyaNyayaSanhita() {
     if (savedSections && savedChapter) {
       setChapterSections(JSON.parse(savedSections));
       setSelectedChapter(savedChapter);
+      setShowIntroduction(false);
       localStorage.removeItem("selectedChapterSections");
       localStorage.removeItem("selectedChapter");
     }
@@ -53,6 +65,7 @@ export default function BhartiyaNyayaSanhita() {
 
     const fetchData = async () => {
       try {
+        setLoading(true);
         const response = await fetch(
           `http://localhost:3005/api/nyaya-sanhita/search?q=${encodeURIComponent(
             query
@@ -60,8 +73,11 @@ export default function BhartiyaNyayaSanhita() {
         );
         const data = await response.json();
         setResults(data);
+        setShowIntroduction(false);
       } catch (error) {
         console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -70,6 +86,23 @@ export default function BhartiyaNyayaSanhita() {
 
   const handleSearch = (newQuery) => {
     setQuery(newQuery);
+  };
+
+  const handlePopularSearchClick = (searchTerm) => {
+    setQuery(searchTerm);
+  };
+
+  const handleRecentChapterClick = async (chapter) => {
+    try {
+      const sections = await fetchSectionsByChapter(chapter);
+      if (sections) {
+        localStorage.setItem("selectedChapterSections", JSON.stringify(sections));
+        localStorage.setItem("selectedChapter", chapter);
+        window.location.reload(); // Force a hard reload
+      }
+    } catch (error) {
+      console.error("Error handling chapter click:", error);
+    }
   };
 
   const fetchSectionsByChapter = async (chapter) => {
@@ -116,94 +149,169 @@ export default function BhartiyaNyayaSanhita() {
       console.error("Logout error:", error);
     } finally {
       localStorage.removeItem("token");
-      localStorage.removeItem("userId");
       localStorage.removeItem("userRole");
+      localStorage.removeItem("userId");
       navigate("/sign-in");
     }
   };
 
-  const NavbarComponent = userRole === "advocate" ? NavbarAdv : NavbarUser;
-
   return (
-    <div
-      className="flex flex-col items-center"
-      style={{
-        backgroundImage: `url(${bgg})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        minHeight: "100vh",
-        width: "100%",
-      }}
-    >
-      {}
+    <div className="dashboard-container">
+      {userRole === "advocate" ? (
+        <NavbarAdv logo={logo} handleLogout={handleLogout} />
+      ) : (
+        <NavbarUser logo={logo} handleLogout={handleLogout} />
+      )}
 
-      <div className="w-full md:w-2/3 p-4 mt-1">
-        <button
-          onClick={() =>
-            navigate(
-              userRole === "advocate" ? "/advocate-dashboard" : "/dashboard"
-            )
-          }
-          className="mb-4 bg-yellow-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-700 transition"
-        >
-          ← Back to Dashboard
-        </button>
+      <section className="section nyaya-sanhita-header">
+        <h3>Bharatiya Nyaya Sanhita, 2023</h3>
+        <p>
+          Explore Indian criminal law and find relevant sections based on your search query.
+        </p>
+      </section>
 
-        <SearchComponent onSearch={handleSearch} />
-
-        <div className="flex pt-4 justify-center flex-wrap">
-          {results.length > 0
-            ? results.map((result, index) => (
-                <LawCard
-                  key={index}
-                  chapter={result.chapter || "Unknown"}
-                  section={result.section_number || "Unknown"}
-                  sectionTitle={result.title || "No Title"}
-                  description={result.description || "No Description"}
-                  fetchChapterTitle={fetchChapterTitle}
-                  onFetchSections={fetchSectionsByChapter}
-                />
-              ))
-            : chapterSections.length === 0 && (
-                <div className="text-center text-gray-700 mt-8">
-                  <h2 className="text-2xl font-bold text-gray-900">
-                    Increase Your Knowledge on Law
-                  </h2>
-                  <p className="mt-2 text-gray-800">
-                    Explore the rich details of Indian Law, including chapters,
-                    sections, and detailed descriptions. Start by searching for
-                    legal topics, case laws, or specific sections!
-                  </p>
-                </div>
-              )}
+      <section className="section search-section">
+        <h3>Search for Laws</h3>
+        <div className="search-wrapper">
+          <SearchComponent onSearch={handleSearch} />
         </div>
+        
+        <div className="popular-searches">
+          <p className="popular-label">Popular searches:</p>
+          <div className="search-tags">
+            {popularSearches.map((term, index) => (
+              <button
+                key={index}
+                onClick={() => handlePopularSearchClick(term)}
+                className="search-tag"
+              >
+                {term}
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
 
-        {loading && (
-          <p className="text-center text-gray-700 mt-4">Loading sections...</p>
-        )}
-        {chapterSections.length > 0 && !loading && (
-          <>
-            <div className="text-center mt-6">
-              <h2 className="text-2xl font-bold text-yellow-600">
-                Chapter {selectedChapter} • {chapterTitle}
-              </h2>
+      <section className="section chapters-section">
+        <h3>Explore Chapters</h3>
+        <div className="chapter-grid">
+          {recentChapters.map((item, index) => (
+            <div 
+              key={index} 
+              className="chapter-card"
+              onClick={() => handleRecentChapterClick(item.chapter)}
+            >
+              <h4>Chapter {item.chapter}</h4>
+              <p>{item.title}</p>
             </div>
-            <div className="flex flex-wrap justify-center mt-8">
-              {chapterSections.map((section, index) => (
-                <LawCard
-                  key={index}
-                  chapter={selectedChapter}
-                  section={section.section_number || "Unknown"}
-                  sectionTitle={section.title || "No Title"}
-                  description={section.description || "No Description"}
-                  fetchChapterTitle={fetchChapterTitle}
-                  onFetchSections={() => {}}
-                />
-              ))}
-            </div>
-          </>
+          ))}
+        </div>
+      </section>
+
+      {/* Loading Indicator */}
+      {loading && (
+        <div className="loading">
+          <div className="spinner"></div>
+          <p>Loading...</p>
+        </div>
+      )}
+
+      {/* Introduction Section */}
+      {showIntroduction && !loading && results.length === 0 && chapterSections.length === 0 && (
+        <section className="bg-white shadow-md rounded-2xl p-6 md:p-10 my-6 animate-fade-in border border-gray-200">
+            <h3 className="text-2xl font-bold text-gray-800 mb-4">About Bharatiya Nyaya Sanhita</h3>
+            <p className="text-gray-700 leading-relaxed mb-4">
+            The <span className="font-semibold text-blue-700">Bharatiya Nyaya Sanhita, 2023</span> is a law passed by the Parliament of India that replaced the Indian Penal Code of 1860. 
+            It was enacted as a part of the comprehensive reform of criminal laws in India.
+            </p>
+            <p className="text-gray-700 leading-relaxed mb-4">
+            The Bharatiya Nyaya Sanhita introduces several new provisions and offenses, including:
+            </p>
+            <ul className="list-disc pl-6 text-gray-700 space-y-2 mb-4">
+            <li><span className="font-medium">Terrorism</span> as a separate offense</li>
+            <li><span className="font-medium">Organized crime</span> and anti-national activities</li>
+            <li>Expanded definitions for <span className="font-medium">crimes against women and children</span></li>
+            <li>New provisions on <span className="font-medium">cyber crimes</span></li>
+            <li>Modernized language and considerations for contemporary issues</li>
+            </ul>
+            <p className="text-gray-700 leading-relaxed">
+            Use the <span className="font-semibold text-blue-600">search feature</span> above to find specific sections or browse through chapters to explore the law in detail.
+            </p>
+        </section>
         )}
-      </div>
+
+
+      {/* Search Results */}
+      {results.length > 0 && (
+        <section className="section results-section">
+          <h3>Search Results</h3>
+          <div className="law-cards">
+            {results.map((result, index) => (
+              <LawCard
+                key={index}
+                chapter={result.chapter || "Unknown"}
+                section={result.section_number || "Unknown"}
+                sectionTitle={result.title || "No Title"}
+                description={result.description || "No Description"}
+                fetchChapterTitle={fetchChapterTitle}
+                onFetchSections={fetchSectionsByChapter}
+              />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* Chapter Sections */}
+      {chapterSections.length > 0 && !loading && (
+        <section className="section chapter-sections">
+          <div className="chapter-title-section">
+            <h3 className="chapter-heading">
+              Chapter {selectedChapter} • {chapterTitle}
+            </h3>
+          </div>
+          <div className="sections-container">
+            {chapterSections.map((section, index) => (
+              <LawCard
+                key={index}
+                chapter={selectedChapter}
+                section={section.section_number || "Unknown"}
+                sectionTitle={section.title || "No Title"}
+                description={section.description || "No Description"}
+                fetchChapterTitle={fetchChapterTitle}
+                onFetchSections={() => {}}
+              />
+            ))}
+          </div>
+        </section>
+      )}
+
+      <footer className="footer">
+        <div className="footer-logo">
+          <img src={footerLogo} alt="Nyayasarthi Logo" />
+        </div>
+        <div className="footer-links">
+          <div className="footer-column">
+            <h4>Quick Links</h4>
+            <Link to="/announcements">Announcement</Link>
+            <Link to="/about-us">About Us</Link>
+            <Link to="/feedback">Feedback</Link>
+            <Link to="/qa">Q&A</Link>
+          </div>
+          <div className="footer-column">
+            <h4>Case</h4>
+            <Link to="/nyaya-sanhita">Find Relevant Laws</Link>
+            <Link to="/floating-case">Float a Case</Link>
+            <Link to="/find-a-lawyer">Find Lawyer</Link>
+            <Link to="/legal-advice">Legal Advice</Link>
+          </div>
+          <div className="footer-column">
+            <h4>Law</h4>
+            <Link to="/nyaya-sanhita">Nyaya Sanhita</Link>
+            <Link to="/search">Search</Link>
+            <Link to="/news">Recent News</Link>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

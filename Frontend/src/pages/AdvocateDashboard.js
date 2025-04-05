@@ -6,6 +6,7 @@ import { FaSignOutAlt, FaExternalLinkAlt } from "react-icons/fa";
 import logo from "../assets/golden nyayasarthi logo.png";
 import footerLogo from "../assets/Component 1.png";
 import NavbarAdv from "../components/NavbarAdv";
+
 const AdvocateDashboard = () => {
   const [caseRequests, setCaseRequests] = useState([]);
   const [myCases, setMyCases] = useState([]);
@@ -15,23 +16,31 @@ const AdvocateDashboard = () => {
   const [actionLoading, setActionLoading] = useState({});
   const navigate = useNavigate();
   const [floatingCasesCount, setFloatingCasesCount] = useState(0);
+  const [bookmarks, setBookmarks] = useState([]);
+  const [news, setNews] = useState([]);
   const userRole = localStorage.getItem("userRole");
+
   useEffect(() => {
     if (userRole !== "advocate") {
       alert("Access denied. Redirecting...");
       navigate(userRole === "plaintiff" ? "/dashboard" : "/sign-in");
     }
   }, [userRole, navigate]);
+
   useEffect(() => {
     if (userRole === "advocate") {
       fetchCaseRequests();
       fetchMyCases();
       fetchFloatingCasesCount();
+      fetchBookmarks();
+      fetchLegalNews();
     }
   }, [userRole]);
+
   if (userRole !== "advocate") {
     return null;
   }
+
   const handleLogout = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -56,6 +65,7 @@ const AdvocateDashboard = () => {
       navigate("/sign-in");
     }
   };
+
   const fetchCaseRequests = async () => {
     setLoadingRequests(true);
     setError("");
@@ -80,6 +90,7 @@ const AdvocateDashboard = () => {
       setLoadingRequests(false);
     }
   };
+
   const fetchMyCases = async () => {
     setLoadingMyCases(true);
     const token = localStorage.getItem("token");
@@ -105,6 +116,7 @@ const AdvocateDashboard = () => {
       setLoadingMyCases(false);
     }
   };
+
   const fetchFloatingCasesCount = async () => {
     const token = localStorage.getItem("token");
     if (!token) return;
@@ -120,6 +132,35 @@ const AdvocateDashboard = () => {
       console.error("Error fetching floating cases count:", err);
     }
   };
+
+  // Fetch bookmarks - this would be from your API in a real app
+  const fetchBookmarks = async () => {
+    setBookmarks([
+      { id: 1, title: "Criminal Procedure Code Amendments 2024" },
+      { id: 2, title: "Supreme Court Judgement on Property Rights" },
+      { id: 3, title: "Bharatiya Nyaya Sanhita Section 354 - Interpretation" },
+      { id: 4, title: "Landmark Cases in Environmental Law" },
+    ]);
+  };
+
+  // Fetch legal news - this would be from your API in a real app
+  const fetchLegalNews = async () => {
+    setNews([
+      {
+        id: 1,
+        title: "Supreme Court Issues New Guidelines on Bail Applications",
+        summary: "New guidelines aim to streamline the bail process and ensure timely hearings for all accused.",
+        date: "2 Apr 2025"
+      },
+      {
+        id: 2,
+        title: "Bar Council Announces Mandatory Continuing Legal Education",
+        summary: "All practicing advocates will need to complete 20 hours of approved continuing education annually.",
+        date: "29 Mar 2025"
+      },
+    ]);
+  };
+
   const handleCaseAction = async (caseId, action) => {
     setActionLoading((prev) => ({ ...prev, [caseId]: true }));
     setError("");
@@ -149,6 +190,7 @@ const AdvocateDashboard = () => {
       setActionLoading((prev) => ({ ...prev, [caseId]: false }));
     }
   };
+
   const formatDate = (dateString) => {
     if (!dateString) return "N/A";
     const date = new Date(dateString);
@@ -156,6 +198,7 @@ const AdvocateDashboard = () => {
       month: "short",
     })} ${date.getFullYear()}`;
   };
+
   return (
     <div className="dashboard-container">
       <NavbarAdv logo={logo} handleLogout={handleLogout} />
@@ -172,6 +215,7 @@ const AdvocateDashboard = () => {
           </Link>
         </div>
       </section>
+
       <section className="section my-case">
         <h3>My Cases</h3>
         {loadingMyCases && <p>Loading assigned cases...</p>}
@@ -197,7 +241,6 @@ const AdvocateDashboard = () => {
                     >
                       View Details
                     </Link>
-                    {}
                   </div>
                 </div>
               ))
@@ -205,7 +248,7 @@ const AdvocateDashboard = () => {
           </div>
         )}
       </section>
-      {}
+
       <section className="section case-request">
         <h3>Case Requests</h3>
         {loadingRequests && <p>Loading case requests...</p>}
@@ -226,11 +269,6 @@ const AdvocateDashboard = () => {
                     <Link
                       to={`/case/${request._id}/details`}
                       className="details-link"
-                      onClick={(e) => {
-                        console.log(
-                          `Navigating to case details for: ${request._id}`
-                        );
-                      }}
                     >
                       View Details
                     </Link>
@@ -255,23 +293,36 @@ const AdvocateDashboard = () => {
           </div>
         )}
       </section>
-      {}
+
       <section className="section bookmarks">
         <h3>Bookmarks</h3>
-        <div className="bookmark-items">
-          <div className="bookmark-item"></div>
-          <div className="bookmark-item"></div>
-          <a href="#view-more" className="view-more">
-            View more...
-          </a>
+        <div className="bookmarks-container">
+          {bookmarks.map((bookmark) => (
+            <div key={bookmark.id} className="bookmark-item">
+              <p>{bookmark.title}</p>
+            </div>
+          ))}
+          <div className="wrap-view-more">
+            <div className="view-more">
+              <Link to="/bookmarks">View more</Link>
+            </div>
+          </div>
         </div>
       </section>
-      {}
+
       <section className="section news-law">
         <h3>News - Law</h3>
-        <div className="news-content"></div>
+        <div className="news-container">
+          {news.map((item) => (
+            <div key={item.id} className="news-item">
+              <h3>{item.title}</h3>
+              <p>{item.summary}</p>
+              <span className="news-date">{item.date}</span>
+            </div>
+          ))}
+        </div>
       </section>
-      {}
+
       <footer className="footer">
         <div className="footer-logo">
           <img src={footerLogo} alt="Nyayasarthi Logo" />
@@ -302,4 +353,5 @@ const AdvocateDashboard = () => {
     </div>
   );
 };
+
 export default AdvocateDashboard;
