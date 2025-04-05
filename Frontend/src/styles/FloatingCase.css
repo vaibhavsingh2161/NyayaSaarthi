@@ -107,7 +107,7 @@ FloatingCase.css .floating-case-container {
 .case-list {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 2rem;
+
 }
 
 .case-card {

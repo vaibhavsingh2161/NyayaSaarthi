@@ -108,6 +108,69 @@
   flex-wrap: wrap;
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
+  gap: 10px;
+}
+
+
+.case-item span,
+.case-request-item span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-right: 10px;
+  flex-shrink: 0; 
+}
+
+
+.case-item span.case-subject,
+.case-request-item span.case-subject {
+  flex: 1 1 250px; 
+  max-width: 350px;
+  font-weight: 500;
+  white-space: nowrap; 
+}
+
+
+.case-item span.case-date,
+.case-request-item span.case-date {
+  flex: 0 0 180px; 
+  white-space: nowrap;
+}
+
+
+.case-item span.case-client,
+.case-request-item span.case-client {
+  flex: 0 0 180px; 
+  white-space: nowrap;
+}
+
+
+.case-item .case-actions,
+.case-request-item .request-actions {
+  flex: 0 0 auto; 
+  white-space: nowrap;
+}
+
+
+@media (max-width: 768px) {
+  .case-item,
+  .case-request-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .case-item span,
+  .case-request-item span {
+    max-width: 100%;
+    width: 100%;
+    white-space: normal; 
+    margin-bottom: 5px;
+  }
+  
+  .case-item .case-actions,
+  .case-request-item .request-actions {
+    margin-top: 10px;
+    align-self: flex-end;
+  }
 }
 
 .case-item:last-child,

@@ -229,11 +229,11 @@ const AdvocateDashboard = () => {
             ) : (
               myCases.map((caseItem) => (
                 <div key={caseItem._id} className="case-item">
-                  <span>
+                  <span className="case-subject">
                     {caseItem.subject} ({caseItem.caseType})
                   </span>
-                  <span>Created: {formatDate(caseItem.createdAt)}</span>
-                  <span>Client: {caseItem.user?.name || "N/A"}</span>
+                  <span className="case-date">Created: {formatDate(caseItem.createdAt)}</span>
+                  <span className="case-client">Client: {caseItem.user?.name || "N/A"}</span>
                   <div className="case-actions">
                     <Link
                       to={`/case/${caseItem._id}/details`}
@@ -260,11 +260,11 @@ const AdvocateDashboard = () => {
             ) : (
               caseRequests.map((request) => (
                 <div key={request._id} className="case-request-item">
-                  <span>
+                  <span className="case-subject">
                     {request.subject} ({request.caseType})
                   </span>
-                  <span>Requested: {formatDate(request.createdAt)}</span>
-                  <span>From: {request.user?.name || "Unknown User"}</span>
+                  <span className="case-date">Requested: {formatDate(request.createdAt)}</span>
+                  <span className="case-client">From: {request.user?.name || "Unknown User"}</span>
                   <div className="request-actions">
                     <Link
                       to={`/case/${request._id}/details`}
