@@ -68,9 +68,14 @@
 
 /* Case List Styles */
 .case-list {
+  margin-bottom: 30px;
+}
+
+.case-table-container {
   border: 1px solid #eee;
   border-radius: 8px;
   overflow: hidden;
+  background-color: #fff;
 }
 
 .case-table {
@@ -87,69 +92,152 @@
 }
 
 .case-index {
-  padding: 12px 15px;
+  padding: 20px 15px;
   width: 30px;
   color: #666;
+  text-align: center;
+  vertical-align: middle;
 }
 
 .case-title {
-  padding: 12px 10px;
+  padding: 20px 10px;
   font-weight: 500;
+  color: #333;
+  width: 25%;
+  vertical-align: middle;
 }
 
 .case-date {
-  padding: 12px;
+  padding: 20px 10px;
   color: #666;
-  width: 120px;
-  text-align: right;
+  width: 15%;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.date-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.case-status-cell {
+  text-align: center;
+  width: 20%;
+  padding: 20px 10px;
+  vertical-align: middle;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-align: center;
+  min-width: 100px;
+}
+
+/* Status-specific colors */
+.status-pending {
+  background-color: #FFF3E0; /* Light orange */
+  color: #F57C00; /* Orange */
+}
+
+.status-assigned {
+  background-color: #E3F2FD; /* Light blue */
+  color: #1976D2; /* Blue */
+}
+
+.status-inprogress {
+  background-color: #E8F5E9; /* Light green */
+  color: #388E3C; /* Green */
+}
+
+.status-closed {
+  background-color: #F5F5F5; /* Light gray */
+  color: #757575; /* Gray */
 }
 
 .case-actions {
-  padding: 12px;
+  padding: 20px 15px;
   text-align: right;
   white-space: nowrap;
+  width: 15%;
+  vertical-align: middle;
 }
 
-.case-actions a {
-  color: #0d1238;
-  text-decoration: none;
-  margin-left: 15px;
+.action-buttons {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+}
+
+.details-button {
+  background-color: #0d1238;
+  color: #D4A373 !important;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
   font-size: 0.9rem;
-}
-
-.case-actions a:hover {
-  text-decoration: underline;
-}
-
-.contact-link {
   font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+}
+
+.details-button:hover {
+  background-color: #192057;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  color: #e74c3c;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  padding: 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.delete-button:hover {
+  background-color: #f8f0f0;
+}
+
+.create-case-container {
+  background-color: #f9f9f9;
+  padding: 15px;
+  display: flex;
+  justify-content: flex-start;
+  border-top: 1px solid #eee;
 }
 
 .create-case-link {
-  padding: 12px 15px;
-  display: flex;
-  justify-content: flex-start;
-  background-color: #f9f9f9;
-}
-
-.create-case-link a {
-  color: #0d1238;
-  text-decoration: none;
   display: flex;
   align-items: center;
-  font-size: 0.9rem;
+  color: #0d1238;
+  text-decoration: none;
+  font-weight: 500;
 }
 
-.plus-icon {
-  display: inline-block;
-  width: 16px;
-  height: 16px;
-  text-align: center;
-  line-height: 14px;
-  border-radius: 50%;
+.create-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
   background-color: #0d1238;
   color: #fff;
-  margin-right: 6px;
+  border-radius: 50%;
+  margin-right: 8px;
+  font-size: 16px;
   font-weight: bold;
 }
 
@@ -164,25 +252,16 @@
 }
 
 .no-cases {
-  padding: 20px;
+  padding: 30px;
   text-align: center;
   color: #666;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  background-color: #f9f9f9;
 }
 
-/* Delete button */
-.delete-button {
-  background: none;
-  border: none;
-  color: #e74c3c;
-  cursor: pointer;
-  font-size: 0.9rem;
-  margin-left: 15px;
-  padding: 0;
-  text-decoration: underline;
-}
-
-.delete-button:hover {
-  color: #c0392b;
+.no-cases p {
+  margin-bottom: 15px;
 }
 
 /* Bookmarks Styles */
@@ -264,8 +343,6 @@
   text-align: left;
 }
 
-/* src/styles/UserDashboard.css (continued) */
-
 .footer-column h4 {
   color: #D4A373;
   margin-bottom: 15px;
@@ -297,16 +374,10 @@
     flex-wrap: wrap;
   }
   
-  .case-actions {
-    display: flex;
+  .action-buttons {
     flex-direction: column;
     gap: 8px;
     align-items: flex-end;
-  }
-  
-  .case-actions a, 
-  .delete-button {
-    margin-left: 0;
   }
   
   .dashboard-footer {
@@ -322,63 +393,58 @@
     flex-direction: column;
     gap: 20px;
   }
-}
-
-/* Add these styles to your src/styles/UserDashboard.css file */
-
-.case-actions {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 15px;
-}
-
-.details-button {
-  background-color: #0d1238;
-  color: #D4A373 !important;
-  border: none;
-  padding: 6px 12px;
-  border-radius: 4px;
-  font-size: 0.9rem;
-  font-weight: 500;
-  cursor: pointer;
-  text-decoration: none;
-  display: inline-block;
-}
-
-.details-button:hover {
-  background-color: #192057;
-  text-decoration: none;
-}
-
-.delete-button {
-  background: none;
-  border: none;
-  color: #e74c3c;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1rem;
-  padding: 6px;
-  border-radius: 50%;
-  transition: background-color 0.2s ease;
-}
-
-.delete-button:hover {
-  background-color: #f8f0f0;
-  color: #c0392b;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .case-actions {
+  
+  .case-table {
+    display: block;
+    overflow-x: auto;
+  }
+  
+  .case-title, .case-date, .case-status-cell {
+    padding: 15px 10px;
+  }
+  
+  .date-container {
     flex-direction: row;
-    justify-content: flex-end;
-    gap: 10px;
+    gap: 5px;
   }
   
   .details-button, .delete-button {
-    margin-left: 0;
+    padding: 6px 12px;
+    font-size: 0.85rem;
+  }
+}
+
+/* Add or update these styles in your UserDashboard.css */
+
+.dashboard-nav a, 
+.dashboard-nav .nav-link {
+  color: #333;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 5px 0;
+  border-bottom: 2px solid transparent;
+  margin: 0 12px;
+}
+
+.dashboard-nav a:hover,
+.dashboard-nav .nav-link:hover {
+  color: #0d1238;
+}
+
+.dashboard-nav a.active {
+  color: #0d1238;
+  border-bottom: 2px solid #D4A373;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .dashboard-nav {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .dashboard-nav a,
+  .dashboard-nav .nav-link {
+    margin: 5px 10px;
   }
 }
