@@ -431,3 +431,70 @@
     margin-left: 0;
   }
 }
+
+/* Clean, simple status badge styles without containers */
+
+.case-status {
+  padding: 12px;
+  width: 120px;
+  text-align: center;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 6px 15px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-transform: capitalize;
+  text-align: center;
+  min-width: 100px;
+}
+
+.status-badge-pending {
+  background-color: #ffeaa7; /* Brighter yellow/gold background */
+  color: #000000;
+}
+
+.status-badge-assigned {
+  background-color: #a0d7ff; /* Brighter blue background */
+  color: #000000;
+}
+
+.status-badge-in-progress {
+  background-color: #9df1c1; /* Brighter green background */
+  color: #000000;
+}
+
+.status-badge-closed {
+  background-color: #e2e8f0; /* Light gray with slight blue tone */
+  color: #000000;
+}
+
+/* Adjust the table layout */
+.case-table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
+/* Column widths */
+.case-index {
+  width: 5%;
+}
+
+.case-title {
+  width: 30%;
+}
+
+.case-date {
+  width: 20%;
+}
+
+.case-status {
+  width: 20%;
+}
+
+.case-actions {
+  width: 25%;
+}
