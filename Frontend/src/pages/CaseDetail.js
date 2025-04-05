@@ -68,7 +68,15 @@ function CaseDetail() {
         }
       );
 
-      setCaseData(response.data.case);
+      const caseData = response.data.case;
+      
+      // Log the advocate data to debug profile picture issues
+      if (caseData.advocate) {
+        console.log("Advocate data from API:", caseData.advocate);
+        console.log("Advocate profile picture:", caseData.advocate.profilePicture);
+      }
+      
+      setCaseData(caseData);
     } catch (err) {
       console.error("Error fetching case details:", err);
       setError("Failed to load case details. Please try again later.");
@@ -391,6 +399,22 @@ function CaseDetail() {
     }
   };
 
+  const assignedAdvocate = caseData?.advocate;
+  const fallbackLawyerImage = "/images/444.jpeg";
+
+  let lawyerImageUrl = fallbackLawyerImage;
+
+  if (assignedAdvocate?.profilePicture) {
+    if (assignedAdvocate.profilePicture.startsWith('uploads/')) {
+      lawyerImageUrl = `/${assignedAdvocate.profilePicture}`;
+    } else {
+      lawyerImageUrl = `/uploads/${assignedAdvocate.profilePicture}`;
+    }
+  }
+
+  console.log("Advocate image URL:", lawyerImageUrl);
+  console.log("Advocate profile picture data:", assignedAdvocate?.profilePicture);
+
   const NavbarComponent = userRole === "advocate" ? NavbarAdv : NavbarUser;
 
   if (loading) {
@@ -500,10 +524,18 @@ function CaseDetail() {
                     <h3>Assigned Lawyer</h3>
                     <div className="lawyer-card">
                       <div className="lawyer-image">
-                        <img src="/images/444.jpeg" alt="Lawyer" />
+                        <img 
+                          src={lawyerImageUrl} 
+                          alt={`${assignedAdvocate?.name || 'Lawyer'}'s profile`} 
+                          onError={(e) => { 
+                            console.log("Failed to load advocate image, trying fallback"); 
+                            e.target.onerror = null; 
+                            e.target.src = fallbackLawyerImage; 
+                          }}
+                        />
                       </div>
                       <div className="lawyer-details">
-                        <h4>{caseData.advocate.name}</h4>
+                        <h4>{assignedAdvocate?.name || 'N/A'}</h4>
                         <p>
                           <strong>Email:</strong> {caseData.advocate.email}
                         </p>

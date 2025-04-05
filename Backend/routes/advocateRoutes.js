@@ -84,6 +84,8 @@ router.post('/createProfile', protect, advocateOnly, upload.single('profilePictu
     const parsedClientele = JSON.parse(clientele || '[]');
     const parsedCourts = JSON.parse(courts || '[]');
 
+    console.log("Creating advocate profile with education:", parsedEducation);
+    console.log("Creating advocate profile with work experience:", parsedWorkExperience);
 
     // Create a new advocate profile
     const advocateDetails = new AdvocateDetails({
@@ -107,7 +109,22 @@ router.post('/createProfile', protect, advocateOnly, upload.single('profilePictu
     // Save advocate details to the database
     await advocateDetails.save();
 
-    res.status(201).json({ message: 'Advocate profile created successfully', profile: advocateDetails }); // Send back created profile
+    // Store the profile picture URL in local storage
+    if (profilePicturePath) {
+      // Client side will store this via localStorage.setItem('advocateProfilePictureUrl', url)
+      // We'll return the URL to the client so they can save it
+      const profilePictureUrl = `/uploads/${path.basename(profilePicturePath)}`;
+      res.status(201).json({ 
+        message: 'Advocate profile created successfully', 
+        profile: advocateDetails,
+        profilePictureUrl: profilePictureUrl
+      });
+    } else {
+      res.status(201).json({ 
+        message: 'Advocate profile created successfully', 
+        profile: advocateDetails
+      });
+    }
   } catch (error) {
     console.error("Error creating profile:", error); // Log detailed error
     // Handle potential JSON parsing errors
@@ -137,7 +154,7 @@ router.get('/profile', protect, advocateOnly, async (req, res) => {
 });
 
 // PUT route to update advocate profile
-router.put('/profile', protect, advocateOnly, async (req, res) => {
+router.put('/profile', protect, advocateOnly, upload.single('profilePicture'), async (req, res) => {
   try {
     // Find the advocate profile to update
     const advocateProfile = await AdvocateDetails.findOne({ userId: req.user.id });
@@ -146,11 +163,15 @@ router.put('/profile', protect, advocateOnly, async (req, res) => {
       return res.status(404).send('Advocate profile not found for this user.');
     }
 
+    // Process file upload if provided
+    if (req.file) {
+      advocateProfile.profilePicture = req.file.path;
+    }
+
     // Update fields that are provided in the request
     const updateFields = [
       'languages', 'dob', 'location', 'enrolmentNo', 'barCouncilRegNo', 
-      'yearsOfExperience', 'education', 'workExperience', 'specialisation', 
-      'casesHandled', 'description', 'clientele', 'courts'
+      'yearsOfExperience', 'description', 'clientele', 'courts'
     ];
     
     // Only update fields that are included in the request
@@ -160,14 +181,31 @@ router.put('/profile', protect, advocateOnly, async (req, res) => {
       }
     });
 
+    // Handle arrays that need to be parsed from JSON
+    ['education', 'workExperience', 'specialisation', 'casesHandled'].forEach(field => {
+      if (req.body[field]) {
+        try {
+          advocateProfile[field] = JSON.parse(req.body[field]);
+        } catch (e) {
+          console.error(`Error parsing ${field}:`, e);
+        }
+      }
+    });
+
     // Save the updated profile
     await advocateProfile.save();
 
-    // Return the updated profile
-    res.status(200).json({ 
+    // Return the updated profile and profile picture URL if updated
+    let response = { 
       message: 'Profile updated successfully', 
       profile: advocateProfile 
-    });
+    };
+
+    if (req.file) {
+      response.profilePictureUrl = `/uploads/${path.basename(req.file.path)}`;
+    }
+
+    res.status(200).json(response);
   } catch (error) {
     console.error("Error updating profile:", error);
     res.status(500).send('Server error updating profile details.');

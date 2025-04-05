@@ -85,6 +85,11 @@ const CreateProfile = () => {
       );
 
       if (response.status === 201) {
+        // Store the profile picture URL if it was returned
+        if (response.data.profilePictureUrl) {
+          localStorage.setItem('advocateProfilePictureUrl', response.data.profilePictureUrl);
+        }
+        
         alert(
           "Profile submitted successfully! Please wait for admin approval to sign in."
         );
@@ -255,58 +260,241 @@ const ProfessionalDetails = ({
   workExperience,
   setWorkExperience,
   nextStep,
-}) => (
-  <form className="profile-form">
-    <div className="form-group">
-      <label>Enrolment No.</label>
-      <input
-        type="text"
-        value={enrolmentNo}
-        onChange={(e) => setEnrolmentNo(e.target.value)}
-        placeholder="Enrolment Number"
-        required
-      />
-    </div>
-    <div className="form-group">
-      <label>Years of Experience</label>
-      <input
-        type="number"
-        value={yearsOfExperience}
-        onChange={(e) => setYearsOfExperience(e.target.value)}
-        placeholder="Years of Experience"
-        required
-      />
-    </div>
-    <div className="form-group education-section">
-      <label>Education</label>
-      <div className="education-box">
-        <input type="text" placeholder="Law Degree" required />
-        <select>
-          <option>L.L.B.</option>
-          <option>L.L.M.</option>
-          <option>Ph.D. in Law</option>
-        </select>
-        <input type="text" placeholder="University/Institution" required />
-        <input type="number" placeholder="Year of passing" required />
-        <input type="text" placeholder="Extra Courses" />
+}) => {
+  const [educationForm, setEducationForm] = useState({
+    degree: "",
+    university: "",
+    yearOfPassing: "",
+    extraCourses: ""
+  });
+
+  const [workExperienceForm, setWorkExperienceForm] = useState({
+    firm: "",
+    startDate: "",
+    endDate: "",
+    briefExperience: ""
+  });
+
+  const handleEducationChange = (e) => {
+    const { name, value } = e.target;
+    setEducationForm({
+      ...educationForm,
+      [name]: value
+    });
+  };
+
+  const handleWorkExperienceChange = (e) => {
+    const { name, value } = e.target;
+    setWorkExperienceForm({
+      ...workExperienceForm,
+      [name]: value
+    });
+  };
+
+  const addEducation = (e) => {
+    e.preventDefault();
+    if (educationForm.degree && educationForm.university && educationForm.yearOfPassing) {
+      setEducation([...education, educationForm]);
+      setEducationForm({
+        degree: "",
+        university: "",
+        yearOfPassing: "",
+        extraCourses: ""
+      });
+    }
+  };
+
+  const removeEducation = (index) => {
+    const updatedEducation = [...education];
+    updatedEducation.splice(index, 1);
+    setEducation(updatedEducation);
+  };
+
+  const addWorkExperience = (e) => {
+    e.preventDefault();
+    if (workExperienceForm.firm && workExperienceForm.startDate) {
+      setWorkExperience([...workExperience, workExperienceForm]);
+      setWorkExperienceForm({
+        firm: "",
+        startDate: "",
+        endDate: "",
+        briefExperience: ""
+      });
+    }
+  };
+
+  const removeWorkExperience = (index) => {
+    const updatedWorkExperience = [...workExperience];
+    updatedWorkExperience.splice(index, 1);
+    setWorkExperience(updatedWorkExperience);
+  };
+
+  return (
+    <form className="profile-form">
+      <div className="form-group">
+        <label>Enrolment No.</label>
+        <input
+          type="text"
+          value={enrolmentNo}
+          onChange={(e) => setEnrolmentNo(e.target.value)}
+          placeholder="Enrolment Number"
+          required
+        />
       </div>
-    </div>
-    <div className="form-group work-experience-section">
-      <label>Work Experience</label>
-      <div className="work-experience-box">
-        <input type="text" placeholder="Firm / Organisation" required />
-        <div className="date-group">
-          <input type="date" placeholder="Start date" required />
-          <input type="date" placeholder="End date" required />
+      <div className="form-group">
+        <label>Years of Experience</label>
+        <input
+          type="number"
+          value={yearsOfExperience}
+          onChange={(e) => setYearsOfExperience(e.target.value)}
+          placeholder="Years of Experience"
+          required
+        />
+      </div>
+      <div className="form-group education-section">
+        <label>Education</label>
+        <div className="education-box">
+          <input 
+            type="text" 
+            name="degree"
+            value={educationForm.degree}
+            onChange={handleEducationChange}
+            placeholder="Law Degree" 
+            required 
+          />
+          <select 
+            name="degree" 
+            value={educationForm.degree}
+            onChange={handleEducationChange}
+          >
+            <option value="">Select Degree</option>
+            <option value="L.L.B.">L.L.B.</option>
+            <option value="L.L.M.">L.L.M.</option>
+            <option value="Ph.D. in Law">Ph.D. in Law</option>
+          </select>
+          <input 
+            type="text" 
+            name="university"
+            value={educationForm.university}
+            onChange={handleEducationChange}
+            placeholder="University/Institution" 
+            required 
+          />
+          <input 
+            type="number" 
+            name="yearOfPassing"
+            value={educationForm.yearOfPassing}
+            onChange={handleEducationChange}
+            placeholder="Year of passing" 
+            required 
+          />
+          <input 
+            type="text" 
+            name="extraCourses"
+            value={educationForm.extraCourses}
+            onChange={handleEducationChange}
+            placeholder="Extra Courses" 
+          />
+          <button 
+            type="button" 
+            className="add-button" 
+            onClick={addEducation}
+          >
+            Add Education
+          </button>
         </div>
-        <input type="text" placeholder="Brief of experience" />
+        
+        {education.length > 0 && (
+          <div className="added-items">
+            <h4>Added Education:</h4>
+            <ul>
+              {education.map((edu, index) => (
+                <li key={index}>
+                  {edu.degree} from {edu.university} ({edu.yearOfPassing})
+                  <button 
+                    type="button" 
+                    onClick={() => removeEducation(index)}
+                    className="remove-button"
+                  >
+                    ×
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
-    </div>
-    <button type="button" onClick={nextStep} className="next-button">
-      Next
-    </button>
-  </form>
-);
+      
+      <div className="form-group work-experience-section">
+        <label>Work Experience</label>
+        <div className="work-experience-box">
+          <input 
+            type="text"
+            name="firm"
+            value={workExperienceForm.firm}
+            onChange={handleWorkExperienceChange}
+            placeholder="Firm / Organisation" 
+            required 
+          />
+          <div className="date-group">
+            <input 
+              type="date"
+              name="startDate"
+              value={workExperienceForm.startDate}
+              onChange={handleWorkExperienceChange}
+              placeholder="Start date" 
+              required 
+            />
+            <input 
+              type="date"
+              name="endDate"
+              value={workExperienceForm.endDate}
+              onChange={handleWorkExperienceChange}
+              placeholder="End date" 
+            />
+          </div>
+          <input 
+            type="text"
+            name="briefExperience"
+            value={workExperienceForm.briefExperience}
+            onChange={handleWorkExperienceChange}
+            placeholder="Brief of experience" 
+          />
+          <button 
+            type="button" 
+            className="add-button" 
+            onClick={addWorkExperience}
+          >
+            Add Work Experience
+          </button>
+        </div>
+        
+        {workExperience.length > 0 && (
+          <div className="added-items">
+            <h4>Added Work Experience:</h4>
+            <ul>
+              {workExperience.map((exp, index) => (
+                <li key={index}>
+                  {exp.firm} ({exp.startDate} - {exp.endDate || 'Present'})
+                  <button 
+                    type="button" 
+                    onClick={() => removeWorkExperience(index)}
+                    className="remove-button"
+                  >
+                    ×
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+      <button type="button" onClick={nextStep} className="next-button">
+        Next
+      </button>
+    </form>
+  );
+};
 
 const SpecialisationCourt = ({
   specialisation,

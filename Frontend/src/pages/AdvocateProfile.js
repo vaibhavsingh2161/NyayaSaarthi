@@ -123,8 +123,14 @@ const AdvocateProfile = () => {
   const fallbackImage = fallbackProfileImage;
 
   const profileImageUrl = profilePicture
-    ? `/uploads/${profilePicture.replace(/^uploads[\\\/]?/, "")}`
+    ? `/uploads/${profilePicture.replace(/^uploads[\\\\\\/]?/, "")}`
     : fallbackImage;
+
+  if (profileImageUrl !== fallbackImage) {
+    localStorage.setItem('advocateProfilePictureUrl', profileImageUrl);
+  } else {
+    localStorage.removeItem('advocateProfilePictureUrl');
+  }
 
   return (
     <div className="profile-container">
@@ -220,9 +226,9 @@ const AdvocateProfile = () => {
               <ul>
                 {education.map((edu, index) => (
                   <li key={index}>
-                    <strong>{edu.degree}</strong> - {edu.university} (
-                    {edu.yearOfPassing})
-                    {edu.extraCourses && <span> ({edu.extraCourses})</span>}
+                    <strong>{edu?.degree || 'N/A'}</strong> - {edu?.university || 'N/A'} (
+                    {edu?.yearOfPassing || 'N/A'})
+                    {edu?.extraCourses && <span> ({edu.extraCourses})</span>}
                   </li>
                 ))}
               </ul>
@@ -237,15 +243,15 @@ const AdvocateProfile = () => {
               <ul>
                 {workExperience.map((exp, index) => (
                   <li key={index}>
-                    <strong>{exp.firm}</strong>(
-                    {exp.startDate
+                    <strong>{exp?.firm || 'N/A'}</strong>(
+                    {exp?.startDate
                       ? new Date(exp.startDate).toLocaleDateString()
-                      : "N/A"}
-                    {exp.endDate
+                      : 'N/A'}
+                    {exp?.endDate
                       ? ` - ${new Date(exp.endDate).toLocaleDateString()}`
-                      : " - Present"}
+                      : ' - Present'}
                     )
-                    {exp.briefExperience && (
+                    {exp?.briefExperience && (
                       <p style={{ margin: "0.2em 0 0 1em", fontSize: "0.9em" }}>
                         {exp.briefExperience}
                       </p>
